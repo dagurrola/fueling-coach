@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fueling Coach — Runcierge</title>
+<style>
+  :root {
+    --bg: #0f1210;
+    --card: #171b18;
+    --border: #2a2f2b;
+    --text: #eef0ec;
+    --text-dim: #9aa39a;
+    --accent: #7fd858;
+    --accent-dim: #4a7a3a;
+    --warn: #e0b84a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+  header {
+    margin-bottom: 28px;
+  }
+  header .kicker {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  header h1 {
+    font-size: 24px;
+    margin: 0 0 8px;
+  }
+  header p {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin: 0;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+  input[type="number"] {
+    width: 100%;
+    background: #0d100e;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  input[type="number"]:focus {
+    outline: none;
+    border-color: var(--accent-dim);
+  }
+  .opt { font-weight: 400; color: var(--text-dim); font-size: 11px; }
+  .seg { display: flex; gap: 8px; }
+  .seg-btn {
+    flex: 1;
+    background: #0d100e;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 11px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .seg-btn.active {
+    background: rgba(127,216,88,0.12);
+    border-color: var(--accent-dim);
+    color: var(--accent);
+  }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .toggle-row .toggle-label {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .toggle-row .toggle-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+  .switch {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--border);
+    border-radius: 26px;
+    transition: 0.2s;
+  }
+  .slider::before {
+    content: "";
+    position: absolute;
+    height: 20px; width: 20px;
+    left: 3px; bottom: 3px;
+    background: var(--text-dim);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  input:checked + .slider { background: var(--accent-dim); }
+  input:checked + .slider::before { background: var(--accent); transform: translateX(20px); }
+
+  button.calc {
+    width: 100%;
+    background: var(--accent);
+    color: #0f1210;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  button.calc:active { opacity: 0.85; }
+
+  #resultado { display: none; }
+  .stat-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat {
+    flex: 1;
+    background: #0d100e;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat .lbl {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .why {
+    font-size: 13px;
+    color: var(--text-dim);
+    border-left: 2px solid var(--accent-dim);
+    padding-left: 12px;
+    margin: 16px 0;
+  }
+  .why b { color: var(--text); }
+
+  h3.section {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-dim);
+    margin: 24px 0 10px;
+  }
+  .producto {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .producto:last-child { border-bottom: none; }
+  .producto .nombre { font-weight: 600; font-size: 14px; }
+  .producto .detalle { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .producto .carbs { font-size: 14px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: rgba(127,216,88,0.15);
+    color: var(--accent);
+    margin-left: 6px;
+    text-transform: uppercase;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+  }
+  .producto .perfil {
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+  .grupo-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    margin: 14px 0 2px;
+  }
+  details.fuentes {
+    margin-top: 22px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+  }
+  details.fuentes summary {
+    cursor: pointer;
+    padding: 13px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    list-style: none;
+  }
+  details.fuentes summary::-webkit-details-marker { display: none; }
+  details.fuentes summary::after { content: " ↓"; color: var(--text-dim); }
+  details.fuentes[open] summary::after { content: " ↑"; }
+  .fuentes-body {
+    padding: 0 16px 8px;
+  }
+  .fuentes-body p {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 0 0 10px;
+  }
+  .fuentes-body b { color: var(--text); }
+  .disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .error {
+    color: var(--warn);
+    font-size: 13px;
+    margin-top: 10px;
+    display: none;
+  }
+  .cta-waitlist {
+    margin: 24px 0 4px;
+    padding: 18px;
+    background: rgba(127,216,88,0.08);
+    border: 1px solid var(--accent-dim);
+    border-radius: 12px;
+  }
+  .cta-waitlist .cta-copy {
+    font-size: 13px;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .waitlist-form {
+    display: flex;
+    gap: 8px;
+  }
+  .waitlist-form input[type="email"] {
+    flex: 1;
+    background: #0d100e;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .waitlist-form input[type="email"]:focus {
+    outline: none;
+    border-color: var(--accent-dim);
+  }
+  .cta-btn {
+    background: var(--accent);
+    color: #0f1210;
+    border: none;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .cta-btn:active { opacity: 0.85; }
+  .cta-btn:disabled { opacity: 0.6; cursor: default; }
+  .cta-msg {
+    font-size: 12px;
+    margin: 10px 0 0;
+    display: none;
+  }
+  .cta-msg.show { display: block; }
+  .cta-msg.ok { color: var(--accent); }
+  .cta-msg.err { color: var(--warn); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Runcierge · Fueling Coach</div>
+    <h1>¿Qué llevar en la sesión de mañana?</h1>
+    <p>Carbohidratos, líquido y qué producto usar — calculado, no adivinado.</p>
+  </header>
+
+  <div class="card">
+    <div class="field">
+      <label>Tu experiencia con fueling</label>
+      <div class="seg">
+        <button type="button" class="seg-btn active" id="nivPrincipiante" onclick="setNivel('principiante')">Principiante</button>
+        <button type="button" class="seg-btn" id="nivIntermedio" onclick="setNivel('intermedio')">Intermedio</button>
+        <button type="button" class="seg-btn" id="nivAvanzado" onclick="setNivel('avanzado')">Avanzado</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>¿Qué es?</label>
+      <div class="seg">
+        <button type="button" class="seg-btn active" id="segEntreno" onclick="setTipo('entreno')">Entreno</button>
+        <button type="button" class="seg-btn" id="segCompetencia" onclick="setTipo('competencia')">Competencia</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="duracion">¿Cuántos minutos vas a correr?</label>
+      <input type="number" id="duracion" placeholder="ej. 90" min="1" inputmode="numeric">
+    </div>
+
+    <!-- Principiante: chips en lenguaje humano -->
+    <div class="field solo-simple">
+      <label>¿Cómo es el terreno?</label>
+      <div class="seg">
+        <button type="button" class="seg-btn active" data-chip="terreno" data-val="0" onclick="chip(this)">Plano</button>
+        <button type="button" class="seg-btn" data-chip="terreno" data-val="300" onclick="chip(this)">Con subidas</button>
+        <button type="button" class="seg-btn" data-chip="terreno" data-val="700" onclick="chip(this)">Montaña</button>
+      </div>
+    </div>
+    <div class="field solo-simple">
+      <label>¿Va a hacer calor?</label>
+      <div class="seg">
+        <button type="button" class="seg-btn active" data-chip="calor" data-val="" onclick="chip(this)">Templado</button>
+        <button type="button" class="seg-btn" data-chip="calor" data-val="28" onclick="chip(this)">Calor</button>
+        <button type="button" class="seg-btn" data-chip="calor" data-val="33" onclick="chip(this)">Mucho calor</button>
+      </div>
+    </div>
+
+    <!-- Intermedio/Avanzado: números crudos -->
+    <div class="field solo-detalle">
+      <label for="desnivel">Desnivel positivo estimado (m D+) <span class="opt">0 si es plano/asfalto</span></label>
+      <input type="number" id="desnivel" placeholder="ej. 400" min="0" inputmode="numeric">
+    </div>
+    <div class="field solo-detalle">
+      <label for="temp">Temperatura esperada (°C) <span class="opt">opcional</span></label>
+      <input type="number" id="temp" placeholder="ej. 28" inputmode="numeric">
+    </div>
+
+    <!-- Solo avanzado: fat-adapted -->
+    <div class="field toggle-row solo-avanzado">
+      <div>
+        <div class="toggle-label">Soy fat-adapted</div>
+        <div class="toggle-sub">Entrenas en ayunas de forma habitual — tu cuerpo ya usa grasa como combustible base</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="fatAdapted">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <button class="calc" onclick="calcular()">Calcular mi fuel</button>
+    <div class="error" id="error">Escribe cuántos minutos dura la sesión.</div>
+  </div>
+
+  <div class="card" id="resultado">
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num" id="statCarbsH">—</div>
+        <div class="lbl">g carbs / h</div>
+      </div>
+      <div class="stat">
+        <div class="num" id="statLiqH">—</div>
+        <div class="lbl">ml líquido / h</div>
+      </div>
+    </div>
+
+    <div class="why" id="whyTotales"></div>
+    <div class="why" id="whyToma"></div>
+
+    <h3 class="section">Cuánto llevar en total</h3>
+    <div class="producto">
+      <div>
+        <div class="nombre">Carbohidratos totales</div>
+        <div class="detalle" id="detCarbsTot"></div>
+      </div>
+      <div class="carbs" id="valCarbsTot"></div>
+    </div>
+    <div class="producto">
+      <div>
+        <div class="nombre">Líquido total</div>
+        <div class="detalle" id="detLiqTot"></div>
+      </div>
+      <div class="carbs" id="valLiqTot"></div>
+    </div>
+
+    <h3 class="section">Cómo llegar a esos carbos</h3>
+    <p class="hint">No importa la marca — importa el número y que tu estómago lo tolere. Elige lo que te caiga bien; combinar también vale.</p>
+    <div id="opciones"></div>
+
+    <div class="cta-waitlist">
+      <p class="cta-copy">Runcierge calcula esto solo, cada noche, con tus datos de Garmin — sin que abras nada.</p>
+      <form class="waitlist-form" id="waitlistForm">
+        <input type="text" inputmode="email" id="waitlistEmail" placeholder="tu@email.com" autocomplete="email">
+        <button type="submit" class="cta-btn" id="waitlistBtn">Quiero probarlo</button>
+      </form>
+      <p class="cta-msg ok" id="waitlistOk">Listo — te avisamos apenas abramos la waitlist.</p>
+      <p class="cta-msg err" id="waitlistErr"></p>
+    </div>
+
+    <details class="fuentes">
+      <summary>¿En qué se basa esto?</summary>
+      <div class="fuentes-body">
+        <p><b>Carbs y líquido por hora</b> — rangos de <i>Training for the Uphill Athlete</i> (House/Johnston/Jornet, cap. 13) + Jeukendrup & Gleeson, <i>Nutrition for Endurance Athletes</i> (2018).</p>
+        <p><b>Menos carbs si eres fat-adapted en entreno</b> — estrategia "train low": entrenar la vía de la grasa a baja intensidad. En competencia se fuela alto ("race high"), no se limita el día del esfuerzo máximo.</p>
+        <p><b>Ajuste por desnivel (D+)</b> — +5–10% carbs y +5–7% líquido por cada 100m de ascenso sostenido. Sunny B. Lau, <i>Ultramarathon Nutrition Guidelines</i> (2020).</p>
+        <p><b>Ajuste por calor</b> — +10% líquido por cada 5°C sobre 20°C. Stacy Sims, <i>Roar</i> (2015).</p>
+        <p><b>Techo de 90 g/h</b> — límite de absorción intestinal con transportadores glucosa+fructosa saturados (consenso de nutrición deportiva).</p>
+        <p><b>Orden de las opciones</b> — por ratio glucosa:fructosa, de perfil más limpio (menos fructosa, menos molestia GI) a menos. La fructosa alta no es mala, pero como fuente única y repetida cansa el estómago — mejor combinar.</p>
+      </div>
+    </details>
+
+    <div class="disclaimer">
+      Guía general de fueling, no consejo médico ni nutricional individualizado.
+      Cifras de gramos por producto son de research de mercado — verifica el empaque real antes de comprar.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Analytics + waitlist (R-43) — Formspree, mismo patrón trail-mvp ──
+// TODO Daniel: crear 2 forms en formspree.io (uno para waitlist, uno para analytics)
+// y pegar sus endpoints aquí antes de integrar al sitio. Sin esto el widget sigue
+// funcionando (fetch falla en silencio) pero no captura nada.
+const WAITLIST_ENDPOINT  = "https://formspree.io/f/TU_FORM_ID_WAITLIST";
+const ANALYTICS_ENDPOINT = "https://formspree.io/f/TU_FORM_ID_ANALYTICS";
+
+// Analítica mínima, fire-and-forget: nunca debe romper el widget si falla o si
+// Daniel no ha configurado el endpoint todavía (placeholder → fetch falla, se traga).
+function trackEvent(evento, extra) {
+  fetch(ANALYTICS_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    keepalive: true,
+    body: JSON.stringify(Object.assign({ evento, widget: "fueling-coach" }, extra)),
+  }).catch(() => {});
+}
+
+// ── Datos — portados literal de dacoach_fuel.py + fueling_catalog.json ──
+// (methodology.md §10, Scout Echo-trail rondas 1-3 + research Cowork 1 jul 2026)
+// Alcance v1: solo banda por DURACIÓN. Ajustes por D+/clima existen en la
+// metodología pero no se aplican aquí — requieren datos que este widget no pide,
+// aplicarlos sin el dato sería alucinar un ajuste (mismo principio del motor real).
+
+const BANDAS = [
+  // [techo_min_exclusivo, carbs_std, carbs_fat, liquido_ml, primera_toma]
+  [60,  [0, 30],   [0, 20],   [400, 500],  null],
+  [90,  [30, 45],  [25, 35],  [500, 600],  "min 45–50"],
+  [120, [45, 60],  [35, 45],  [600, 800],  "min 45–50"],
+  [null,[60, 75],  [45, 55],  [800, 1000], "min 45, cada 30 min"],
+];
+
+function bandaPara(duracionMin) {
+  for (const [techo, carbsStd, carbsFat, liquido, toma] of BANDAS) {
+    if (techo === null || duracionMin < techo) {
+      return { carbsStd, carbsFat, liquido, toma };
+    }
+  }
+  const ultima = BANDAS[BANDAS.length - 1];
+  return { carbsStd: ultima[1], carbsFat: ultima[2], liquido: ultima[3], toma: ultima[4] };
+}
+
+// Catálogo — GENERADO por generar_catalogo_fueling.py, no editar a mano (R-43).
+// Los números (carbs_g) se derivan de dacoach/fueling_catalog.json — única fuente de
+// verdad para las cifras. La curación (grupo/porque/limpieza/unidad de despliegue)
+// vive en CURATION dentro del generador; para cambiar un producto o agregar uno nuevo,
+// edita el generador y vuelve a correrlo — no este bloque.
+// CATALOGO:START
+const CATALOGO = [
+  { nombre: "Papas a la sal", carbs_g: 24, unidad: "bolsa 45g", plural: "bolsas", grupo: "Comida real", porque: "almidón puro + sodio, cero fructosa — el perfil más limpio para el estómago en sesiones largas", limpieza: 2 },
+  { nombre: "SIS GO Isotonic", carbs_g: 22, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "maltodextrina, isotónico — no necesita agua extra para digerirse", limpieza: 2 },
+  { nombre: "GU Energy Gel", carbs_g: 23, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "clásico, fácil de conseguir en MX; algo de fructosa pero balanceado", limpieza: 1 },
+  { nombre: "Maurten Gel 100", carbs_g: 25, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "hidrogel diseñado para absorción alta; más fructosa relativa, mejor a carga alta", limpieza: 0 },
+  { nombre: "Precision PF 30", carbs_g: 30, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "30g por gel — menos sobres para el mismo total; ratio 2:1 glucosa:fructosa", limpieza: 1 },
+  { nombre: "Dátil Medjool", carbs_g: 18, unidad: "pieza", plural: "dátiles", grupo: "Comida real", porque: "natural, denso, con potasio; fructosa alta — mejor combinado con algo de glucosa", limpieza: 0 },
+  { nombre: "Plátano mediano", carbs_g: 28, unidad: "pieza", plural: "plátanos", grupo: "Comida real", porque: "barato y accesible; mejor en la primera hora, luego el volumen estorba", limpieza: 1 },
+  { nombre: "Gomitas", carbs_g: 32, unidad: "puño 40g", plural: "puños", grupo: "Comida real", porque: "azúcar rápido y barato; rompe la fatiga de comer solo geles. Suma sodio aparte", limpieza: 1 },
+  { nombre: "Tailwind (mezcla)", carbs_g: 25, unidad: "porción", plural: "porciones", grupo: "Bebida", porque: "carbs + sodio en el mismo líquido — resuelve hidratación y fuel de un solo golpe", limpieza: 1 },
+];
+// CATALOGO:END
+
+let NIVEL = "principiante";
+function setNivel(n) {
+  NIVEL = n;
+  document.getElementById("nivPrincipiante").classList.toggle("active", n === "principiante");
+  document.getElementById("nivIntermedio").classList.toggle("active", n === "intermedio");
+  document.getElementById("nivAvanzado").classList.toggle("active", n === "avanzado");
+  // Principiante: chips en lenguaje humano. Intermedio/Avanzado: números crudos.
+  // Fat-adapted solo en avanzado — es una adaptación entrenada, no una preferencia;
+  // mostrarla a un principiante es jerga que no le aplica.
+  document.querySelectorAll(".solo-simple").forEach(el => el.style.display = (n === "principiante") ? "" : "none");
+  document.querySelectorAll(".solo-detalle").forEach(el => el.style.display = (n === "principiante") ? "none" : "");
+  document.querySelectorAll(".solo-avanzado").forEach(el => el.style.display = (n === "avanzado") ? "" : "none");
+  if (n !== "avanzado") document.getElementById("fatAdapted").checked = false;
+}
+
+function chip(btn) {
+  const grupo = btn.dataset.chip;
+  document.querySelectorAll(`[data-chip="${grupo}"]`).forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+function chipVal(grupo) {
+  const activo = document.querySelector(`[data-chip="${grupo}"].active`);
+  return activo ? activo.dataset.val : "";
+}
+
+let TIPO = "entreno";
+function setTipo(t) {
+  TIPO = t;
+  document.getElementById("segEntreno").classList.toggle("active", t === "entreno");
+  document.getElementById("segCompetencia").classList.toggle("active", t === "competencia");
+  // En competencia se fuela a rango completo (race high) — fat-adapted no reduce carbs
+  // el día de esfuerzo máximo. El toggle se deshabilita visualmente.
+  const sw = document.getElementById("fatAdapted");
+  sw.disabled = (t === "competencia");
+  sw.closest(".card").querySelector(".toggle-row").style.opacity = (t === "competencia") ? "0.45" : "1";
+}
+
+function calcular() {
+  const duracion = parseInt(document.getElementById("duracion").value, 10);
+  // Principiante responde chips ("con subidas" ≈ 300m D+, "calor" ≈ 28°C — aproximaciones
+  // declaradas, no medidas); intermedio/avanzado dan el número crudo.
+  const esSimple = NIVEL === "principiante";
+  const desnivel = esSimple
+    ? (parseInt(chipVal("terreno"), 10) || 0)
+    : (parseInt(document.getElementById("desnivel").value, 10) || 0);
+  const temp = esSimple
+    ? parseInt(chipVal("calor"), 10)
+    : parseInt(document.getElementById("temp").value, 10);
+  const errorEl = document.getElementById("error");
+  const resEl = document.getElementById("resultado");
+
+  if (!duracion || duracion <= 0) {
+    errorEl.style.display = "block";
+    resEl.style.display = "none";
+    return;
+  }
+  errorEl.style.display = "none";
+
+  if (duracion < 60) {
+    resEl.style.display = "block";
+    document.getElementById("statCarbsH").textContent = "0–30";
+    document.getElementById("statLiqH").textContent = "400–500";
+    document.getElementById("whyTotales").innerHTML =
+      "<b>Menos de 60 min:</b> no amerita fueling estructurado — agua basta para la mayoría de atletas.";
+    ["whyToma","detCarbsTot","detLiqTot"].forEach(id => document.getElementById(id).textContent = "");
+    ["valCarbsTot","valLiqTot"].forEach(id => document.getElementById(id).textContent = "—");
+    document.getElementById("opciones").innerHTML = "";
+    trackEvent("widget_completado", { nivel: NIVEL, tipo: TIPO, duracion_min: duracion, banda: "sin_fueling" });
+    return;
+  }
+
+  // fat-adapted solo aplica en ENTRENO (train low). En competencia se fuela alto (race high).
+  const esCompetencia = TIPO === "competencia";
+  const fatAdapted = document.getElementById("fatAdapted").checked && !esCompetencia;
+  const { carbsStd, carbsFat, liquido, toma } = bandaPara(duracion);
+  let carbs = (fatAdapted ? carbsFat : carbsStd).slice();
+  let liq = liquido.slice();
+  const horas = duracion / 60;
+
+  // Ajuste por D+ (methodology §10, Sunny B. Lau): +5–10% carbs y +5–7% líquido por 100m.
+  // Usamos el punto medio de cada rango de % para no inflar el rango final más de la cuenta.
+  const notas = [];
+  if (desnivel >= 100) {
+    const cient = Math.floor(desnivel / 100);          // bloques de 100m
+    const pctCarb = (duracion < 90 ? 0.05 : 0.085) * cient;  // 5% <90min · ~8.5% (medio de 7-10) largo
+    const pctLiq  = (duracion < 90 ? 0.05 : 0.06) * cient;
+    carbs = [carbs[0]*(1+pctCarb), carbs[1]*(1+pctCarb)];
+    liq   = [liq[0]*(1+pctLiq),   liq[1]*(1+pctLiq)];
+    notas.push(`+${Math.round(pctCarb*100)}% carbs y +${Math.round(pctLiq*100)}% líquido por ${desnivel}m D+`);
+  }
+  // Ajuste por temperatura (Sims): +10% líquido por cada 5°C sobre 20°C.
+  if (!isNaN(temp) && temp > 20) {
+    const pasos = Math.floor((temp - 20) / 5);
+    if (pasos > 0) {
+      const pctT = 0.10 * pasos;
+      liq = [liq[0]*(1+pctT), liq[1]*(1+pctT)];
+      notas.push(`+${Math.round(pctT*100)}% líquido por ${temp}°C`);
+    }
+  }
+
+  // Techo fisiológico: el intestino absorbe ~90 g/h máx (consenso, transportadores
+  // glucosa+fructosa saturados). Ningún ajuste por D+/calor puede rebasarlo sin volverse
+  // ficción — se capa y se avisa.
+  let capAviso = false;
+  if (carbs[1] > 90) { capAviso = true; carbs = [Math.min(carbs[0], 90), 90]; }
+
+  const r = x => Math.round(x);
+  const carbsH = [r(carbs[0]), r(carbs[1])];
+  const liqH   = [r(liq[0]), r(liq[1])];
+  if (capAviso) notas.push("carbs tope 90 g/h (límite de absorción intestinal)");
+  const carbsTot = [r(carbs[0]*horas), r(carbs[1]*horas)];
+  const liqTot   = [r(liq[0]*horas), r(liq[1]*horas)];
+  const medio = (carbsTot[0] + carbsTot[1]) / 2;
+
+  const rango = (a, b) => a === b ? `${a}` : `${a}–${b}`;
+  resEl.style.display = "block";
+  document.getElementById("statCarbsH").textContent = rango(carbsH[0], carbsH[1]);
+  document.getElementById("statLiqH").textContent = rango(liqH[0], liqH[1]);
+
+  // Por qué — según tipo
+  let porTipo;
+  if (esCompetencia) {
+    porTipo = "<b>Competencia:</b> se fuela a rango completo (race high) — el día de esfuerzo máximo no se limita carbs aunque entrenes en ayunas. La estrategia baja en carbs es para construir el motor, no para competir.";
+  } else if (fatAdapted) {
+    porTipo = "<b>Entreno · fat-adapted:</b> tu cuerpo ya usa grasa como combustible base, así que necesitas menos carbs por hora que el estándar (train low — entrenas la vía de la grasa).";
+  } else {
+    porTipo = "<b>Entreno estándar:</b> rango de nutrición deportiva sin reducción por adaptación a grasa.";
+  }
+  document.getElementById("whyTotales").innerHTML = porTipo +
+    (notas.length ? `<br><br><b>Ajustes aplicados:</b> ${notas.join(" · ")}.` : "");
+
+  document.getElementById("whyToma").innerHTML = toma
+    ? `<b>Primera toma:</b> ${toma}${fatAdapted ? " — coincide con tu práctica de salir en ayunas y fuelear cuando el cuerpo lo pide" : ""}.`
+    : "";
+
+  document.getElementById("detCarbsTot").textContent = `${carbsH[0]}–${carbsH[1]} g/h × ${horas.toFixed(1)} h`;
+  document.getElementById("valCarbsTot").textContent = `${carbsTot[0]}–${carbsTot[1]} g`;
+  document.getElementById("detLiqTot").textContent = `${liqH[0]}–${liqH[1]} ml/h × ${horas.toFixed(1)} h`;
+  document.getElementById("valLiqTot").textContent = `${liqTot[0]}–${liqTot[1]} ml`;
+
+  // Abanico de opciones — el número manda, el producto es elección de quien lo lee.
+  // Cada opción muestra cuántas porciones = tu total de carbs. Agrupadas por grupo,
+  // ordenadas por limpieza (perfil más limpio primero) dentro del grupo.
+  const totalTexto = `~${Math.round(medio)} g`;
+  document.querySelector(".hint").innerHTML =
+    `Necesitas <b>${carbsTot[0]}–${carbsTot[1]} g</b> en toda la sesión (${totalTexto} de referencia). ` +
+    `No importa la marca — importa el número y que tu estómago lo tolere. Combinar también vale.`;
+
+  // Unidades PRÁCTICAS: nadie carga medio gel. Redondeo a rango entero (piso-techo del
+  // rango de carbs) + cadencia sugerida — el número de verdad accionable en el trail.
+  const primeraTomaMin = 45;  // consistente con la banda (min 45-50)
+  function unidadesTexto(p) {
+    const nLow = Math.max(1, Math.round(carbsTot[0] / p.carbs_g));
+    const nHigh = Math.max(nLow, Math.ceil(carbsTot[1] / p.carbs_g));
+    const rangoU = nLow === nHigh ? `${nLow}` : `${nLow}–${nHigh}`;
+    const nMid = Math.max(1, Math.round(medio / p.carbs_g));
+    let cadencia = "";
+    if (p.grupo === "Bebida") {
+      cadencia = "repartidas en tus botellas/soft flasks";
+    } else if (nMid <= 1) {
+      cadencia = `al min ${primeraTomaMin}`;
+    } else {
+      const ventana = Math.max(duracion - primeraTomaMin, 30);
+      const cada = Math.max(10, Math.round((ventana / (nMid - 1)) / 5) * 5);
+      cadencia = `1 cada ~${cada} min desde el min ${primeraTomaMin}`;
+    }
+    return { rangoU, cadencia };
+  }
+
+  const grupos = ["Comida real", "Gel deportivo", "Bebida"];
+  let html = "";
+  for (const g of grupos) {
+    const items = CATALOGO.filter(p => p.grupo === g).sort((a, b) => b.limpieza - a.limpieza);
+    if (!items.length) continue;
+    html += `<div class="grupo-lbl">${g}</div>`;
+    html += items.map(p => {
+      const u = unidadesTexto(p);
+      return `<div class="producto"><div>` +
+        `<div class="nombre">${p.nombre} <span class="detalle">· ${p.carbs_g}g/${p.unidad}</span></div>` +
+        `<div class="perfil">${p.porque}</div></div>` +
+        `<div class="carbs">${u.rangoU} ${p.plural}<div class="detalle" style="text-align:right">${u.cadencia}</div></div></div>`;
+    }).join("");
+  }
+  document.getElementById("opciones").innerHTML = html;
+
+  trackEvent("widget_completado", { nivel: NIVEL, tipo: TIPO, duracion_min: duracion, banda: "con_fueling" });
+}
+
+// CTA→waitlist (R-43): envía el email a Formspree + registra el clic en analytics
+// (nivel/tipo de la última sesión calculada — señal de qué perfil convierte).
+document.getElementById("waitlistForm").addEventListener("submit", function (ev) {
+  ev.preventDefault();
+  const btn = document.getElementById("waitlistBtn");
+  const okMsg = document.getElementById("waitlistOk");
+  const errMsg = document.getElementById("waitlistErr");
+  const email = document.getElementById("waitlistEmail").value.trim();
+  okMsg.classList.remove("show");
+  errMsg.classList.remove("show");
+
+  // Validación propia (el input es type="text", no "email"): nunca depender de la
+  // validación nativa del navegador para dar retroalimentación — en algunos
+  // contextos (webview, embebido en iframe) el tooltip nativo no se ve y el botón
+  // parece "no dar clic" cuando en realidad el navegador bloqueó el submit en silencio.
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errMsg.textContent = "Escribe un email válido.";
+    errMsg.classList.add("show");
+    return;
+  }
+
+  btn.disabled = true;
+  trackEvent("cta_click", { nivel: NIVEL, tipo: TIPO });
+
+  fetch(WAITLIST_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify({ email, origen: "fueling-coach", nivel: NIVEL, tipo: TIPO }),
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("formspree error");
+      okMsg.classList.add("show");
+      ev.target.reset();
+    })
+    .catch(() => {
+      errMsg.textContent = "No se pudo enviar. Intenta de nuevo en un momento.";
+      errMsg.classList.add("show");
+      btn.disabled = false;
+    });
+});
+
+// Estado inicial: principiante (chips visibles, números ocultos, sin fat-adapted)
+setNivel("principiante");
+</script>
+</body>
+</html>
