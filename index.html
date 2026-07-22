@@ -199,13 +199,103 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 10px;
-    padding: 12px 0;
+    padding: 12px 10px;
+    margin: 0 -10px;
     border-bottom: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
   }
+  .producto:hover { background: rgba(127,216,88,0.05); }
   .producto:last-child { border-bottom: none; }
   .producto .nombre { font-weight: 600; font-size: 14px; }
   .producto .detalle { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
   .producto .carbs { font-size: 14px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .producto.sel {
+    background: rgba(127,216,88,0.1);
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+  }
+  .producto .conteo {
+    display: inline-block;
+    background: var(--accent);
+    color: #0f1210;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 18px;
+    text-align: center;
+    padding: 1px 5px;
+    border-radius: 8px;
+    margin-left: 6px;
+  }
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 2px 0;
+  }
+  .or-divider::before, .or-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .or-divider span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .total-anchor {
+    background: rgba(127,216,88,0.08);
+    border: 1px solid var(--accent-dim);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 0 0 16px;
+  }
+  .total-anchor .lbl {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    margin-bottom: 2px;
+  }
+  .total-anchor .big {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+  }
+  .total-anchor .instruccion {
+    font-size: 13.5px;
+    color: var(--text);
+    margin-top: 10px;
+    line-height: 1.45;
+  }
+  .total-anchor .instruccion b { color: var(--accent); }
+  .total-anchor .progreso {
+    font-size: 13px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--accent-dim);
+    display: none;
+  }
+  .total-anchor .progreso.show { display: block; }
+  .total-anchor .progreso .falta { color: var(--text); }
+  .total-anchor .progreso .cubierto { color: var(--accent); font-weight: 700; }
+  .total-anchor .progreso .exceso { color: var(--warn); }
+  .total-anchor .reset {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 8px;
+    white-space: nowrap;
+  }
   .badge {
     display: inline-block;
     font-size: 10px;
@@ -433,7 +523,15 @@
     </div>
 
     <h3 class="section">Cómo llegar a esos carbos</h3>
-    <p class="hint">No importa la marca — importa el número y que tu estómago lo tolere. Elige lo que te caiga bien; combinar también vale.</p>
+    <div class="total-anchor">
+      <div class="lbl">Necesitas</div>
+      <div class="big" id="totalAnchorNum">—</div>
+      <div class="instruccion" id="totalAnchorTxt"></div>
+      <div class="progreso" id="progresoSeleccion">
+        <span id="progresoTxt"></span>
+        <span class="reset" id="resetSeleccion">reiniciar</span>
+      </div>
+    </div>
     <div id="opciones"></div>
 
     <div class="cta-waitlist">
@@ -595,6 +693,10 @@ function calcular() {
     ["whyToma","detCarbsTot","detLiqTot"].forEach(id => document.getElementById(id).textContent = "");
     ["valCarbsTot","valLiqTot"].forEach(id => document.getElementById(id).textContent = "—");
     document.getElementById("opciones").innerHTML = "";
+    document.getElementById("totalAnchorNum").textContent = "—";
+    document.getElementById("totalAnchorTxt").textContent = "";
+    document.getElementById("progresoSeleccion").classList.remove("show");
+    carbsBandaActual = [0, 0];
     trackEvent("widget_completado", { nivel: NIVEL, tipo: TIPO, duracion_min: duracion, banda: "sin_fueling" });
     return;
   }
@@ -671,10 +773,14 @@ function calcular() {
   // Abanico de opciones — el número manda, el producto es elección de quien lo lee.
   // Cada opción muestra cuántas porciones = tu total de carbs. Agrupadas por grupo,
   // ordenadas por limpieza (perfil más limpio primero) dentro del grupo.
-  const totalTexto = `~${Math.round(medio)} g`;
-  document.querySelector(".hint").innerHTML =
-    `Necesitas <b>${carbsTot[0]}–${carbsTot[1]} g</b> en toda la sesión (${totalTexto} de referencia). ` +
-    `No importa la marca — importa el número y que tu estómago lo tolere. Combinar también vale.`;
+  // R-45: total-ancla arriba (no enterrado en texto chico) + selector clicable con
+  // contador en vivo — resuelve la confusión "se ve como buffet, sumo todo" sin
+  // dejar editar cantidades (v1 deliberadamente mínima, twin P014).
+  carbsBandaActual = carbsTot;
+  document.getElementById("totalAnchorNum").textContent = `${carbsTot[0]}–${carbsTot[1]} g de carbo`;
+  document.getElementById("totalAnchorTxt").innerHTML =
+    `A continuación tienes opciones para cubrir esos carbos <b>— puedes combinarlas</b>.`;
+  document.getElementById("progresoSeleccion").classList.remove("show");
 
   // Unidades PRÁCTICAS: nadie carga medio gel. Redondeo a rango entero (piso-techo del
   // rango de carbs) + cadencia sugerida — el número de verdad accionable en el trail.
@@ -703,18 +809,72 @@ function calcular() {
     const items = CATALOGO.filter(p => p.grupo === g).sort((a, b) => b.limpieza - a.limpieza);
     if (!items.length) continue;
     html += `<div class="grupo-lbl">${g}</div>`;
-    html += items.map(p => {
+    html += items.map((p, i) => {
       const u = unidadesTexto(p);
-      return `<div class="producto"><div>` +
-        `<div class="nombre">${p.nombre} <span class="detalle">· ${p.carbs_g}g/${p.unidad}</span></div>` +
+      const fila = `<div class="producto" data-carbs="${p.carbs_g}" data-count="0">` +
+        `<div>` +
+        `<div class="nombre">${p.nombre} <span class="detalle">· ${p.carbs_g}g/${p.unidad}</span><span class="conteo" style="display:none">0</span></div>` +
         `<div class="perfil">${p.porque}</div></div>` +
-        `<div class="carbs">${u.rangoU} ${p.plural}<div class="detalle" style="text-align:right">${u.cadencia}</div></div></div>`;
+        `<div class="carbs">Con esto solo: ${u.rangoU} ${p.plural}<div class="detalle" style="text-align:right">${u.cadencia}</div></div></div>`;
+      return (i > 0 ? `<div class="or-divider"><span>o</span></div>` : "") + fila;
     }).join("");
   }
   document.getElementById("opciones").innerHTML = html;
 
   trackEvent("widget_completado", { nivel: NIVEL, tipo: TIPO, duracion_min: duracion, banda: "con_fueling" });
 }
+
+// R-45 / twin P014: selector clicable con contador en vivo, sin edición de
+// cantidades (v1 deliberadamente mínima) — cada clic suma UNA porción del
+// producto al plan; "reiniciar" borra todo. Sin esto el abanico se lee como
+// buffet acumulativo en vez de alternativas (confirmado por Daniel probando
+// el widget real).
+let carbsBandaActual = [0, 0];
+
+function actualizarProgreso() {
+  let total = 0;
+  document.querySelectorAll("#opciones .producto").forEach(row => {
+    total += parseInt(row.dataset.count || "0", 10) * parseFloat(row.dataset.carbs);
+  });
+  const prog = document.getElementById("progresoSeleccion");
+  const txt = document.getElementById("progresoTxt");
+  if (total <= 0) {
+    prog.classList.remove("show");
+    return;
+  }
+  prog.classList.add("show");
+  const [lo, hi] = carbsBandaActual;
+  const t = Math.round(total);
+  if (t < lo) {
+    txt.innerHTML = `Llevas <b>${t} g</b> — te faltan <span class="falta">~${lo - t} g</span> para el mínimo.`;
+  } else if (t <= hi) {
+    txt.innerHTML = `<span class="cubierto">✅ Cubierto: ${t} g</span> (dentro de ${lo}–${hi} g)`;
+  } else {
+    txt.innerHTML = `Llevas <b>${t} g</b> — <span class="exceso">ya pasaste el rango</span> (${lo}–${hi} g), no hace falta más.`;
+  }
+}
+
+document.getElementById("opciones").addEventListener("click", function (ev) {
+  const row = ev.target.closest(".producto");
+  if (!row) return;
+  const count = parseInt(row.dataset.count || "0", 10) + 1;
+  row.dataset.count = count;
+  row.classList.add("sel");
+  const badge = row.querySelector(".conteo");
+  badge.textContent = count;
+  badge.style.display = "inline-block";
+  actualizarProgreso();
+});
+
+document.getElementById("resetSeleccion").addEventListener("click", function () {
+  document.querySelectorAll("#opciones .producto").forEach(row => {
+    row.dataset.count = "0";
+    row.classList.remove("sel");
+    const badge = row.querySelector(".conteo");
+    if (badge) { badge.style.display = "none"; badge.textContent = "0"; }
+  });
+  actualizarProgreso();
+});
 
 // CTA→waitlist (R-43): envía el email a Formspree + registra el clic en analytics
 // (nivel/tipo de la última sesión calculada — señal de qué perfil convierte).
