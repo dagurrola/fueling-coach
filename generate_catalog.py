@@ -88,6 +88,20 @@ CURATION = [
         "porque": "carbs + sodio en el mismo líquido — resuelve hidratación y fuel de un solo golpe",
         "limpieza": 1,
     },
+    # R-47 (Jona): faltaba un drink mix ALTO en carbos — "aportan 80-90 por toma
+    # y ya quitas 6 geles". De los 7 de oficiales_extendido.bebidas_polvo este es
+    # el ÚNICO con carbs_g confirmado:true; los otros son estimados de la fuente.
+    # Se agrega solo este a propósito: meter 6 cifras estimadas al widget iría
+    # contra la disciplina del catálogo. Aviso de disponibilidad en el "porque"
+    # porque la sección extendido declara "no como catálogo de compra inmediata
+    # en MX" (la marca sí tiene presencia MX, este SKU no está verificado).
+    {
+        "nombre": "Maurten Drink Mix 320", "fuente_lista": "oficiales_extendido.bebidas_polvo",
+        "fuente_nombre": "Drink Mix 320",
+        "unidad": "sobre", "plural": "sobres", "grupo": "Bebida",
+        "porque": "80g en un solo sobre — cubre casi toda la sesión sin cargar geles; premium e importado, confirma disponibilidad antes de contar con él",
+        "limpieza": 1,
+    },
 ]
 
 
@@ -107,9 +121,46 @@ def _carbs_g(raw):
     raise ValueError(f"carbs_g no parseable: {valor!r}")
 
 
+def _sodio(item):
+    """Extrae el sodio del catálogo para mostrarlo en el widget (R-46).
+
+    NO inventa ni normaliza: el catálogo trae los valores en formas distintas
+    (int, rango 'lo-hi', o string con variantes por SKU tipo '10 (estándar) /
+    118 (Energy+Electrolyte)'). Devolvemos dos cosas:
+      - `label`: versión corta para la fila (solo la cifra/rango, sin paréntesis)
+      - `detalle`: el string COMPLETO del catálogo, va en el title= del elemento
+        para no perder el matiz (varía por sabor, por SKU, etc.)
+    `None` cuando el catálogo no tiene dato confirmado — la fila entonces dice
+    "sin dato" en vez de un número inventado.
+    """
+    s = item.get("sodio_mg") or {}
+    valor = s.get("valor")
+    if valor is None:
+        return None, None
+    if isinstance(valor, (int, float)):
+        return f"{round(valor)} mg", None
+    texto = str(valor).strip()
+    # Corta el primer número o rango del string; el resto (paréntesis con
+    # variantes/matices) se conserva íntegro como detalle en el tooltip.
+    m = re.match(r"^\s*(\d+(?:\.\d+)?(?:\s*[-–]\s*\d+(?:\.\d+)?)?)", texto)
+    if not m:
+        return None, texto
+    cifra = re.sub(r"\s*[-–]\s*", "–", m.group(1))
+    hay_mas = texto[m.end():].strip(" ()")
+    return f"{cifra} mg", (texto if hay_mas else None)
+
+
 def _buscar(catalogo, lista, nombre_exacto):
-    clave = "producto" if lista == "oficiales" else "alimento"
-    for item in catalogo[lista]:
+    # `lista` acepta ruta anidada con punto para la sección oficiales_extendido
+    # (p.ej. "oficiales_extendido.bebidas_polvo") — R-47.
+    if "." in lista:
+        raiz, sub = lista.split(".", 1)
+        items = catalogo[raiz][sub]
+        clave = "producto"
+    else:
+        items = catalogo[lista]
+        clave = "producto" if lista == "oficiales" else "alimento"
+    for item in items:
         if item.get(clave) == nombre_exacto:
             return item
     raise KeyError(f"'{nombre_exacto}' no encontrado en fueling_catalog.json[{lista}]")
@@ -122,11 +173,18 @@ def generar():
     for c in CURATION:
         item = _buscar(catalogo, c["fuente_lista"], c["fuente_nombre"])
         carbs = _carbs_g(item)
-        filas.append(
+        sodio, sodio_detalle = _sodio(item)
+        campos = (
             '  { nombre: "%s", carbs_g: %d, unidad: "%s", plural: "%s", grupo: "%s", '
-            'porque: "%s", limpieza: %d },'
+            'porque: "%s", limpieza: %d'
             % (c["nombre"], carbs, c["unidad"], c["plural"], c["grupo"], c["porque"], c["limpieza"])
         )
+        # sodio: null explícito cuando el catálogo no lo confirma — el widget
+        # muestra "sin dato", nunca un número inventado (R-46).
+        campos += ", sodio: %s" % (f'"{sodio}"' if sodio else "null")
+        if sodio_detalle:
+            campos += ', sodio_detalle: "%s"' % sodio_detalle.replace('"', "'")
+        filas.append(campos + " },")
 
     bloque = "const CATALOGO = [\n" + "\n".join(filas) + "\n];"
 

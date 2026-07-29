@@ -228,6 +228,35 @@
     border-radius: 8px;
     margin-left: 6px;
   }
+  /* Sodio por porción (R-46) — dato del catálogo, no un objetivo prescrito. */
+  .producto .na {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #7fb8d8;
+    background: rgba(127,184,216,0.12);
+    padding: 1px 6px;
+    border-radius: 6px;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  .producto .na.sin-dato {
+    color: var(--text-dim);
+    background: rgba(154,163,154,0.1);
+    font-weight: 400;
+  }
+  .producto .na[title] { cursor: help; border-bottom: 1px dotted rgba(127,184,216,0.5); }
+  .nota-sodio {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin: 14px 0 0;
+    padding: 11px 13px;
+    background: rgba(127,184,216,0.07);
+    border-left: 2px solid #7fb8d8;
+    border-radius: 0 8px 8px 0;
+  }
+  .nota-sodio b { color: var(--text); }
   .or-divider {
     display: flex;
     align-items: center;
@@ -505,6 +534,7 @@
 
     <div class="why" id="whyTotales"></div>
     <div class="why" id="whyToma"></div>
+    <div class="why" id="whyIntestino"></div>
 
     <h3 class="section">Cuánto llevar en total</h3>
     <div class="producto">
@@ -521,6 +551,13 @@
       </div>
       <div class="carbs" id="valLiqTot"></div>
     </div>
+    <div class="producto">
+      <div>
+        <div class="nombre">Sodio total <span class="detalle">· ACSM, 300–600 mg/h</span></div>
+        <div class="detalle" id="detNaTot"></div>
+      </div>
+      <div class="carbs" id="valNaTot"></div>
+    </div>
 
     <h3 class="section">Cómo llegar a esos carbos</h3>
     <div class="total-anchor">
@@ -533,6 +570,7 @@
       </div>
     </div>
     <div id="opciones"></div>
+    <p class="nota-sodio" id="notaSodio"></p>
 
     <div class="cta-waitlist">
       <p class="cta-copy">Runcierge calcula esto solo, cada noche, con tus datos de Garmin — sin que abras nada.</p>
@@ -551,8 +589,9 @@
         <p><b>Menos carbs si eres fat-adapted en entreno</b> — estrategia "train low": entrenar la vía de la grasa a baja intensidad. En competencia se fuela alto ("race high"), no se limita el día del esfuerzo máximo.</p>
         <p><b>Ajuste por desnivel (D+)</b> — +5–10% carbs y +5–7% líquido por cada 100m de ascenso sostenido. Sunny B. Lau, <i>Ultramarathon Nutrition Guidelines</i> (2020).</p>
         <p><b>Ajuste por calor</b> — +10% líquido por cada 5°C sobre 20°C. Stacy Sims, <i>Roar</i> (2015).</p>
-        <p><b>Techo de 90 g/h</b> — límite de absorción intestinal con transportadores glucosa+fructosa saturados (consenso de nutrición deportiva).</p>
+        <p><b>Techo de 90 g/h</b> — límite de absorción intestinal con un solo tipo de carbohidrato (~60 g/h); llegar más alto requiere mezclar transportadores (glucosa+fructosa). Jeukendrup, <i>Curr Opin Clin Nutr Metab Care</i> (2014); ACSM.</p>
         <p><b>Orden de las opciones</b> — por ratio glucosa:fructosa, de perfil más limpio (menos fructosa, menos molestia GI) a menos. La fructosa alta no es mala, pero como fuente única y repetida cansa el estómago — mejor combinar.</p>
+        <p><b>Sodio, 300–600 mg/h</b> — ACSM, vía Veniamakis et al., <i>Nutrients</i> (2022). Rango poblacional, no ajustado por tasa de sudoración individual. La evidencia de que pastillas de sal específicamente mejoren el rendimiento (vs. obtenerlo de bebida/comida) es débil e inconsistente — mismo review.</p>
       </div>
     </details>
 
@@ -614,15 +653,16 @@ function bandaPara(duracionMin) {
 // edita el generador y vuelve a correrlo — no este bloque.
 // CATALOGO:START
 const CATALOGO = [
-  { nombre: "Papas a la sal", carbs_g: 24, unidad: "bolsa 45g", plural: "bolsas", grupo: "Comida real", porque: "almidón puro + sodio, cero fructosa — el perfil más limpio para el estómago en sesiones largas", limpieza: 2 },
-  { nombre: "SIS GO Isotonic", carbs_g: 22, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "maltodextrina, isotónico — no necesita agua extra para digerirse", limpieza: 2 },
-  { nombre: "GU Energy Gel", carbs_g: 23, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "clásico, fácil de conseguir en MX; algo de fructosa pero balanceado", limpieza: 1 },
-  { nombre: "Maurten Gel 100", carbs_g: 25, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "hidrogel diseñado para absorción alta; más fructosa relativa, mejor a carga alta", limpieza: 0 },
-  { nombre: "Precision PF 30", carbs_g: 30, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "30g por gel — menos sobres para el mismo total; ratio 2:1 glucosa:fructosa", limpieza: 1 },
-  { nombre: "Dátil Medjool", carbs_g: 18, unidad: "pieza", plural: "dátiles", grupo: "Comida real", porque: "natural, denso, con potasio; fructosa alta — mejor combinado con algo de glucosa", limpieza: 0 },
-  { nombre: "Plátano mediano", carbs_g: 28, unidad: "pieza", plural: "plátanos", grupo: "Comida real", porque: "barato y accesible; mejor en la primera hora, luego el volumen estorba", limpieza: 1 },
-  { nombre: "Gomitas", carbs_g: 32, unidad: "puño 40g", plural: "puños", grupo: "Comida real", porque: "azúcar rápido y barato; rompe la fatiga de comer solo geles. Suma sodio aparte", limpieza: 1 },
-  { nombre: "Tailwind (mezcla)", carbs_g: 25, unidad: "porción", plural: "porciones", grupo: "Bebida", porque: "carbs + sodio en el mismo líquido — resuelve hidratación y fuel de un solo golpe", limpieza: 1 },
+  { nombre: "Papas a la sal", carbs_g: 24, unidad: "bolsa 45g", plural: "bolsas", grupo: "Comida real", porque: "almidón puro + sodio, cero fructosa — el perfil más limpio para el estómago en sesiones largas", limpieza: 2, sodio: "124 mg" },
+  { nombre: "SIS GO Isotonic", carbs_g: 22, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "maltodextrina, isotónico — no necesita agua extra para digerirse", limpieza: 2, sodio: "10 mg", sodio_detalle: "10 (estándar) / 118 (GO Energy+Electrolyte)" },
+  { nombre: "GU Energy Gel", carbs_g: 23, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "clásico, fácil de conseguir en MX; algo de fructosa pero balanceado", limpieza: 1, sodio: "55–125 mg", sodio_detalle: "55-125 (varía por sabor, Roctane más alto)" },
+  { nombre: "Maurten Gel 100", carbs_g: 25, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "hidrogel diseñado para absorción alta; más fructosa relativa, mejor a carga alta", limpieza: 0, sodio: "20 mg" },
+  { nombre: "Precision PF 30", carbs_g: 30, unidad: "gel", plural: "geles", grupo: "Gel deportivo", porque: "30g por gel — menos sobres para el mismo total; ratio 2:1 glucosa:fructosa", limpieza: 1, sodio: "0 mg" },
+  { nombre: "Dátil Medjool", carbs_g: 18, unidad: "pieza", plural: "dátiles", grupo: "Comida real", porque: "natural, denso, con potasio; fructosa alta — mejor combinado con algo de glucosa", limpieza: 0, sodio: "1–2 mg" },
+  { nombre: "Plátano mediano", carbs_g: 28, unidad: "pieza", plural: "plátanos", grupo: "Comida real", porque: "barato y accesible; mejor en la primera hora, luego el volumen estorba", limpieza: 1, sodio: "1 mg" },
+  { nombre: "Gomitas", carbs_g: 32, unidad: "puño 40g", plural: "puños", grupo: "Comida real", porque: "azúcar rápido y barato; rompe la fatiga de comer solo geles. Suma sodio aparte", limpieza: 1, sodio: null },
+  { nombre: "Tailwind (mezcla)", carbs_g: 25, unidad: "porción", plural: "porciones", grupo: "Bebida", porque: "carbs + sodio en el mismo líquido — resuelve hidratación y fuel de un solo golpe", limpieza: 1, sodio: "303 mg" },
+  { nombre: "Maurten Drink Mix 320", carbs_g: 80, unidad: "sobre", plural: "sobres", grupo: "Bebida", porque: "80g en un solo sobre — cubre casi toda la sesión sin cargar geles; premium e importado, confirma disponibilidad antes de contar con él", limpieza: 1, sodio: null },
 ];
 // CATALOGO:END
 
@@ -690,9 +730,10 @@ function calcular() {
     document.getElementById("statLiqH").textContent = "400–500";
     document.getElementById("whyTotales").innerHTML =
       "<b>Menos de 60 min:</b> no amerita fueling estructurado — agua basta para la mayoría de atletas.";
-    ["whyToma","detCarbsTot","detLiqTot"].forEach(id => document.getElementById(id).textContent = "");
-    ["valCarbsTot","valLiqTot"].forEach(id => document.getElementById(id).textContent = "—");
+    ["whyToma","whyIntestino","detCarbsTot","detLiqTot","detNaTot"].forEach(id => document.getElementById(id).textContent = "");
+    ["valCarbsTot","valLiqTot","valNaTot"].forEach(id => document.getElementById(id).textContent = "—");
     document.getElementById("opciones").innerHTML = "";
+    document.getElementById("notaSodio").innerHTML = "";
     document.getElementById("totalAnchorNum").textContent = "—";
     document.getElementById("totalAnchorTxt").textContent = "";
     document.getElementById("progresoSeleccion").classList.remove("show");
@@ -744,6 +785,15 @@ function calcular() {
   const liqTot   = [r(liq[0]*horas), r(liq[1]*horas)];
   const medio = (carbsTot[0] + carbsTot[1]) / 2;
 
+  // Sodio (R-46): 300–600 mg/h es el rango de ACSM para ejercicio prolongado
+  // (Veniamakis et al. 2022, PMC8955583) — NO escalamos por calor/D+ porque esa
+  // fuente no da un factor numérico para eso (a diferencia del líquido, donde
+  // Sims sí lo da); inventar un multiplicador aquí sería el mismo trap que v1
+  // evitó siempre. El calor SÍ importa más para sodio, pero eso se dice en
+  // texto, no en un número que no viene de ninguna parte.
+  const NA_H = [300, 600];
+  const naTot = [r(NA_H[0]*horas), r(NA_H[1]*horas)];
+
   const rango = (a, b) => a === b ? `${a}` : `${a}–${b}`;
   resEl.style.display = "block";
   document.getElementById("statCarbsH").textContent = rango(carbsH[0], carbsH[1]);
@@ -765,10 +815,30 @@ function calcular() {
     ? `<b>Primera toma:</b> ${toma}${fatAdapted ? " — coincide con tu práctica de salir en ayunas y fuelear cuando el cuerpo lo pide" : ""}.`
     : "";
 
+  // R-44: NO hay banda distinta por nivel de experiencia en la fuente (Jeukendrup
+  // 2014 / ACSM confirmado — no separan "principiante" de "avanzado" con cifras).
+  // Lo que SÍ es real y sourced: un solo tipo de carbohidrato (mono-transportador,
+  // ej. solo maltodextrina) tiene techo de absorción ~60g/h — pasar de eso exige
+  // MEZCLAR glucosa+fructosa. Si el rango calculado pide más de 60g/h, se avisa
+  // en vez de asumir que cualquier producto solo llega ahí. Aparte, a
+  // principiante se le sugiere arrancar bajo en el rango (gut training es real,
+  // sin protocolo oficial de progresión — no se inventa uno).
+  let avisoIntestino = "";
+  if (carbsH[1] > 60) {
+    avisoIntestino = `<b>Arriba de 60 g/h necesitas mezclar tipos de carbohidrato</b> (glucosa+fructosa, no un solo producto repetido) — un solo tipo tiene techo de absorción ~60 g/h. Revisa que tu combinación de abajo no sea del mismo tipo repetido.`;
+  }
+  if (esSimple && !esCompetencia) {
+    avisoIntestino += (avisoIntestino ? " " : "") +
+      `<b>Primera vez fueleando así:</b> arranca cerca del extremo bajo del rango — la tolerancia intestinal se entrena con la práctica, no hay atajo ni protocolo único para acelerarlo.`;
+  }
+  document.getElementById("whyIntestino").innerHTML = avisoIntestino;
+
   document.getElementById("detCarbsTot").textContent = `${carbsH[0]}–${carbsH[1]} g/h × ${horas.toFixed(1)} h`;
   document.getElementById("valCarbsTot").textContent = `${carbsTot[0]}–${carbsTot[1]} g`;
   document.getElementById("detLiqTot").textContent = `${liqH[0]}–${liqH[1]} ml/h × ${horas.toFixed(1)} h`;
   document.getElementById("valLiqTot").textContent = `${liqTot[0]}–${liqTot[1]} ml`;
+  document.getElementById("detNaTot").textContent = `${NA_H[0]}–${NA_H[1]} mg/h × ${horas.toFixed(1)} h`;
+  document.getElementById("valNaTot").textContent = `${naTot[0]}–${naTot[1]} mg`;
 
   // Abanico de opciones — el número manda, el producto es elección de quien lo lee.
   // Cada opción muestra cuántas porciones = tu total de carbs. Agrupadas por grupo,
@@ -811,15 +881,39 @@ function calcular() {
     html += `<div class="grupo-lbl">${g}</div>`;
     html += items.map((p, i) => {
       const u = unidadesTexto(p);
+      // Sodio (R-46): dato del catálogo, nunca inventado. "sin dato" cuando la
+      // fuente no lo confirma; el título conserva el matiz completo (varía por
+      // sabor / por SKU) para no perder precisión al acortar la cifra.
+      const naTxt = p.sodio ? `${p.sodio} Na` : `sin dato de Na`;
+      const naTitle = p.sodio_detalle ? ` title="Sodio: ${p.sodio_detalle}"` : "";
+      const naCls = p.sodio ? "na" : "na sin-dato";
       const fila = `<div class="producto" data-carbs="${p.carbs_g}" data-count="0">` +
         `<div>` +
-        `<div class="nombre">${p.nombre} <span class="detalle">· ${p.carbs_g}g/${p.unidad}</span><span class="conteo" style="display:none">0</span></div>` +
+        `<div class="nombre">${p.nombre} <span class="detalle">· ${p.carbs_g}g/${p.unidad}</span>` +
+        `<span class="${naCls}"${naTitle}>${naTxt}</span>` +
+        `<span class="conteo" style="display:none">0</span></div>` +
         `<div class="perfil">${p.porque}</div></div>` +
         `<div class="carbs">Con esto solo: ${u.rangoU} ${p.plural}<div class="detalle" style="text-align:right">${u.cadencia}</div></div></div>`;
       return (i > 0 ? `<div class="or-divider"><span>o</span></div>` : "") + fila;
     }).join("");
   }
   document.getElementById("opciones").innerHTML = html;
+
+  // Nota de sodio (R-46) — el número de arriba (300-600mg/h, ACSM) es rango
+  // poblacional, no ajustado por calor/sudoración individual (esa fuente no da
+  // un factor — inventar uno sería el mismo trap que v1 evitó con D+/clima).
+  // Evidencia de que las CÁPSULAS de sal específicamente mejoren rendimiento es
+  // débil/inconsistente (Veniamakis 2022) — se dice explícito para no sobre-
+  // vender el producto más caro cuando bebida/comida ya alcanzan.
+  const calorAlto = !isNaN(temp) && temp >= 25;
+  document.getElementById("notaSodio").innerHTML =
+    `<b>Sobre el sodio:</b> los geles casi no traen (0–125 mg por sobre); las bebidas de mezcla ` +
+    `y la comida salada sí — revisa el número de cada opción arriba para acercarte a tu total. ` +
+    (calorAlto
+      ? `<b>Con el calor que marcaste, el sodio importa más de lo normal.</b> ` : ``) +
+    `El rango de arriba es poblacional (ACSM), no tu tasa de sudoración real, que es individual. ` +
+    `Nota honesta: la evidencia de que las pastillas de sal específicamente mejoren el rendimiento es débil — ` +
+    `para la mayoría, bebida con electrolitos o comida salada ya cubre el número sin gastar en cápsulas.`;
 
   trackEvent("widget_completado", { nivel: NIVEL, tipo: TIPO, duracion_min: duracion, banda: "con_fueling" });
 }
