@@ -1,0 +1,1545 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Runcierge V2_deck</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Runcierge — V2_deck (10-nov). Una columna que cuenta octubre y noviembre de un corredor real, con los mensajes tal cual
+   los guardó producción. Piel del canon y de la presentación V2: oscuro siempre, verde lima, Helvetica Neue. Sin altimetría. */
+:root{
+  --bg:#0F1210; --card:#171B18; --borde:#2A2F2B; --texto:#EEF0EC; --dim:#9AA39A;
+  --lima:#7FD858; --lima-d:#4A7A3A; --ambar:#E0B84A; --wash:#1C2A19; --sobre-lima:#10190B;
+  --msg:#F3F5F1; --msg-t:#151A16; --msg-d:#5B635B;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gl:max(16px,env(safe-area-inset-left,0px)); --gr:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+body{margin:0;background:var(--bg);color:var(--texto);font-family:var(--sans);font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{font-weight:700;letter-spacing:-.025em;line-height:1.06;text-wrap:balance}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--lima);outline-offset:3px;border-radius:4px}
+.in{width:100%;max-width:1040px;margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+.ceja{font-size:.75rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lima)}
+.hora{font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;color:var(--dim)}
+h2{font-size:clamp(1.9rem,4.4vw,3.1rem);max-width:17em}
+.lead{font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--dim);max-width:36em}
+.lead b{color:var(--texto);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:.8rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none;background:var(--lima);color:var(--sobre-lima)}
+.btn.sec{background:transparent;color:var(--texto);border:1px solid var(--borde);font-weight:600;min-height:44px;font-size:.95rem}
+.liga{text-underline-offset:.25em;min-height:44px;display:inline-flex;align-items:center}
+
+/* encabezado y portada */
+.arriba{display:flex;justify-content:space-between;align-items:center;padding-block:calc(1.1rem + env(safe-area-inset-top,0px)) 0}
+.logo{font-weight:700;font-size:1.2rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lima);text-decoration:none}
+.inv{font-weight:600;min-height:44px;padding:.4rem .2rem;text-decoration:underline;text-underline-offset:.25em}
+.portada .in{display:grid;gap:1.2rem;padding-block:clamp(3.5rem,11vh,7rem) clamp(3rem,8vh,5rem)}
+h1{font-size:clamp(2.6rem,6.4vw,5rem);max-width:12em}
+.tesis{font-size:clamp(1.15rem,2vw,1.45rem);font-weight:700;color:var(--lima);max-width:30em;text-wrap:balance}
+.acciones{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;align-items:center;margin-top:.4rem}
+.real{display:flex;gap:.6rem;align-items:baseline;border-top:1px solid var(--borde);padding-top:1rem;margin-top:1rem;color:var(--dim);font-size:.95rem;max-width:44em}
+.real i{font-style:normal;flex:none;width:.55rem;height:.55rem;border-radius:50%;background:var(--lima);transform:translateY(-.05rem)}
+
+/* bloques */
+.bloque{padding-block:clamp(3.5rem,9vh,6rem);border-top:1px solid var(--borde)}
+.bloque .in{display:grid;gap:1.3rem}
+.par{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:start;margin-top:.6rem}
+@media (max-width:760px){ .par{grid-template-columns:minmax(0,1fr)} }
+.par > *{min-width:0}
+.foto{margin:0;aspect-ratio:4/3;max-width:100%;overflow:hidden;border-radius:10px;background:var(--card);border:1px solid var(--borde)}
+.foto img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(1) contrast(1.08) brightness(.8)}
+
+/* el mensaje: lo único con forma de notificación */
+.msg{background:var(--msg);color:var(--msg-t);border-radius:16px;padding:1rem 1.15rem 1.15rem;max-width:31rem}
+.msg .hd{display:flex;align-items:center;gap:.55rem;font-family:var(--mono);font-size:.76rem;color:var(--msg-d);margin-bottom:.6rem}
+.msg .hd i{width:24px;height:24px;border-radius:6px;background:var(--lima);color:var(--sobre-lima);display:inline-grid;place-items:center;font-style:normal;font-weight:700;font-size:.8rem;font-family:var(--sans)}
+.msg .hd span{margin-left:auto}
+.msg p+p{margin-top:.6rem}
+.msg .tit{font-weight:700}
+.frase{display:inline;cursor:pointer;text-align:left;border-bottom:1.5px dashed var(--lima-d)}
+.frase[aria-expanded="true"]{background:rgba(127,216,88,.28)}
+.regla{margin-top:.85rem;padding-top:.65rem;border-top:1px solid rgba(21,26,22,.14);font-family:var(--mono);font-size:.78rem;line-height:1.55;color:var(--lima-d);min-height:3.2em}
+.literal{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+
+/* cifras y terreno */
+.cifras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;border-top:1px solid var(--borde);padding-top:1.1rem}
+.cifras b{display:block;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.cifras span{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.terreno{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}
+@media (max-width:520px){ .terreno{grid-template-columns:minmax(0,1fr)} }
+.terreno div{background:var(--card);border:1px solid var(--borde);border-radius:10px;padding:1rem 1.1rem}
+.terreno b{display:block;font-size:2.4rem;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;color:var(--lima)}
+.terreno span{display:block;font-size:.8rem;color:var(--dim);margin-top:.35rem}
+.terreno strong{display:block;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
+.cita{border-left:2px solid var(--lima-d);padding-left:1rem;color:var(--texto);font-style:italic;max-width:40em}
+
+/* silencio */
+.silencio{text-align:left}
+.silencio .vacio{display:flex;align-items:center;gap:.8rem;font-family:var(--mono);font-size:.82rem;color:var(--dim)}
+.silencio .vacio::before{content:"";width:2.4rem;height:1px;background:var(--borde)}
+
+/* memoria */
+.tabla{overflow-x:auto;border:1px solid var(--borde);border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:.95rem;font-variant-numeric:tabular-nums;min-width:30rem}
+th,td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--borde)}
+th{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);font-weight:700}
+tr:last-child td{border-bottom:0}
+tr.hoy td{background:var(--wash);font-weight:700}
+.nota{color:var(--dim);font-size:.95rem}
+
+/* instrumentos */
+.instrumentos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.5rem,4vw,3rem);margin-top:.6rem}
+@media (max-width:760px){ .instrumentos{grid-template-columns:minmax(0,1fr)} }
+.instrumentos > *{min-width:0}
+.ins{display:grid;gap:.85rem;align-content:start}
+.ins h3{font-size:1.5rem}
+.ins .foto{aspect-ratio:16/9}
+.lectura{font-weight:700;font-size:clamp(1.8rem,4.5vw,2.6rem);letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums}
+.lectura small{display:block;font-family:var(--mono);font-weight:400;font-size:.78rem;letter-spacing:.02em;color:var(--dim);margin-top:.5rem;line-height:1.5}
+.campo{display:grid;gap:.4rem}
+.campo label,.q{font-family:var(--mono);font-size:.78rem;letter-spacing:.03em;color:var(--dim)}
+.campo output{color:var(--texto)}
+input[type=range]{width:100%;min-height:44px;accent-color:var(--lima);margin:0}
+.seg{display:flex;flex-wrap:wrap;gap:.45rem}
+.seg button{min-height:44px;padding:.45rem .9rem;border-radius:999px;border:1px solid var(--borde);font-size:.95rem}
+.seg button[aria-pressed="true"]{background:var(--lima);color:var(--sobre-lima);border-color:var(--lima);font-weight:700}
+.ins .btn.sec{justify-self:start}
+.mx{background:var(--wash);border:1px solid var(--lima-d);border-radius:10px;padding:1rem 1.2rem;color:var(--texto)}
+.mx b{color:var(--lima)}
+
+/* también */
+.tambien{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+@media (max-width:760px){ .tambien{grid-template-columns:minmax(0,1fr)} }
+.tambien li{border-top:1px solid var(--borde);padding-top:.9rem;display:grid;gap:.3rem}
+.tambien b{font-size:1.1rem}
+.tambien span{color:var(--dim);font-size:.95rem}
+
+/* prueba */
+.probe{display:grid;gap:1.1rem}
+.msg .ph{color:var(--msg-d)}
+
+/* cierre */
+.tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+@media (max-width:760px){ .tres{grid-template-columns:minmax(0,1fr)} }
+.tres h3{font-size:1.25rem;margin-block:.35rem}
+.tres p:not(.ceja){color:var(--dim)}
+.form{display:flex;flex-wrap:wrap;gap:.7rem;align-items:flex-end;max-width:34rem}
+.form label{flex:1 1 240px;display:grid;gap:.35rem;font-family:var(--mono);font-size:.78rem;color:var(--dim)}
+.form input{min-height:50px;border-radius:999px;border:1px solid var(--borde);background:transparent;color:var(--texto);padding:.6rem 1.1rem;font:inherit}
+.form input[aria-invalid="true"]{border-color:var(--ambar)}
+.ok{color:var(--lima);font-weight:600}
+.pend{border-bottom:1px dashed currentColor}
+footer{display:flex;flex-wrap:wrap;gap:.8rem 2rem;justify-content:space-between;align-items:center;color:var(--dim);font-size:.92rem;padding-top:2rem;padding-bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));border-top:1px solid var(--borde);margin-top:2rem}
+footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
+
+/* prototipo del alta: pantalla completa, un paso a la vez */
+.flujo{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;overscroll-behavior:contain}
+.fl-top{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--borde);padding-top:env(safe-area-inset-top,0px)}
+.fl-top .in{display:flex;align-items:center;gap:1rem;min-height:60px}
+.fl-top .logo{font-size:1rem}
+.prog{flex:1;height:4px;background:var(--borde);border-radius:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--lima);transition:width .3s}
+@media (prefers-reduced-motion:reduce){ .prog i{transition:none} }
+.chip{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ambar);border:1px solid var(--ambar);border-radius:999px;padding:.2rem .6rem}
+.cerrar{flex:none;min-height:44px;padding:0 .4rem;font-weight:600;text-decoration:underline;text-underline-offset:.25em}
+.paso{max-width:640px;margin:0 auto;padding-block:clamp(2rem,6vh,3.5rem) calc(3rem + env(safe-area-inset-bottom,0px));padding-left:var(--gl);padding-right:var(--gr);display:grid;gap:1.15rem}
+.paso h2{font-size:clamp(1.7rem,4.2vw,2.4rem)}
+.paso .hora{color:var(--lima)}
+.paso input[type=text],.paso input[type=email],.paso select,.paso textarea{width:100%;min-height:50px;border-radius:12px;border:1px solid var(--borde);background:var(--card);color:var(--texto);padding:.7rem 1rem;font:inherit}
+.paso textarea{min-height:110px;resize:vertical}
+.paso input[aria-invalid="true"]{border-color:var(--ambar)}
+.err{color:var(--ambar);font-size:.92rem;min-height:1.3em}
+.check{display:flex;gap:.75rem;align-items:flex-start;background:var(--card);border:1px solid var(--borde);border-radius:12px;padding:.9rem 1rem;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--lima);flex:none;margin:.15rem 0 0}
+.check b{display:block}
+.check span{color:var(--dim);font-size:.95rem}
+.fila-btn{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;align-items:center;margin-top:.4rem}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.atras{min-height:44px;color:var(--dim);text-decoration:underline;text-underline-offset:.25em}
+.pg{border:1.5px dashed var(--borde);border-radius:14px;padding:1.2rem;display:grid;gap:.8rem}
+.pg .marca{font-family:var(--mono);font-size:.75rem;color:var(--ambar);letter-spacing:.06em}
+.pg ul{margin:0;padding-left:1.1rem;color:var(--dim)}
+.ok-g{display:flex;gap:.6rem;align-items:center;color:var(--lima);font-weight:700}
+.ok-g::before{content:"";width:.6rem;height:.6rem;border-radius:50%;background:var(--lima)}
+.aviso{background:var(--wash);border:1px solid var(--lima-d);border-radius:12px;padding:.9rem 1rem;color:var(--texto);font-size:.97rem}
+.est{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+@media (max-width:560px){ .est{grid-template-columns:minmax(0,1fr)} }
+.est > div{background:var(--card);border:1px solid var(--borde);border-radius:12px;padding:1rem 1.1rem;display:grid;gap:.3rem;min-width:0}
+.est .k{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);font-weight:700}
+.est .v{font-size:1.15rem;font-weight:700}
+.est .s{color:var(--dim);font-size:.92rem}
+.estm{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);margin-left:.4rem}
+.est3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){ .est3{grid-template-columns:minmax(0,1fr)} }
+.barras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;align-items:end;border-bottom:1px solid var(--borde);padding-top:1rem}
+.barras div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:.3rem}
+.barras i{display:block;width:100%;max-width:56px;background:var(--lima-d);border-radius:6px 6px 0 0}
+.barras div:last-child i{background:var(--lima)}
+.barras span{font-family:var(--mono);font-size:.75rem;color:var(--dim);font-variant-numeric:tabular-nums}
+.bar-x{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;font-family:var(--mono);font-size:.75rem;color:var(--dim);text-align:center}
+.ayuda{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.ayuda button{width:100%;text-align:left;min-height:50px;padding:.7rem 1rem;border-radius:12px;border:1px solid var(--borde);background:var(--card);font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.ayuda button::after{content:"→";color:var(--dim)}
+.ayuda button[aria-expanded="true"]{border-color:var(--lima-d)}
+.ayuda .resp{color:var(--dim);padding:.6rem 1rem 0;font-size:.95rem}
+.ayuda .peligro{color:var(--ambar)}
+.btn.peligro{background:var(--ambar);color:var(--sobre-lima)}
+
+/* jerarquía v4: dos voces. Evidencia (lo que pasó) en tamaño medio; posturas (lo que nos hace distintos) en grande y con fondo propio */
+.bloque h2{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+.pos{display:flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;justify-self:start}
+.pos b{display:inline-grid;place-items:center;min-width:2.1rem;height:1.6rem;padding:0 .45rem;border-radius:6px;background:var(--wash);border:1px solid var(--lima-d);color:var(--lima);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.grande{font-size:clamp(2.3rem,6.2vw,5rem);font-weight:700;letter-spacing:-.035em;line-height:1.02;text-wrap:balance;max-width:14em}
+.postura{background:var(--lima);color:var(--sobre-lima)}
+.postura .in{display:grid;gap:clamp(1.8rem,4vw,2.8rem);padding-block:clamp(3.5rem,10vh,6.5rem)}
+.postura .ceja{color:var(--sobre-lima)}
+.postura .grande span{font-weight:400}
+.cuatro{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.2rem}
+@media (max-width:860px){ .cuatro{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:520px){ .cuatro{grid-template-columns:minmax(0,1fr)} }
+.cuatro a{display:grid;gap:.35rem;align-content:start;text-decoration:none;border-top:2px solid var(--sobre-lima);padding-top:.8rem;min-width:0}
+.cuatro i{font-style:normal;font-family:var(--mono);font-size:.8rem;font-weight:700}
+.cuatro b{font-size:1.2rem;letter-spacing:-.01em}
+.cuatro span{font-size:.97rem}
+.cuatro a:hover b{text-decoration:underline;text-underline-offset:.2em}
+.silencio{padding-block:clamp(6rem,18vh,11rem)}
+.silencio h2{font-size:clamp(2.3rem,6.2vw,5rem);max-width:12em}
+.tel{border:1.5px dashed var(--borde);border-radius:18px;padding:1.1rem 1.3rem;max-width:22rem;display:grid;gap:.3rem}
+.tel b{font-family:var(--mono);font-size:.8rem;color:var(--dim);font-weight:400}
+.tel span{color:var(--dim)}
+.mexico{background:var(--wash);border-top:1px solid var(--lima-d);border-bottom:1px solid var(--lima-d)}
+.mexico .in{display:grid;gap:clamp(1.8rem,4vw,2.8rem);padding-block:clamp(3.5rem,10vh,6.5rem)}
+.mexico .grande em{font-style:normal;color:var(--lima)}
+.tresmx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+@media (max-width:760px){ .tresmx{grid-template-columns:minmax(0,1fr)} }
+.tresmx div{border-top:2px solid var(--lima);padding-top:.9rem;display:grid;gap:.35rem;align-content:start;min-width:0}
+.tresmx b{font-size:1.2rem}
+.tresmx span{color:var(--dim)}
+.tresmx .estm{margin-left:0;justify-self:start}
+/* herramientas: los dos widgets publicados, tal cual */
+.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+@media (max-width:620px){ .tabs{grid-template-columns:minmax(0,1fr)} }
+.tab{text-align:left;border:1px solid var(--borde);background:var(--card);border-radius:14px;padding:1rem 1.2rem;display:grid;gap:.3rem;min-width:0}
+.tab[aria-selected="true"]{border-color:var(--lima);background:var(--wash)}
+.tab .k{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);font-weight:700}
+.tab b{font-size:1.3rem;letter-spacing:-.02em;line-height:1.15}
+.tab span{color:var(--dim);font-size:.95rem}
+.tab{transition:border-color .15s}
+.tab:hover{border-color:var(--lima-d)}
+.tab .ir{color:var(--lima);font-weight:700;font-size:.95rem;margin-top:.4rem}
+.herr-barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.4rem 1rem;border:1px solid var(--lima);background:var(--wash);border-radius:14px;padding:.6rem 1.1rem;scroll-margin-top:1rem}
+.herr-barra .t{display:grid;gap:.1rem;min-width:0}
+.herr-barra .k{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);font-weight:700}
+.herr-barra b{font-size:1.15rem;letter-spacing:-.02em}
+.herr-barra .liga{color:var(--dim);text-decoration:underline}
+.herr-barra .liga:hover{color:var(--texto)}
+.marco{border:1px solid var(--borde);border-radius:14px;overflow:hidden;background:var(--bg)}
+.marco iframe{display:block;width:100%;height:820px;border:0;background:var(--bg)}
+.marco-pie{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.3rem 1.2rem;align-items:center;color:var(--dim);font-size:.9rem}
+.nav{display:flex;align-items:center;gap:.4rem 1.4rem}
+.nav a{font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+@media (max-width:420px){ .nav a{display:none} }
+.tres article{border-top:2px solid var(--lima);padding-top:1rem}
+.tres h3{font-size:clamp(1.45rem,2.6vw,2rem)}
+
+/* Tenis ideal nativo: mismas preguntas y mismo motor que el widget, con la piel de la página */
+.tn{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(1.5rem,4vw,3rem);align-items:start}
+@media (max-width:860px){ .tn{grid-template-columns:minmax(0,1fr)} }
+.tn > *{min-width:0}
+.tn-preg{display:grid;gap:1.5rem}
+.tn-q{display:grid;gap:.6rem}
+.tn-q .q{display:flex;align-items:center;gap:.55rem;color:var(--texto);font-family:var(--sans);font-size:.98rem;font-weight:700;letter-spacing:0}
+.tn-q .q i{font-style:normal;display:inline-grid;place-items:center;width:1.55rem;height:1.55rem;border-radius:50%;border:1px solid var(--borde);font-family:var(--mono);font-size:.75rem;color:var(--dim);flex:none}
+.tn-q.hecho .q i{background:var(--lima);border-color:var(--lima);color:var(--sobre-lima)}
+.tn-q .q em{font-style:normal;font-weight:400;color:var(--dim);font-size:.85rem}
+.seg.dos button{display:grid;gap:.1rem;text-align:left;border-radius:12px;padding:.55rem .9rem;flex:1 1 9rem}
+.seg.dos small{font-size:.78rem;color:var(--dim);font-weight:400}
+.seg.dos button[aria-pressed="true"] small{color:var(--sobre-lima)}
+.tn-sub{display:grid;gap:.5rem;padding-left:2.1rem}
+.tn-sub .q2{font-family:var(--mono);font-size:.76rem;color:var(--dim)}
+.afinar{border:1px solid var(--borde);border-radius:12px}
+.afinar summary{cursor:pointer;min-height:48px;display:flex;align-items:center;padding:0 1rem;font-weight:600;color:var(--lima);list-style:none}
+.afinar summary::-webkit-details-marker{display:none}
+.afinar summary::after{content:"+";margin-left:auto;color:var(--dim);font-size:1.2rem}
+.afinar[open] summary::after{content:"–"}
+.afinar .cuerpo{display:grid;gap:1.1rem;padding:0 1rem 1rem}
+.tn-lado{position:sticky;top:calc(1rem + env(safe-area-inset-top,0px));display:grid;gap:.8rem}
+@media (max-width:860px){ .tn-lado{position:static} }
+.tn-vacio{border:1.5px dashed var(--borde);border-radius:16px;padding:1.4rem;display:grid;gap:.8rem;color:var(--dim)}
+.tn-vacio b{color:var(--texto);font-size:1.15rem}
+.pasos{display:flex;gap:.35rem}
+.pasos i{flex:1;height:4px;border-radius:4px;background:var(--borde)}
+.pasos i.si{background:var(--lima)}
+.tn-res{background:var(--card);border:1px solid var(--lima-d);border-radius:16px;padding:1.3rem 1.3rem 1.2rem;display:grid;gap:.85rem}
+.tn-top{display:flex;flex-wrap:wrap;gap:.4rem .6rem;align-items:center}
+.tn-top .k{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lima);font-weight:700}
+.presu{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:.15rem .55rem;border:1px solid currentColor}
+.presu.dentro{color:var(--lima)} .presu.subir,.presu.fuera{color:var(--ambar)}
+.tn-res h3{font-size:clamp(1.6rem,3.2vw,2.2rem)}
+.tn-precio{font-family:var(--mono);font-size:.85rem;color:var(--dim)}
+.tn-why{font-size:1.08rem}
+.metr{display:grid;gap:.45rem}
+.metr div{display:grid;grid-template-columns:7.5rem minmax(0,1fr);align-items:center;gap:.8rem;font-size:.85rem;color:var(--dim)}
+.metr span{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.metr span i{height:7px;border-radius:2px;background:var(--borde)}
+.metr span i.si{background:var(--lima)}
+.ficha{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;font-family:var(--mono);font-size:.8rem;color:var(--dim)}
+.ficha b{color:var(--texto);font-weight:600}
+.pc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;font-size:.9rem}
+@media (max-width:520px){ .pc{grid-template-columns:minmax(0,1fr)} }
+.pc ul{margin:0;padding:0;list-style:none;display:grid;gap:.3rem}
+.pc li{display:flex;gap:.45rem;color:var(--dim)}
+.pc .mas li::before{content:"+";color:var(--lima);font-weight:700}
+.pc .menos li::before{content:"–";color:var(--ambar);font-weight:700}
+.tn-comprar{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center}
+.tn-comprar small{font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+.alts{display:grid;gap:.5rem}
+.alt{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2rem 1rem;align-items:center;text-align:left;width:100%;border:1px solid var(--borde);border-radius:12px;padding:.75rem 1rem;background:transparent}
+.alt:hover{border-color:var(--lima-d)}
+.alt .k{grid-column:1/-1;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.alt b{font-size:1.02rem}
+.alt span{font-family:var(--mono);font-size:.8rem;color:var(--dim)}
+.alt em{grid-column:1/-1;font-style:normal;color:var(--dim);font-size:.88rem}
+.puente{display:flex;gap:.6rem;align-items:baseline;color:var(--dim);font-size:.92rem}
+.puente::before{content:"";flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--lima);transform:translateY(-.05rem)}
+.listo-movil{display:none;color:var(--lima);font-weight:700;text-decoration:none;min-height:44px;align-items:center}
+@media (max-width:860px){ .listo-movil.si{display:inline-flex} }
+</style>
+
+<header class="in arriba">
+  <a class="logo" href="#inicio">Runcierge</a>
+  <nav class="nav" aria-label="Principal"><a href="#herramientas">Pruébalo gratis</a><button class="inv" type="button" data-abre="invi">Tengo invitación</button></nav>
+</header>
+
+<main>
+<section class="portada" id="inicio">
+  <div class="in">
+    <p class="ceja">Trail · México · Garmin</p>
+    <h1>Solo preocúpate por correr.</h1>
+    <p class="lead">Leo tu Garmin, entiendo cada entrenamiento con las reglas del trail y te escribo solo cuando sirve: <b>la noche antes, al terminar y cuando algo se repite.</b> Si un día no hay nada útil que decir, no te escribo.</p>
+    <div class="acciones"><a class="btn" href="#tu">Quiero probarlo</a><a class="btn sec" href="#herramientas">Pruébalo sin conectar nada</a><a class="liga" href="#tesis">Veamos cómo funciona ↓</a></div>
+    <p class="real"><i aria-hidden="true"></i><span>Todo lo que sigue pasó de verdad: son los mensajes que recibió un corredor en octubre y noviembre de 2026, copiados tal cual. Solo quitamos su nombre.</span></p>
+  </div>
+</section>
+
+<section class="postura" id="tesis">
+  <div class="in">
+    <p class="ceja">La diferencia</p>
+    <p class="grande"><span>Un agente general recuerda que corriste.</span> Runcierge sabe qué significa.</p>
+    <ol class="cuatro">
+      <li><a href="#sabado"><i>01</i><b>Criterio fijo</b><span>Cada frase sale de un dato y de una regla que puedes ver.</span></a></li>
+      <li><a href="#brief"><i>02</i><b>Escribe cuando sirve</b><span>La noche antes, al terminar, cuando algo se repite. Si no hay nada, se calla.</span></a></li>
+      <li><a href="#memoria"><i>03</i><b>Memoria de corredor</b><span>Guarda tus largos como datos con significado, no como charla.</span></a></li>
+      <li><a href="#mexico"><i>04</i><b>Trail en México</b><span>Lee desnivel y terreno, y sabe dónde consigues lo que comes.</span></a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="bloque" id="brief">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>02</b>Escribe cuando sirve</a>
+    <p class="hora">Viernes 23 de octubre · 20:00</p>
+    <h2>Antes de que preguntes qué toca mañana, ya te escribí.</h2>
+    <div class="par">
+      <article class="msg" aria-label="Mensaje de Runcierge, viernes 20:00">
+        <div class="hd"><i>R</i>Runcierge<span>vie 20:00</span></div>
+        <p class="tit">Recap · viernes</p>
+        <p>Hoy fue una sesión de bici tranquila, justo lo que necesitabas para mantener la base. La intensidad fue perfecta, permitiendo una buena recuperación activa.</p>
+        <p class="tit">Mañana: Largo trail</p>
+        <p>Mañana tienes un largo de 100 minutos en Z2. Con tu <button class="frase" type="button" aria-expanded="false" data-r="Lectura de Garmin de ese viernes. Con la batería baja, el mensaje pone el límite de pulso por delante.">Body Battery un poco baja</button>, es clave que te enfoques en <button class="frase" type="button" aria-expanded="false" data-r="El límite que trae el plan para ese largo: 100 minutos en Z2, pulso hasta 140.">mantener la FC por debajo de 140 bpm</button>. Lleva <button class="frase" type="button" aria-expanded="false" data-r="Regla fija para salidas de 90 a 120 minutos en ayunas: 35–45 g por hora, 600–800 ml por hora, primera toma entre el minuto 45 y el 50.">35-45g/h de carbohidratos</button>, como geles o dátiles, y 600-800ml/h de líquido, empezando a tomar a los 45-50 minutos. Tu enfoque principal es la consistencia y la gestión del esfuerzo.</p>
+        <p class="regla" aria-live="polite">Toca lo subrayado y te enseño de qué dato sale.</p>
+      </article>
+      <figure class="foto"><img src="img/noche.jpg" alt="Buró de noche con el reloj cargando junto al teléfono" decoding="async"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="bloque" id="sabado">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>01</b>Criterio fijo</a>
+    <p class="hora">Sábado 24 de octubre · 10:10</p>
+    <h2>Tú entrenas. Yo leo después.</h2>
+    <p class="lead">Largo de trail en Apaseo el Grande. El corredor paró el reloj y, sin escribir nada, le llegó esto.</p>
+    <div class="cifras">
+      <div><b>11.6</b><span>km</span></div>
+      <div><b>363</b><span>m de subida</span></div>
+      <div><b>137</b><span>pulso medio · límite 140</span></div>
+    </div>
+    <div class="par">
+      <article class="msg" aria-label="Mensaje de Runcierge, sábado 10:10">
+        <div class="hd"><i>R</i>Runcierge<span>sáb 10:10</span></div>
+        <p>Sesión de largo trail en <button class="frase" type="button" aria-expanded="false" data-r="49 % del tiempo en Z2 y pulso medio de 137, debajo del límite de 140 que traía el plan.">zona aeróbica muy bien controlada</button>, con pulso promedio de 137 lpm y <button class="frase" type="button" aria-expanded="false" data-r="El pulso tocó 172 en las cuestas. Con 363 m de subida acumulada, es lo esperado.">picos esperados por el desnivel</button>. <button class="frase" type="button" aria-expanded="false" data-r="Cadencia 137, contacto con el suelo 277 ms y oscilación 7.2 cm: dentro de la variación normal contra su sesión de carrera anterior.">La forma se mantiene estable.</button></p>
+        <p><b>Acción:</b> Prioriza la recuperación pasiva para asimilar la carga de la semana.</p>
+        <p class="regla" aria-live="polite">Cada frase sale de un dato. Toca una y te lo enseño.</p>
+      </article>
+      <figure class="foto"><img src="img/reloj.jpg" alt="Muñeca enlodada con el reloj mostrando un mapa" decoding="async"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="bloque" id="terreno">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>04</b>Trail en México</a>
+    <p class="hora">Sábado 24 de octubre · 13:30 · el análisis, a un toque</p>
+    <h2>Tu reloj te da una cadencia media. Yo la leo por terreno.</h2>
+    <div class="terreno" role="list">
+      <div role="listitem"><strong>Subida</strong><b>164</b><span>pasos por minuto</span></div>
+      <div role="listitem"><strong>Plano</strong><b>150</b><span>pasos por minuto</span></div>
+      <div role="listitem"><strong>Bajada</strong><b>160</b><span>pasos por minuto</span></div>
+    </div>
+    <p class="cita">“…una estrategia de terreno que muestra 164 spm en subida, 150 spm en plano y 160 spm en bajada, lo cual es una adaptación eficiente al trail.”</p>
+    <p class="literal">Fragmento literal del análisis que recibió el corredor.</p>
+  </div>
+</section>
+
+<section class="bloque silencio" id="silencio">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>02</b>Escribe cuando sirve</a>
+    <p class="hora">Domingo 1 de noviembre</p>
+    <h2>No había nada que decir. No le escribí.</h2>
+    <p class="lead">Sin sesión y sin nada que avisar, su teléfono no se enteró de mí.</p>
+    <div class="tel" aria-label="Notificaciones de ese día"><b>dom 1 nov · Runcierge</b><span>Ningún mensaje ese día.</span></div>
+  </div>
+</section>
+
+<section class="bloque" id="memoria">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>03</b>Memoria de corredor</a>
+    <p class="hora">Domingo 8 de noviembre · 08:00</p>
+    <h2>Recordar que corriste lo hace cualquiera. Yo te digo qué significa.</h2>
+    <div class="par">
+      <article class="msg" aria-label="Mensaje de Runcierge, lectura semanal">
+        <div class="hd"><i>R</i>Runcierge<span>dom 08:00</span></div>
+        <p>Tu semana 2–8 nov: 214 min corriendo (+76 min vs la anterior), largo 108 min, 9 de 9 sesiones.</p>
+        <p><b>Subiste 55 % de minutos corriendo. Cuida el sueño y no agregues nada extra.</b></p>
+        <p class="ph">…</p>
+      </article>
+      <div class="probe">
+        <p class="nota">Lo que guardo no es texto suelto. Son campos con significado. Así se ve octubre en su memoria:</p>
+        <div class="tabla">
+          <table>
+            <thead><tr><th>Largo</th><th>Duración</th><th>Km</th><th>Pulso medio</th><th>Subida</th></tr></thead>
+            <tbody>
+              <tr><td>3 oct</td><td>75 min</td><td>9.3</td><td>139</td><td>243 m</td></tr>
+              <tr><td>10 oct</td><td>80 min</td><td>8.5</td><td>133</td><td>238 m</td></tr>
+              <tr><td>18 oct</td><td>85 min</td><td>9.1</td><td>124</td><td>298 m</td></tr>
+              <tr class="hoy"><td>24 oct</td><td>100 min</td><td>11.6</td><td>137</td><td>363 m</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="nota">Cuatro largos, cada uno más largo que el anterior, y en todos el pulso medio quedó debajo de 140. Subió la duración, no la intensidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloque" id="decide">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>01</b>Criterio fijo</a>
+    <p class="hora">Antes del siguiente largo</p>
+    <h2>Decido dos cosas por ti, con una regla fija.</h2>
+    <p class="lead">No lo adivino. Aquí están las dos reglas abiertas, con los tenis y los kilómetros reales de este corredor. Muévelas y mira qué te diría.</p>
+    <div class="instrumentos">
+      <div class="ins">
+        <figure class="foto"><img src="img/tenis.jpg" alt="Tenis de trail enlodados sobre roca" decoding="async"></figure>
+        <h3>Tus tenis</h3>
+        <div class="seg" id="segT" role="group" aria-label="Terreno de mañana"><button type="button" data-t="trail_tecnico" aria-pressed="false">Trail técnico</button><button type="button" data-t="trail_mixto" aria-pressed="true">Trail mixto</button><button type="button" data-t="road_rodada" aria-pressed="false">Asfalto</button><button type="button" data-t="road_velocidad" aria-pressed="false">Pista</button></div>
+        <p class="lectura" id="tOut" aria-live="polite"></p>
+        <a class="btn sec" href="#herramientas" data-ir-w="tenis">¿Te faltan tenis? Prueba Tenis ideal ↓</a>
+      </div>
+      <div class="ins">
+        <figure class="foto"><img src="img/nutricion.jpg" alt="Geles, dátiles y botellas blandas sobre madera" decoding="async"></figure>
+        <h3>Lo que comes</h3>
+        <div class="campo"><label for="dur">Arrastra: tu largo dura <output id="durV" for="dur">1 h 40</output></label><input id="dur" type="range" min="30" max="240" step="5" value="100"></div>
+        <div class="seg" id="segF" role="group" aria-label="Sales en ayunas"><button type="button" data-f="1" aria-pressed="true">Salgo en ayunas</button><button type="button" data-f="0" aria-pressed="false">Desayuno antes</button></div>
+        <p class="lectura" id="fOut" aria-live="polite"></p>
+        <a class="btn sec" href="#herramientas" data-ir-w="nutricion">Con qué productos: prueba Nutrición ideal ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mexico" id="mexico">
+  <div class="in">
+    <a class="pos" href="#tesis"><b>04</b>Trail en México</a>
+    <p class="grande">Hecho para <em>trail en México.</em></p>
+    <div class="tresmx">
+      <div><b>Desnivel y terreno, no solo distancia.</b><span>La cadencia se lee por subida, plano y bajada. Lo que comes se ajusta por metros de subida.</span></div>
+      <div><b>Lo que consigues aquí.</b><span>Tenis ideal y Nutrición ideal te dicen dónde comprar cada par y cada producto en México.</span></div>
+      <div><span class="estm">Próximamente</span><b>Destino.</b><span>Dónde cargar la víspera si viajas a correr.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloque herr" id="herramientas">
+  <div class="in">
+    <p class="ceja">Pruébalo hoy · sin conectar nada</p>
+    <h2>Dos decisiones que puedes resolver ahora mismo.</h2>
+    <p class="lead">Son las mismas reglas que uso con tu Garmin, abiertas para cualquiera. Contestas unas preguntas y te doy la respuesta. No necesitas cuenta ni conectar tu reloj.</p>
+    <div class="tabs" id="herrElige" role="group" aria-label="Elige una herramienta">
+      <button class="tab" type="button" id="tabTenis" aria-controls="tenisPanel" aria-expanded="false" data-w="tenis"><span class="k">Tenis ideal</span><b>¿Qué tenis de trail te conviene?</b><span>Tu nivel, terreno y presupuesto. Un par ideal y dos alternativas, con dónde comprarlos.</span><span class="ir">Empezar →</span></button>
+      <button class="tab" type="button" id="tabNutri" aria-controls="wPanel" aria-expanded="false" data-w="nutricion"><span class="k">Nutrición ideal</span><b>¿Qué llevar en la sesión de mañana?</b><span>Carbohidratos, líquido y sodio por hora, y con qué productos llegar.</span><span class="ir">Empezar →</span></button>
+    </div>
+    <div class="herr-barra" id="herrBarra" hidden><div class="t"><span class="k" id="hbK"></span><b id="hbT"></b></div><button class="liga" type="button" id="hbCambia"></button></div>
+    <div class="tn" id="tenisPanel" hidden>
+      <div class="tn-preg">
+        <div class="tn-q" data-q="nivel"><span class="q"><i>1</i>¿Cuánto llevas en trail?</span>
+          <div class="seg dos" role="group" aria-label="Nivel"><button type="button" data-v="principiante" aria-pressed="false"><b>Empezando</b><small>0–6 meses · 5 a 10 K</small></button><button type="button" data-v="intermedio" aria-pressed="false"><b>Intermedio</b><small>1–2 años · hasta 21 K</small></button><button type="button" data-v="avanzado" aria-pressed="false"><b>Avanzado</b><small>2+ años · ultras y técnico</small></button></div></div>
+        <div class="tn-q" data-q="terreno"><span class="q"><i>2</i>¿Dónde vas a correr?</span>
+          <div class="seg" role="group" aria-label="Terreno"><button type="button" data-v="montaña" aria-pressed="false">Montaña</button><button type="button" data-v="bosque" aria-pressed="false">Bosque</button><button type="button" data-v="roca" aria-pressed="false">Roca</button><button type="button" data-v="mixto" aria-pressed="false">Mixto</button></div>
+          <div class="tn-sub" id="tnHum" hidden><span class="q2">¿Suele estar húmedo?</span><div class="seg" data-q="humedad" role="group" aria-label="Humedad"><button type="button" data-v="seco" aria-pressed="false">Seco</button><button type="button" data-v="humedo" aria-pressed="false">Húmedo o con lodo</button><button type="button" data-v="ambos" aria-pressed="false">De todo</button></div></div></div>
+        <div class="tn-q" data-q="presupuesto"><span class="q"><i>3</i>¿Cuánto quieres gastar?</span>
+          <div class="seg" role="group" aria-label="Presupuesto"><button type="button" data-v="menos2000" aria-pressed="false">Menos de $2,000</button><button type="button" data-v="2000-4000" aria-pressed="false">$2,000 a $4,000</button><button type="button" data-v="mas4000" aria-pressed="false">Más de $4,000</button></div></div>
+        <div class="tn-q" data-q="objMaj"><span class="q"><i>4</i>¿Para qué los quieres?</span>
+          <div class="seg" role="group" aria-label="Objetivo"><button type="button" data-v="entrenamiento" aria-pressed="false">Entrenar</button><button type="button" data-v="competencia" aria-pressed="false">Una carrera</button></div>
+          <div class="tn-sub" id="tnSub" hidden><span class="q2" id="tnSubQ"></span><div class="seg" data-q="objSub" role="group" aria-label="Detalle del objetivo" id="tnSubSeg"></div></div></div>
+        <details class="afinar"><summary>Afinar <em style="font-style:normal;font-weight:400;color:var(--dim);margin-left:.4rem">opcional</em></summary><div class="cuerpo">
+          <div class="tn-q"><span class="q2" style="font-family:var(--mono);font-size:.76rem;color:var(--dim)">¿Cómo pisas?</span><div class="seg" data-q="pisada" role="group" aria-label="Pisada"><button type="button" data-v="" aria-pressed="true">No sé</button><button type="button" data-v="neutral" aria-pressed="false">Neutral</button><button type="button" data-v="pronador" aria-pressed="false">Pronador</button><button type="button" data-v="supinador" aria-pressed="false">Supinador</button></div></div>
+          <div class="tn-q"><span class="q2" style="font-family:var(--mono);font-size:.76rem;color:var(--dim)">¿Qué te importa más?</span><div class="seg" data-q="prioridad" role="group" aria-label="Prioridad"><button type="button" data-v="" aria-pressed="true">Nada en especial</button><button type="button" data-v="ligereza" aria-pressed="false">Ligereza</button><button type="button" data-v="agarre" aria-pressed="false">Agarre</button><button type="button" data-v="amortiguacion" aria-pressed="false">Amortiguación</button><button type="button" data-v="estabilidad" aria-pressed="false">Estabilidad</button></div></div>
+        </div></details>
+        <a class="listo-movil" id="tnListo" href="#tnLado">Tu par está listo ↓</a>
+      </div>
+      <div class="tn-lado" id="tnLado" aria-live="polite"></div>
+    </div>
+    <div class="marco" id="wPanel" hidden><iframe id="wFrame" title="Nutrición ideal" loading="lazy"></iframe></div>
+    <div class="marco-pie" id="wPie" hidden><span>Es la herramienta publicada, tal cual.</span><a class="liga" id="wAbrir" href="https://dagurrola.github.io/fueling-coach/" target="_blank" rel="noopener">Abrir en pantalla completa ↗</a></div>
+  </div>
+</section>
+
+<section class="bloque" id="tambien">
+  <div class="in">
+    <p class="ceja">Y además</p>
+    <ul class="tambien">
+      <li><b>Tu plan, en tu reloj.</b><span>Las sesiones de tu plan llegan a tu Garmin con series y descansos.</span></li>
+      <li><b>Mover una sesión por chat.</b><span>Me dices que no puedes el martes y la muevo, con un botón para confirmar.</span></li>
+      <li><b>Un ajuste cuando hace falta.</b><span>Si veo una señal de riesgo, te propongo un cambio. Tú decides.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="bloque" id="tu">
+  <div class="in">
+    <p class="hora">Esta noche · 21:00</p>
+    <h2>Cuéntame tu último entrenamiento. Te digo lo que te escribiría.</h2>
+    <div class="par">
+      <div class="probe">
+        <div class="campo"><span class="q">Tu último entrenamiento fue</span><div class="seg" data-p="que" role="group" aria-label="Qué hiciste"><button type="button" data-v="facil" aria-pressed="false">Trote fácil</button><button type="button" data-v="largo" aria-pressed="false">Largo</button><button type="button" data-v="fuerte" aria-pressed="false">Cuestas o series</button><button type="button" data-v="carrera" aria-pressed="false">Carrera</button></div></div>
+        <div class="campo"><label for="pDur">Arrastra: duró <output id="pDurV" for="pDur">1 h 15</output></label><input id="pDur" type="range" min="20" max="240" step="5" value="75"></div>
+        <div class="campo"><span class="q">¿Cómo terminaste?</span><div class="seg" data-p="sens" role="group" aria-label="Cómo terminaste"><button type="button" data-v="fresco" aria-pressed="false">Fresco</button><button type="button" data-v="normal" aria-pressed="false">Cansado, lo normal</button><button type="button" data-v="pesado" aria-pressed="false">Pesado</button><button type="button" data-v="pase" aria-pressed="false">Me pasé</button></div></div>
+        <p class="nota">Son reglas fijas: aquí no hay inteligencia artificial y no guardo nada.</p>
+      </div>
+      <div>
+        <article class="msg" aria-live="polite"><div class="hd"><i>R</i>Runcierge<span>hoy 21:00</span></div><div id="pOut"><p class="ph">Elige qué hiciste y cómo terminaste. Aquí aparece lo que te mandaría esta noche.</p></div></article>
+        <div class="acciones" id="pCta" hidden><a class="btn" href="#cierre">Hazlo con mis datos de verdad</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloque" id="cierre">
+  <div class="in">
+    <div class="tres">
+      <article><p class="ceja">No pongo plan</p><h3>El tuyo lo respeto.</h3><p>Lo subo a tu reloj y te digo cómo te fue contra él.</p></article>
+      <article><p class="ceja">No espero que preguntes</p><h3>Te escribo yo, cuando sirve.</h3><p>Si no hay nada que decir, no digo nada.</p></article>
+      <article><p class="ceja">No invento</p><h3>Si no tengo el dato, te lo digo.</h3><p>Lo que no sé va entre corchetes.</p></article>
+    </div>
+    <h2 style="margin-top:1.5rem">Ese sábado puede ser el tuyo.</h2>
+    <form class="form" id="wl" novalidate><label for="wlMail">Tu correo<input id="wlMail" type="email" inputmode="email" autocomplete="email" placeholder="tú@correo.com" required></label><button class="btn" type="submit">Avísame cuando me toque</button></form>
+    <p class="nota">Solo el correo. Nada de contraseñas de Garmin, nunca: te conectas en la pantalla oficial de Garmin. <span class="pend">[se conecta al alta real]</span></p>
+    <footer>
+      <span>Runcierge · Morelia, México</span>
+      <nav aria-label="Pie"><a href="../privacidad.html" target="_blank" rel="noopener">Aviso de privacidad</a><button class="liga" type="button" data-abre="invi">Tengo invitación</button><button class="liga" type="button" data-abre="estado">Mi estado</button></nav>
+    </footer>
+  </div>
+</section>
+</main>
+
+<div class="flujo" id="flujo" hidden role="dialog" aria-modal="true" aria-labelledby="flT">
+  <div class="fl-top"><div class="in">
+    <span class="logo">Runcierge</span>
+    <div class="prog" aria-hidden="true"><i id="flBar"></i></div>
+    <span class="chip">Prototipo</span>
+    <button class="cerrar" type="button" id="flX">Cerrar</button>
+  </div></div>
+
+  <!-- 1 · Acceso por invitación -->
+  <form class="paso" data-paso="codigo" novalidate>
+    <p class="hora">1 · Acceso por invitación</p>
+    <h2 id="flT">¿Tienes código de invitación?</h2>
+    <p class="lead">Voy abriendo de a cinco o diez corredores. Sin código, apúntate en la lista y te escribo cuando se abra tu lugar.</p>
+    <div class="campo"><label for="fCod">Tu código</label><input id="fCod" type="text" autocomplete="off" placeholder="RUN-XXXX" style="text-transform:uppercase;letter-spacing:.08em"></div>
+    <p class="err" id="eCod" aria-live="polite"></p>
+    <p class="nota">En este prototipo sirve <b>RUN-2026</b>.</p>
+    <div class="fila-btn"><button class="btn" type="submit">Validar</button><a class="atras" href="#cierre" data-cierra>No tengo código</a></div>
+  </form>
+
+  <form class="paso" data-paso="correo" novalidate hidden>
+    <p class="hora">1 · Acceso por invitación · código válido</p>
+    <h2>Tu correo es tu cuenta.</h2>
+    <p class="lead">Sin contraseña. Cuando quieras entrar a tu estado, te mando un enlace por Telegram.</p>
+    <div class="campo"><label for="fMail">Tu correo</label><input id="fMail" type="email" inputmode="email" autocomplete="email" placeholder="tú@correo.com"></div>
+    <p class="err" id="eMail" aria-live="polite"></p>
+    <div class="fila-btn"><button class="btn" type="submit">Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </form>
+
+  <form class="paso" data-paso="garmin" novalidate hidden>
+    <p class="hora">1 · Acceso por invitación · conecta tu Garmin</p>
+    <h2>Antes de conectar, esto es lo que hago con tus datos.</h2>
+    <label class="check"><input type="checkbox" class="cons" id="c1"><span><b>Leo tus actividades y tu recuperación.</b> Distancia, ritmo, pulso, cadencia, desnivel, sueño y Body Battery. Solo para escribirte a ti.</span></label>
+    <label class="check"><input type="checkbox" class="cons" id="c2"><span><b>Parte del texto lo redacta una inteligencia artificial.</b> Los números los calculo con reglas fijas; el modelo solo los pone en palabras. Tus datos no entrenan ningún modelo.</span></label>
+    <label class="check"><input type="checkbox" class="cons" id="c3"><span><b>Puedes desconectar y borrar todo cuando quieras.</b> Desde tu estado o desde Garmin Connect.</span></label>
+    <p class="nota">Detalle completo en el <a href="../privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</p>
+    <div class="pg" id="pgGarmin" hidden>
+      <p class="marca">AQUÍ VA LA PANTALLA OFICIAL DE GARMIN · SIMULADA</p>
+      <p>Garmin te pide entrar con tu cuenta y autorizar a Runcierge. La contraseña la escribes en Garmin, nunca aquí.</p>
+      <ul><li>Actividades</li><li>Salud: sueño, estrés, recuperación</li><li>Entrenamiento: enviar sesiones a tu reloj</li></ul>
+      <div class="fila-btn"><button class="btn" type="button" id="pgOk">Autorizar (simulado)</button></div>
+    </div>
+    <p class="ok-g" id="gOk" hidden>Garmin conectado</p>
+    <div class="fila-btn"><button class="btn" type="button" id="bGarmin" disabled>Conectar mi Garmin</button><button class="btn" type="submit" id="bGarminSig" hidden>Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </form>
+
+  <!-- 2 · Setup -->
+  <form class="paso" data-paso="setup" novalidate hidden>
+    <p class="hora">2 · Setup</p>
+    <h2>Lo que tu reloj no me dice.</h2>
+    <p class="aviso">Garmin me manda tus sesiones desde hoy, no las anteriores. Por eso te pregunto lo esencial: lo demás lo aprendo de cada entrenamiento.</p>
+    <div class="campo"><label for="fReloj">Tu reloj</label><select id="fReloj"><option value="">Elige uno</option><option>Forerunner</option><option>Fenix</option><option>Enduro</option><option>Epix</option><option>Instinct</option><option>Otro Garmin</option></select></div>
+    <div class="campo"><label for="fRitmo">Tu ritmo cómodo en plano (min/km)</label><input id="fRitmo" type="text" inputmode="decimal" placeholder="6:30"></div>
+    <div class="campo"><label for="fTenis">Los tenis que más usas</label><input id="fTenis" type="text" placeholder="Speedgoat 5"></div>
+    <div class="campo"><label for="fKm">¿Cuántos km crees que llevan?</label><input id="fKm" type="text" inputmode="numeric" placeholder="300"></div>
+    <p class="nota">Si no sabes, déjalo en blanco: lo completas después por Telegram.</p>
+    <div class="campo"><span class="q">¿Corres para competir o para entrenar?</span><div class="seg" id="sComp" role="group" aria-label="Competencia o entrenamiento"><button type="button" data-v="Competencia" aria-pressed="false">Tengo una carrera</button><button type="button" data-v="Entrenamiento" aria-pressed="false">Solo entrenar</button></div></div>
+    <div class="campo"><span class="q">¿Dónde te escribo?</span><div class="seg" id="sCanal" role="group" aria-label="Canal"><button type="button" data-v="Telegram" aria-pressed="true">Telegram</button><button type="button" data-v="" aria-pressed="false" disabled title="Próximamente">WhatsApp · próximamente</button></div></div>
+    <div class="fila-btn"><button class="btn" type="submit">Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </form>
+
+  <!-- 3 · Evaluación -->
+  <form class="paso" data-paso="eval" novalidate hidden>
+    <p class="hora">3 · Evaluación</p>
+    <h2>No te hago un examen hoy.</h2>
+    <div class="est">
+      <div><span class="k">Zonas de pulso <span class="estm">estimadas</span></span><span class="v">Las calculo con tus primeras sesiones.</span><span class="s">En unos días, en una sesión fácil que ya tengas, te propongo una prueba para medirlas. Tú dices si va.</span></div>
+      <div><span class="k">Cadencia</span><span class="v">La leo de tus sesiones.</span><span class="s">Por terreno: subida, plano y bajada. No necesitas hacer nada.</span></div>
+    </div>
+    <p class="nota">Hasta tener tus zonas medidas, mis mensajes describen y comparan contra ti mismo. No te prescribo intensidades con zonas que no son tuyas.</p>
+    <div class="fila-btn"><button class="btn" type="submit">Entendido</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </form>
+
+  <!-- 4 · Entrenamiento -->
+  <form class="paso" data-paso="entreno" novalidate hidden>
+    <p class="hora">4 · Entrenamiento</p>
+    <h2>¿Qué estás buscando?</h2>
+    <div class="campo"><span class="q">Tu objetivo</span><div class="seg" id="sObj" role="group" aria-label="Objetivo"><button type="button" data-v="Competencia" aria-pressed="false">Una carrera</button><button type="button" data-v="Mejorar base" aria-pressed="false">Mejorar mi base</button><button type="button" data-v="Mantenimiento" aria-pressed="false">Mantenerme</button><button type="button" data-v="No sé todavía" aria-pressed="false">No sé todavía</button></div></div>
+    <div class="campo"><span class="q">¿Tienes plan o entrenador?</span><div class="seg" id="sPlan" role="group" aria-label="Plan"><button type="button" data-v="si" aria-pressed="false">Sí</button><button type="button" data-v="no" aria-pressed="false">No</button></div></div>
+    <div class="campo" id="cPlan" hidden><label for="fPlan">Pégalo como te lo mandaron. Lo convierto en sesiones para tu reloj.</label><textarea id="fPlan" placeholder="Lunes: gym B. Martes: cuestas 6×2 min. Sábado: largo 100 min Z2…"></textarea></div>
+    <p class="nota" id="nPlan" hidden>Sin plan no pasa nada: leo lo que hagas y lo comparo contra ti mismo.</p>
+    <p class="err" id="eEnt" aria-live="polite"></p>
+    <div class="fila-btn"><button class="btn" type="submit">Terminar</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </form>
+
+  <!-- listo: primer valor -->
+  <div class="paso" data-paso="listo" hidden>
+    <p class="hora">Listo · tu primer mensaje</p>
+    <h2>Ya te escribí a Telegram.</h2>
+    <article class="msg" aria-label="Mensaje de bienvenida"><div class="hd"><i>R</i>Runcierge<span>ahora</span></div><div id="bien"></div></article>
+    <p class="nota">Ejemplo armado con tus respuestas de este prototipo. Lo que va entre corchetes lo llenaría tu Garmin.</p>
+    <div class="fila-btn"><button class="btn" type="button" data-ir="estado">Ver mi estado</button><button class="atras" type="button" data-atras>Atrás</button></div>
+  </div>
+
+  <!-- 5 · Mi estado -->
+  <div class="paso" data-paso="estado" hidden style="max-width:820px">
+    <p class="hora">5 · Mi estado</p>
+    <h2 id="eHola">Tu estado</h2>
+    <div class="est">
+      <div><span class="k">Conexión</span><span class="v">Garmin conectado</span><span class="s">Leo tus sesiones unos minutos después de que pares el reloj.</span></div>
+      <div><span class="k">Objetivo</span><span class="v" id="eObj">[objetivo]</span><span class="s" id="ePlan">[plan]</span></div>
+      <div><span class="k">Esta semana</span><span class="v">Aún sin sesiones</span><span class="s">Tu primera sesión aparece aquí en cuanto la termines.</span></div>
+      <div><span class="k">Último mensaje</span><span class="v">Bienvenida</span><span class="s">El próximo llega la noche antes de tu siguiente sesión.</span></div>
+    </div>
+    <div class="probe">
+      <p class="q">Así se verá tu resumen. Ejemplo con los largos de octubre del corredor de arriba, en minutos:</p>
+      <div class="barras" aria-label="Duración de los cuatro largos de octubre">
+        <div><span>75</span><i style="height:105px"></i></div><div><span>80</span><i style="height:112px"></i></div><div><span>85</span><i style="height:119px"></i></div><div><span>100</span><i style="height:140px"></i></div>
+      </div>
+      <div class="bar-x"><span>3 oct</span><span>10 oct</span><span>18 oct</span><span>24 oct</span></div>
+    </div>
+    <p class="q">Recomendaciones para ti</p>
+    <div class="est est3">
+      <div><span class="k">Tenis</span><span class="v" id="eTen">[tenis]</span><span class="s" id="eTenS">[km]</span></div>
+      <div><span class="k">Nutrición</span><span class="v">Para tu próximo largo</span><span class="s"><a href="https://dagurrola.github.io/fueling-coach/" target="_blank" rel="noopener">Arma lo que vas a comer</a></span></div>
+      <div><span class="k">Destino <span class="estm">próximamente</span></span><span class="v">Dónde cargar la víspera</span><span class="s">Si viajas a correr, te digo dónde comer y descansar.</span></div>
+    </div>
+    <p class="q">Ayuda</p>
+    <ul class="ayuda" id="ayuda">
+      <li><button type="button" aria-expanded="false" data-r="Reviso tu conexión: Garmin conectado, última lectura hace [minutos]. Si tu reloj no ha sincronizado con Garmin Connect, la sesión no me llega. Abre Garmin Connect en tu teléfono para que sincronice.">No me llegan mis mensajes</button></li>
+      <li><button type="button" aria-expanded="false" data-r="Si cambiaste tu contraseña de Garmin o quitaste el permiso, vuelve a conectar. Son dos toques y no pierdes nada de tu memoria.">Problemas con Garmin</button></li>
+      <li><button type="button" aria-expanded="false" data-r="Te llevo a la pantalla oficial de Garmin para autorizar de nuevo. Tu historia en Runcierge se queda igual.">Reconectar mi Garmin</button></li>
+      <li><button type="button" aria-expanded="false" data-r="Te abro Telegram en la conversación con Runcierge. [enlace del bot]">Abrir Telegram</button></li>
+      <li><button type="button" aria-expanded="false" class="peligro" data-borrar>Borrar mi cuenta</button></li>
+    </ul>
+    <div class="pg" id="borrar" hidden>
+      <p class="marca">CONFIRMA</p>
+      <p>Se borra todo: tus sesiones, tus mensajes, tus tenis y tu correo. Garmin queda desconectado. No se puede deshacer.</p>
+      <div class="fila-btn"><button class="btn peligro" type="button" id="bBorrar">Sí, borrar todo</button><button class="atras" type="button" id="bNoBorrar">Mejor no</button></div>
+    </div>
+    <p class="ok" id="borrado" hidden>Listo. Tu cuenta y tus datos están borrados (simulado).</p>
+  </div>
+</div>
+
+<script>
+(function(){
+/* prototipo del alta: 1 Acceso · 2 Setup · 3 Evaluación · 4 Entrenamiento · 5 Mi estado (sketches del 8-ago) */
+const fl=document.getElementById("flujo"), pasos=[...fl.querySelectorAll("[data-paso]")], orden=pasos.map(p=>p.dataset.paso), bar=document.getElementById("flBar");
+const S={canal:"Telegram"}; let hist=[];
+const $=id=>document.getElementById(id);
+function ver(nombre,push=true){ const cur=pasos.find(p=>!p.hidden); if(push&&cur&&cur.dataset.paso!==nombre) hist.push(cur.dataset.paso);
+  pasos.forEach(p=>p.hidden=p.dataset.paso!==nombre); bar.style.width=Math.round((orden.indexOf(nombre)+1)/orden.length*100)+"%"; fl.scrollTop=0;
+  const f=pasos.find(p=>p.dataset.paso===nombre).querySelector("input,button.btn"); if(f) setTimeout(()=>f.focus({preventScroll:true}),30);
+  if(nombre==="estado") pintaEstado(); if(nombre==="listo") pintaBien(); }
+function abrir(nombre){ fl.hidden=false; document.body.style.overflow="hidden"; hist=[]; ver(nombre||"codigo",false); try{ history.replaceState(null,"","#"+(nombre==="estado"?"mi-estado":"entrar")); }catch(e){} }
+function cerrar(){ fl.hidden=true; document.body.style.overflow=""; try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
+document.querySelectorAll("[data-abre]").forEach(b=>b.addEventListener("click",()=>abrir(b.dataset.abre==="estado"?"estado":"codigo")));
+$("flX").addEventListener("click",cerrar);
+fl.querySelectorAll("[data-cierra]").forEach(a=>a.addEventListener("click",cerrar));
+fl.querySelectorAll("[data-atras]").forEach(b=>b.addEventListener("click",()=>{ const prev=hist.pop(); if(prev) ver(prev,false); }));
+fl.querySelectorAll("[data-ir]").forEach(b=>b.addEventListener("click",()=>ver(b.dataset.ir)));
+addEventListener("keydown",e=>{ if(e.key==="Escape"&&!fl.hidden) cerrar(); });
+function sel(id,fn){ const g=$(id), bs=[...g.querySelectorAll("button:not([disabled])")]; bs.forEach(x=>x.addEventListener("click",()=>{ bs.forEach(y=>y.setAttribute("aria-pressed","false")); x.setAttribute("aria-pressed","true"); fn&&fn(x.dataset.v); })); }
+const form=n=>pasos.find(p=>p.dataset.paso===n);
+form("codigo").addEventListener("submit",e=>{ e.preventDefault(); const c=$("fCod"), v=c.value.trim().toUpperCase();
+  if(!/^RUN-[A-Z0-9]{4}$/.test(v)){ c.setAttribute("aria-invalid","true"); $("eCod").textContent="El código tiene la forma RUN-XXXX. Revisa que esté completo."; return; }
+  if(v!=="RUN-2026"){ c.setAttribute("aria-invalid","true"); $("eCod").textContent="Ese código no existe o ya se usó. Si te lo mandaron hoy, revisa mayúsculas y guiones."; return; }
+  c.removeAttribute("aria-invalid"); $("eCod").textContent=""; ver("correo"); });
+form("correo").addEventListener("submit",e=>{ e.preventDefault(); const m=$("fMail"), v=m.value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ m.setAttribute("aria-invalid","true"); $("eMail").textContent="Escribe un correo completo, como nombre@correo.com."; return; }
+  m.removeAttribute("aria-invalid"); $("eMail").textContent=""; S.mail=v; ver("garmin"); });
+const cons=[...fl.querySelectorAll(".cons")];
+cons.forEach(c=>c.addEventListener("change",()=>{ $("bGarmin").disabled=!cons.every(x=>x.checked); }));
+$("bGarmin").addEventListener("click",()=>{ $("pgGarmin").hidden=false; $("bGarmin").hidden=true; $("pgOk").focus(); });
+$("pgOk").addEventListener("click",()=>{ $("pgGarmin").hidden=true; $("gOk").hidden=false; $("bGarminSig").hidden=false; $("bGarminSig").focus(); S.garmin=true; });
+form("garmin").addEventListener("submit",e=>{ e.preventDefault(); if(S.garmin) ver("setup"); });
+sel("sComp",v=>S.comp=v); sel("sCanal",v=>S.canal=v||"Telegram");
+form("setup").addEventListener("submit",e=>{ e.preventDefault(); S.reloj=$("fReloj").value; S.ritmo=$("fRitmo").value.trim(); S.tenis=$("fTenis").value.trim(); S.km=$("fKm").value.trim(); ver("eval"); });
+form("eval").addEventListener("submit",e=>{ e.preventDefault(); ver("entreno"); });
+sel("sObj",v=>S.obj=v);
+sel("sPlan",v=>{ S.plan=v; $("cPlan").hidden=v!=="si"; $("nPlan").hidden=v!=="no"; });
+form("entreno").addEventListener("submit",e=>{ e.preventDefault(); if(!S.obj||!S.plan){ $("eEnt").textContent="Elige un objetivo y dime si tienes plan. \"No sé todavía\" también vale."; return; } $("eEnt").textContent=""; S.planTxt=$("fPlan").value.trim(); ver("listo"); });
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ph=s=>`<span class="pend">[${s}]</span>`;
+function pintaBien(){ const ten=S.tenis?esc(S.tenis):ph("tus tenis"), km=S.km?esc(S.km)+" km":ph("km");
+  const obj=S.obj==="No sé todavía"?"Sin objetivo por ahora: está bien. En dos o tres semanas te propongo uno con lo que vea.":"Tu objetivo: "+esc(S.obj.toLowerCase())+".";
+  const plan=S.plan==="si"?(S.planTxt?"Recibí tu plan. Las sesiones de esta semana ya van a tu reloj.":"Cuando tengas el plan a la mano, mándamelo por aquí y lo subo a tu reloj."):"Sin plan, leo cada sesión contra ti mismo.";
+  $("bien").innerHTML=`<p>Hola. Ya leo tu Garmin. Cada sesión que termines me llega sola.</p><p>${obj} ${plan}</p><p>Tus zonas por ahora son estimadas. En unos días te propongo una prueba para medirlas.</p><p>Tus ${ten} van en ${km}. Te aviso antes de que se acaben, no cuando ya te duela la rodilla.</p><p><b>Te escribo la noche antes de tu próxima sesión.</b></p>`; }
+function pintaEstado(){ $("eObj").textContent=S.obj||"[objetivo]"; $("ePlan").textContent=S.plan==="si"?"Con plan: lo subo a tu reloj.":S.plan==="no"?"Sin plan: comparo contra ti mismo.":"[plan]";
+  $("eTen").textContent=S.tenis||"[tenis]"; $("eTenS").textContent=S.km?S.km+" km estimados. Los voy sumando con cada sesión.":"[km] · los voy sumando con cada sesión."; $("eHola").textContent=S.mail?"Tu estado, "+S.mail.split("@")[0]:"Tu estado"; }
+const ay=[...$("ayuda").querySelectorAll("button")];
+ay.forEach(b=>b.addEventListener("click",()=>{ const li=b.parentElement, old=li.querySelector(".resp"), on=b.getAttribute("aria-expanded")==="true";
+  ay.forEach(x=>{ x.setAttribute("aria-expanded","false"); const r=x.parentElement.querySelector(".resp"); if(r) r.remove(); }); $("borrar").hidden=true;
+  if(on) return; b.setAttribute("aria-expanded","true");
+  if(b.hasAttribute("data-borrar")){ $("borrar").hidden=false; $("bBorrar").focus(); return; }
+  const p=document.createElement("p"); p.className="resp"; p.textContent=b.dataset.r; li.appendChild(p); }));
+$("bNoBorrar").addEventListener("click",()=>{ $("borrar").hidden=true; ay.forEach(x=>x.setAttribute("aria-expanded","false")); });
+$("bBorrar").addEventListener("click",()=>{ $("borrar").hidden=true; $("ayuda").hidden=true; $("borrado").hidden=false; });
+function porHash(){ const h=location.hash.slice(1); if(h==="entrar") abrir("codigo"); else if(h==="mi-estado") abrir("estado"); }
+addEventListener("hashchange",porHash); porHash();
+/* frases que enseñan su dato */
+document.querySelectorAll(".msg").forEach(m=>{ const fs=[...m.querySelectorAll(".frase")], r=m.querySelector(".regla"); if(!r) return; const idle=r.textContent;
+  fs.forEach(b=>b.addEventListener("click",()=>{ const on=b.getAttribute("aria-expanded")==="true"; fs.forEach(x=>x.setAttribute("aria-expanded","false")); if(on){ r.textContent=idle; return; } b.setAttribute("aria-expanded","true"); r.textContent=b.dataset.r; })); });
+/* reglas reales: calzado.json de producción (pares activos, 10-nov) y dacoach_fuel.py */
+const CALZ=[{n:"Speedgoat 5",rot:["trail_tecnico","trail_mixto"],km:399.9,al:550},{n:"TNF Enduris 4 (II)",rot:["trail_mixto"],km:76.8,al:620},{n:"TNF Enduris 4 (I)",rot:["trail_mixto"],km:524.1,al:620},{n:"Puma Deviate 3",rot:["road_velocidad"],km:212.4,al:620}];
+const TERR={trail_tecnico:"trail técnico",trail_mixto:"trail mixto",road_rodada:"asfalto",road_velocidad:"pista"};
+const BANDAS=[[60,[0,30],[0,20],[400,500],null],[90,[30,45],[25,35],[500,600],"entre el minuto 45 y el 50"],[120,[45,60],[35,45],[600,800],"entre el minuto 45 y el 50"],[null,[60,75],[45,55],[800,1000],"al minuto 45 y luego cada 30"]];
+const hm=m=>m<60?m+" min":Math.floor(m/60)+" h"+(m%60?" "+String(m%60).padStart(2,"0"):"");
+const km=v=>Math.round(v).toLocaleString("es-MX")+" km";
+function grupo(s,fn){ const bs=[...s.querySelectorAll("button")]; bs.forEach(x=>x.addEventListener("click",()=>{ bs.forEach(y=>y.setAttribute("aria-pressed","false")); x.setAttribute("aria-pressed","true"); fn(); })); }
+const sT=document.getElementById("segT"), sF=document.getElementById("segF"), dur=document.getElementById("dur");
+function tenis(){ const t=sT.querySelector('[aria-pressed="true"]').dataset.t, ok=CALZ.filter(z=>z.rot.includes(t)).sort((a,b)=>a.km-b.km), o=document.getElementById("tOut");
+  if(!ok.length){ o.innerHTML="Sin par activo<small>Para "+TERR[t]+" no tiene ningún par activo. Aquí te mandaría a Tenis ideal.</small>"; return; }
+  const z=ok[0], resto=ok.slice(1).map(x=>x.n+" ("+km(x.km)+")").join(", ");
+  o.innerHTML=z.n+"<small>Lleva "+km(z.km)+". Va el par de menos km para "+TERR[t]+"."+(resto?" Los otros: "+resto+".":"")+" Te aviso a los "+km(z.al)+".</small>"; }
+function fuel(){ const d=+dur.value, fat=sF.querySelector('[aria-pressed="true"]').dataset.f==="1", b=BANDAS.find(x=>x[0]===null||d<x[0]), c=fat?b[2]:b[1], l=b[3];
+  document.getElementById("durV").textContent=hm(d); document.getElementById("fOut").innerHTML=c[0]+"–"+c[1]+" g/h<small>"+l[0]+"–"+l[1]+" ml por hora"+(b[4]?" · primera toma "+b[4]:" · menos de una hora: sin tomas programadas")+"</small>"; }
+grupo(sT,tenis); grupo(sF,fuel); dur.addEventListener("input",fuel); tenis(); fuel();
+/* tú: reglas fijas */
+const P={que:null,dur:"d2",sens:null}, T={que:{facil:"Trote fácil",largo:"Largo",fuerte:"Cuestas o series",carrera:"Carrera"},dur:{d1:"menos de 1 h",d2:"1 h a 1 h 30",d3:"1 h 30 a 2 h",d4:"más de 2 h"}};
+function probeMsg(p){
+  const {que,dur,sens}=p, L=[], title=`${T.que[que]} · ${T.dur[dur]}`;
+  if(que==="facil"){ L.push(sens==="fresco"||sens==="normal" ? "Así se construye el fondo: fácil, sin apuro, casi sin sentir que entrenaste. Esa salida cuenta más de lo que parece." : "Si una salida fácil se sintió pesada, casi nunca es culpa de la salida. Es lo que traías de antes: el sueño, la semana, algo que no cerró. Yo lo buscaría ahí."); }
+  else if(que==="largo"){ L.push({fresco:"Terminar un largo fresco es buena noticia: la duración ya la tienes. El próximo lo puedes estirar un poco.",normal:"Cansado al final pero sin arrastrarte: así se siente un largo bien puesto. Justo ahí.",pesado:"Un largo pesado te cobra un par de días. No pasa nada, pero no le pongas otro esfuerzo encima.",pase:"Cuando un largo se te va de las manos, gasta en vez de construir. Lo que toca ahora es recuperar, no desquitarte."}[sens]); }
+  else if(que==="fuerte"){ L.push({fresco:"Si terminaste fresco después de cuestas o series, o fue la dosis justa o se quedó corta. Con tu pulso te lo podría decir.",normal:"Cansado después de cuestas es lo esperado. Lo que me importa es cuánto tardas en volver a sentirte tú.",pesado:"Pesado después de cuestas o series: fue de las que cobran. La siguiente sesión fuerte, no antes de tres días.",pase:"Te pasaste. No es drama, pero sí es dato: la siguiente fuerte espera tres días, y entre medio todo va fácil."}[sens]); }
+  else { L.push("Una carrera no la mido como un entreno. Me importa cómo llegaste y cómo te sientes pasado mañana, no lo que marcó el reloj."+(sens==="pase"?" Y si te pasaste, esta semana es para recuperar, aunque el martes te sientas nuevo.":"")); }
+  L.push({d1:"Menos de una hora se recupera rápido: mañana puedes volver a salir sin problema.",d2:"Entre una hora y hora y media es la salida que más seguido deberías repetir. Es tu pan de cada día.",d3:"Entre hora y media y dos horas ya hay que comer en el camino y dormir bien después.",d4:"Más de dos horas es trabajo de fin de semana. Lo que viene, fácil, por lo menos dos días."}[dur]);
+  const heavy=sens==="pase"||(sens==="pesado"&&que!=="facil")||que==="carrera";
+  const man=heavy?"Mañana: suave o descanso. Si sales, que puedas platicar todo el camino.":(sens==="fresco"&&que==="facil")?"Mañana puedes meterle algo con intención: unas cuestas cortas o un trote más largo de lo normal.":"Mañana trote fácil o bici suave. Lo fuerte lo dejamos para pasado mañana.";
+  return `<p><b>${title}.</b> ${L[0]}</p><p>${L[1]}</p><p><b>${man}</b></p><p class="ph" style="font-size:.92rem;margin-top:.6rem">Esto lo armé con tres respuestas tuyas. Con tu Garmin sabría tu pulso, tu cadencia por terreno y qué hiciste la semana pasada, y no te habría preguntado nada.</p>`;
+}
+const pOut=document.getElementById("pOut"), pCta=document.getElementById("pCta"), pDur=document.getElementById("pDur");
+function pinta(){ const m=+pDur.value; document.getElementById("pDurV").textContent=hm(m); P.dur=m<60?"d1":m<90?"d2":m<120?"d3":"d4"; if(!P.que||!P.sens) return; pOut.innerHTML=probeMsg(P); pCta.hidden=false; }
+document.querySelectorAll("[data-p]").forEach(g=>{ grupo(g,()=>{ P[g.dataset.p]=g.querySelector('[aria-pressed="true"]').dataset.v; pinta(); }); });
+pDur.addEventListener("input",pinta); pinta();
+/* lista e invitación, sin backend */
+document.getElementById("wl").addEventListener("submit",e=>{ e.preventDefault(); const em=document.getElementById("wlMail"), v=(em.value||"").trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ em.focus(); em.setAttribute("aria-invalid","true"); return; }
+  const o=document.createElement("p"); o.className="ok"; o.textContent="Listo. Te escribo a "+v+" cuando se abra tu lugar. (Prototipo: este correo no se guarda.)"; e.target.replaceWith(o); });
+})();
+
+/* herramientas. Tenis ideal: nativo, con el motor del widget extraído tal cual (ver MOTOR-TENIS).
+   Nutrición ideal: iframe a la URL publicada en hosting real; copia literal dentro del artifact. */
+/* MOTOR-TENIS:START — generado por herramientas/generar_motor_tenis.py desde trail-mvp/index.html. No editar a mano. */
+function recomendarTenis(p){
+  const {terreno='',presupuesto='',nivel='',objMaj='',objSub='',humedad='',pisada='',prioridad=''}=p;
+  let objetivo=objSub||objMaj;
+  if(!nivel||!terreno||!presupuesto||!objetivo) return null;
+// REGLA 1: Terrain buckets
+  const terrainBucket={
+    montaña:'technical_trail',
+    roca:'technical_trail',
+    bosque:'mixed_trail',
+    mixto:'mixed_trail'
+  };
+  const bucket=terrainBucket[terreno]||'mixed_trail';
+
+  // REGLA 1c: humedad expande el pool a mud_soft_ground — antes ese bucket
+  // no tenia puerta de entrada en el wizard aunque el catalogo si lo tuviera.
+  const bucketsObjetivo=[bucket];
+  if((humedad==='humedo'||humedad==='ambos') && bucket!=='mud_soft_ground'){
+    bucketsObjetivo.push('mud_soft_ground');
+  }
+
+  // Budget
+  const maxMXN={'menos2000':1999,'2000-4000':4000,'mas4000':99999}[presupuesto]||4000;
+  const tolerance={'menos2000':0.12,'2000-4000':0.15,'mas4000':0.20}[presupuesto]||0.15;
+  const maxSoft=maxMXN===99999?99999:Math.round(maxMXN*(1+tolerance));
+
+  function budgetBadge(z){
+    if(z.precioNum<=maxMXN) return 'dentro';
+    if(z.precioNum<=maxSoft) return 'subir';
+    return 'fuera';
+  }
+
+  const catalogo=[
+    {nombre:'Merrell Trail Glove 7',marca:'Merrell',precio:'$1,600 MXN',precioNum:1600,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['ligero','zero-drop'],terreno:'Mixto / Bosque',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','tecnica','5K','10K'],
+      rol:'ligero',shortReason:'El inicio más accesible en trail sin arriesgar presupuesto.',
+      subhead:'El más ligero de Merrell para sendero mixto, distancias corta.',
+      copy:'Minimalista para quien quiere probar el trail sin comprometer presupuesto. Más sensación en el pie, menos amortiguación.',
+      highlight:'Ideal si todavía no sabes cuánto te va a gustar el trail.',
+      metricas:{amortiguacion:1,agarre:3,estabilidad:2},distancia:'Corta',
+      peso_g:210,stack_heel:18.0,stack_toe:18.0,drop_rr:0.0,score_rr:83,review_source:'RunRepeat',pros:['Minimalista y ligero','Máxima sensación del terreno','Zero-drop natural'],contras:['Sin amortiguación para distancias largas','No para terreno técnico o rocoso','Adaptación necesaria'],link:'https://www.amazon.com.mx/Merrell-Trail-Glove-Zapatillas-Hombre/dp/B0FH3NKW8H',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Merrell Moab 3 Vent',marca:'Merrell',precio:'$1,800 MXN',precioNum:1800,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['protección','versátil'],terreno:'Mixto / Bosque',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','tecnica','5K','10K'],
+      rol:'protección',shortReason:'Protección y comodidad para empezar en terreno mixto.',
+      subhead:'El de mayor protección de Merrell para sendero mixto, distancias corta-media.',
+      copy:'Construcción robusta con agarre confiable para terreno mixto. Más protección que el Trail Glove a precio accesible.',
+      highlight:'Ideal si prefieres más protección que sensación en tus primeras salidas.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Merrell+Moab+3+Vent+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Adidas Terrex Agravic Flow 2',marca:'Adidas',precio:'$1,900 MXN',precioNum:1900,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['mixto','bosque'],tags:['puerta-trail','ciudad','ligero'],terreno:'Puerta a Trail',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','5K','10K'],
+      rol:'transición',shortReason:'Para quien corre en ciudad y quiere explorar el sendero.',
+      subhead:'El puente ideal de Adidas para transición ciudad-trail, distancias corta.',
+      copy:'Suela que funciona en asfalto y sendero ligero. Peso bajo y precio accesible para hacer la transición sin compromiso.',
+      highlight:'Ideal si ya corres en calle y quieres meterte al trail gradualmente.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:3},distancia:'Corta',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Adidas+Terrex+Agravic+Flow+2',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.dportenis.mx/Tenis-adidas-Terrex-Agravic-Flow-20-Hombre-1026731-0800/',labelMarca:'Dportenis'},
+    {nombre:'Salomon Sense Ride 5',marca:'Salomon',precio:'$1,900 MXN',precioNum:1900,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['mixto','versátil'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','tecnica','distancia','5K','10K'],
+      rol:'versátil',shortReason:'Versátil y accesible para sendero mixto y bosque.',
+      subhead:'El más versátil de Salomon para transición ciudad-trail, distancias corta-media.',
+      copy:'Buen equilibrio entre tracción y comodidad para terreno mixto. Funciona en senderos variados sin ser extremo en ninguna dirección.',
+      highlight:'Ideal si quieres un zapato funcional sin complicarte la elección.',
+      metricas:{amortiguacion:3,agarre:3,estabilidad:3},distancia:'Corta-Media',
+      peso_g:291,stack_heel:27.2,stack_toe:18.5,drop_rr:8.7,score_rr:89,review_source:'RunRepeat',pros:['Lockdown perfecto','Buena sensación del terreno','Confiable en bajadas moderadas'],contras:['No para trail técnico duro','Fino bajo antepié','Algo estrecho'],link:'https://www.amazon.com.mx/s?k=Salomon+Sense+Ride+5+trail',linkRunnics:'https://www.runnics.com/buscar?q=salomon+sense+ride+5',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/collections/sense-ride-5',labelMarca:'Salomon MX (colección)'},
+    {nombre:'Salomon Speedcross 6',marca:'Salomon',precio:'$2,800 MXN',precioNum:2800,
+      bucket:['mud_soft_ground','technical_trail'],terrenoKeys:['barro','tierra suelta','montaña'],tags:['barro','agarre alto','técnico'],terreno:'Barro / Terreno suelto',
+      nivelKeys:['principiante','intermedio','avanzado'],objetivoKeys:['competencia','entrenamiento','5K','10K','21K'],
+      rol:'agarre',shortReason:'Tracción agresiva para terreno suelto o húmedo.',
+      subhead:'El de mayor agarre de Salomon para barro y terreno suelto, distancias corta-media.',
+      copy:'El agarre más agresivo del grupo. Si tus rutas tienen lodo o tierra blanda, gana mucho en mordida y control sobre terreno complicado.',
+      highlight:'Ideal si prefieres sentirte seguro en terreno difícil.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:4},distancia:'Corta-Media',
+      peso_g:296,stack_heel:36.5,stack_toe:22.4,drop_rr:14.1,score_rr:89,review_source:'RunRepeat',pros:['Tracción extrema en barro','Durabilidad impresionante','Expulsión rápida de barro'],contras:['Midsole duro','Pésima respirabilidad','No apto para pisada media/delantera'],link:'https://www.amazon.com.mx/s?k=Salomon+Speedcross+6',linkRunnics:'https://www.runnics.com/buscar?q=salomon+speedcross+6',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/products/speedcross-6-de-hombre-para-trail-running',labelMarca:'Salomon MX'},
+    {nombre:'Merrell Agility Peak 5',marca:'Merrell',precio:'$2,900 MXN',precioNum:2900,
+      bucket:['technical_trail','mud_soft_ground','mixed_trail'],terrenoKeys:['roca','barro','mixto'],tags:['barro','grip','accesible'],terreno:'Barro / Tierra suelta',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','5K','10K','21K'],
+      rol:'agarre',shortReason:'Grip confiable en barro sin el precio de las opciones premium.',
+      subhead:'El de mayor agarre de Merrell para terreno técnico, distancias media.',
+      copy:'Suela con buen agarre en tierra suelta y barro a precio razonable. Más accesible que el Speedcross con suficiente tracción para la mayoría de terrenos difíciles.',
+      highlight:'Ideal si corres en temporada de lluvias sin querer gastar de más.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Media',
+      peso_g:289,stack_heel:39.2,stack_toe:25.8,drop_rr:13.4,score_rr:88,review_source:'RunRepeat',pros:['Maneja trail duro con facilidad','Funciona bien en bajadas y subidas','Upper muy duradero con refuerzos TPU'],contras:['Agarre menor de lo esperado','Drop real muy distinto al declarado','Caja de dedos estrecha'],link:'https://www.amazon.com.mx/dp/B0CTFQC3X8',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Salomon Pulsar Trail',marca:'Salomon',precio:'$3,000 MXN',precioNum:3000,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['técnico','ligero','precisión'],terreno:'Técnico / Montaña',
+      nivelKeys:['intermedio'],objetivoKeys:['entrenamiento','tecnica','velocidad','10K','21K'],
+      rol:'técnico',shortReason:'Precisión y agilidad para terreno técnico sin pagar premium.',
+      subhead:'El más técnico de Salomon para sendero mixto, distancias media.',
+      copy:'Respuesta ágil en terreno técnico con la tracción característica de Salomon. Para corredores que ya conocen la montaña y quieren más precisión sin llegar a gama alta.',
+      highlight:'Ideal si tu terreno tiene roca y raíces y ya tienes experiencia.',
+      metricas:{amortiguacion:3,agarre:3,estabilidad:3},distancia:'Media',
+      peso_g:281,stack_heel:31.0,stack_toe:23.8,drop_rr:7.2,score_rr:87,review_source:'RunRepeat',pros:['Ride estable y protegido','Excelente lockdown de talón','Buen precio para la calidad'],contras:['No para terreno mojado','Algo pesado para su clase','Caja de dedos estrecha'],link:'https://www.amazon.com.mx/s?k=Salomon+Pulsar+Trail',linkRunnics:'https://www.runnics.com/buscar?q=salomon+pulsar+trail',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/products/pulsar-calzado-de-trail-running-para-hombre',labelMarca:'Salomon MX'},
+    {nombre:'Salomon Ultra Glide 2',marca:'Salomon',precio:'$3,100 MXN',precioNum:3100,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['bosque','mixto','ciudad'],tags:['mixto','amortiguado','versátil'],terreno:'Larga distancia / Versátil',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['distancia','21K','entrenamiento'],
+      rol:'confort',shortReason:'Alta amortiguación para distancias largas en terreno moderado.',
+      subhead:'El más cómodo de Salomon para transición ciudad-trail, distancias larga.',
+      copy:'Alta amortiguación y versatilidad para terreno moderado. No es la más ágil en técnico, pero sí la más cómoda para acumular kilómetros.',
+      highlight:'Ideal si tu prioridad es comodidad en distancias largas.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:3},distancia:'Larga',
+      peso_g:286,stack_heel:30.6,stack_toe:23.4,drop_rr:7.2,score_rr:86,review_source:'RunRepeat',pros:['Upper transpirable','Lockdown excelente','Amortiguación suave y protectora'],contras:['Suela se gasta rápido','Sistema de agujetas frustrante','Lengüeta puede rozar'],link:'https://www.amazon.com.mx/s?k=Salomon+Ultra+Glide+2+trail',linkRunnics:'https://www.runnics.com/buscar?q=salomon+ultra+glide+2',linkDecathlon:'',linkMarca:'',labelMarca:'Salomon MX'},
+    {nombre:'The North Face Flight Vectiv',marca:'The North Face',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['puerta-trail','placa','velocidad'],terreno:'Puerta a Trail / Velocidad',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['velocidad','competencia','10K','21K'],
+      rol:'velocidad',shortReason:'Placa de propulsión para ir más rápido en trail suave.',
+      subhead:'El más veloz de The North Face para transición ciudad-trail, distancias corta-media.',
+      copy:'Placa Vectiv para mayor propulsión en terreno suave y transiciones ciudad-trail. Para corredores que ya buscan tiempos en sendero no muy técnico.',
+      highlight:'Ideal si compites en distancias cortas o quieres velocidad en senderos suaves.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:4},distancia:'Corta-Media',
+      peso_g:255,stack_heel:33.0,stack_toe:25.0,drop_rr:8.0,score_rr:85,review_source:'RunRepeat',pros:['Placa Vectiv para propulsión','Ligero y rápido en trail suave','Buen fit para pie normal'],contras:['No para terreno técnico real','Agarre básico en mojado','Versión anterior al Enduris'],link:'https://www.amazon.com.mx/s?k=The+North+Face+Flight+Vectiv',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'The North Face MX'},
+    {nombre:'Inov-8 Trailfly G 270',marca:'Inov-8',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['technical_trail','mud_soft_ground'],terrenoKeys:['roca','mixto','barro'],tags:['roca','agarre extremo','técnico'],terreno:'Roca / Técnico',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['competencia','tecnica','velocidad','10K','21K'],
+      rol:'agarre',shortReason:'Suela de grafeno para agarre extremo en roca seca.',
+      subhead:'El de mayor agarre de Inov-8 para terreno técnico, distancias corta-media.',
+      copy:'Suela de grafeno para agarre extremo en roca seca. Para corredores técnicos que priorizan precisión sobre terreno duro.',
+      highlight:'Ideal si tus rutas tienen mucha roca y necesitas precisión.',
+      metricas:{amortiguacion:2,agarre:5,estabilidad:3},distancia:'Corta-Media',
+      peso_g:270,stack_heel:28.0,stack_toe:21.0,drop_rr:6.0,score_rr:86,review_source:'RunRepeat',pros:['Suela de grafeno para agarre extremo','Muy ligero para zapato técnico','Excelente en roca seca'],contras:['Poca amortiguación para distancias largas','Ajuste muy estrecho','Durabilidad del upper básica'],link:'https://www.amazon.com.mx/dp/B09MZ24H4J',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'Hoka Speedgoat 6',marca:'Hoka',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['mixed_trail','mud_soft_ground'],terrenoKeys:['mixto','montaña','bosque'],tags:['ultra','distancia','montaña','todo terreno'],terreno:'Ultra / Todo Terreno',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['distancia','21K','51Kplus'],
+      rol:'confort',shortReason:'La referencia para ultras: máxima amortiguación con agarre superior.',
+      subhead:'El más cómodo de Hoka para sendero mixto, distancias larga-ultra.',
+      copy:'La versión mejorada del Speedgoat legendario — más agarre y más amortiguación. Protege el pie en kilómetros largos en cualquier terreno sin sacrificar tracción.',
+      highlight:'Ideal si estás entrenando para tu primer 50K o ya corres distancias largas.',
+      metricas:{amortiguacion:5,agarre:4,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:278,stack_heel:32.1,stack_toe:27.2,drop_rr:4.9,score_rr:77,review_source:'RunRepeat',pros:['Suela Vibram Megagrip','Amortiguación superior a v5','Upper duradero'],contras:['Mala respirabilidad','Sin retorno de energía','Durabilidad de suela'],link:'https://www.amazon.com.mx/s?k=Hoka+Speedgoat+6+trail',linkRunnics:'https://www.runnics.com/buscar?q=hoka+speedgoat+6',linkDecathlon:'',linkMarca:'https://hoka.mx/collections/trail-running',labelMarca:'Hoka MX (colección)'},
+    {nombre:'La Sportiva Bushido III',marca:'La Sportiva',precio:'$3,500 MXN',precioNum:3500,
+      bucket:['technical_trail'],terrenoKeys:['roca','montaña'],tags:['técnico','roca','precisión'],terreno:'Técnico / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['competencia','tecnica','10K','21K'],
+      rol:'técnico',shortReason:'Precisión extrema en roca para el corredor técnico.',
+      subhead:'El más técnico de La Sportiva para terreno técnico, distancias media-larga.',
+      copy:'Diseñada para terreno muy técnico con roca. Alta estabilidad lateral y agarre preciso para corredores que buscan control máximo en cada paso.',
+      highlight:'Ideal si tus rutas son muy técnicas y necesitas el máximo control.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:5},distancia:'Media-Larga',
+      peso_g:265,stack_heel:26.0,stack_toe:18.0,drop_rr:8.0,score_rr:85,review_source:'RunRepeat',pros:['Precisión extrema en roca','FriXion AT para grip excepcional','Muy ligero para lo que ofrece'],contras:['Poca amortiguación para distancias largas','No para terreno suave o barro','Ajuste muy específico pie estrecho'],link:'https://www.amazon.com.mx/s?k=La+Sportiva+Bushido+III',linkRunnics:'https://www.runnics.com/buscar?q=la+sportiva+bushido',linkDecathlon:'',linkMarca:'https://lasportiva.mx/products/pa-bushido-iii-hombre',labelMarca:'La Sportiva MX'},
+    {nombre:'La Sportiva Jackal II',marca:'La Sportiva',precio:'$3,600 MXN',precioNum:3600,
+      bucket:['technical_trail','mixed_trail'],terrenoKeys:['roca','montaña','mixto'],tags:['barro','agarre','competencia'],terreno:'Barro / Tierra suelta',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['competencia','entrenamiento','21K','51Kplus'],
+      rol:'agarre',shortReason:'Agarre extremo en barro con capacidad para competencia.',
+      subhead:'El de mayor agarre de La Sportiva para terreno técnico, distancias media-larga.',
+      copy:'Suela muy agresiva para condiciones difíciles: barro, tierra suelta y terreno variable en lluvia. Para corredores que compiten o entrenan en condiciones exigentes.',
+      highlight:'Ideal si corres en temporada lluviosa o rutas con mucho barro.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:4},distancia:'Media-Larga',
+      peso_g:255,stack_heel:28.0,stack_toe:20.0,drop_rr:8.0,score_rr:84,review_source:'RunRepeat',pros:['Ligero y preciso en roca','FriXion con doble patrón de agarre','Excelente para carreras técnicas'],contras:['Amortiguación insuficiente para ultra','Caja de dedos estrecha','Durabilidad básica del upper'],link:'https://www.amazon.com.mx/s?k=La+Sportiva+Jackal+II',linkRunnics:'https://www.runnics.com/buscar?q=la+sportiva+jackal',linkDecathlon:'',linkMarca:'https://lasportiva.mx/products/pa-jackal-ii',labelMarca:'La Sportiva MX'},
+    {nombre:'Nike Ultrafly',marca:'Nike',precio:'$3,800 MXN',precioNum:3800,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['puerta-trail','velocidad','placa carbono'],terreno:'Puerta a Trail / Velocidad',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['velocidad','competencia','5K','10K','21K'],
+      rol:'velocidad',shortReason:'Placa de carbono para competir en trail suave.',
+      subhead:'El más veloz de Nike para sendero mixto, distancias corta-media.',
+      copy:'Placa de carbono para máxima propulsión en trail suave y transiciones ciudad-trail. Para el corredor que busca velocidad en competencias en terreno no técnico.',
+      highlight:'Ideal si compites en trail suave o cross country y priorizas tiempo.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:4},distancia:'Corta-Media',
+      peso_g:252,stack_heel:38.0,stack_toe:33.0,drop_rr:5.0,score_rr:82,review_source:'RunRepeat',pros:['ZoomX foam ultra reactivo','Ligero para su amortiguación','Buena propulsión en trail suave'],contras:['Agarre insuficiente en técnico','No para barro','Precio muy alto'],link:'https://www.amazon.com.mx/s?k=Nike+Ultrafly+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.nike.com/mx/t/tenis-de-carreras-en-senderos-acg-ultrafly-trail-apURNErV',labelMarca:'Nike MX'},
+    {nombre:'Hoka Mafate 5',marca:'Hoka',precio:'$4,200 MXN',precioNum:4200,
+      bucket:['technical_trail','mixed_trail'],terrenoKeys:['montaña','roca','mixto'],tags:['ultra','barro','máxima protección'],terreno:'Barro / Ultra',
+      nivelKeys:['avanzado'],objetivoKeys:['distancia','51Kplus','competencia'],
+      rol:'ultra',shortReason:'Máxima protección y amortiguación para ultra en condiciones exigentes.',
+      subhead:'El especialista en ultra distancia de Hoka para terreno técnico, distancias ultra.',
+      copy:'Máxima amortiguación y estabilidad para distancias ultra en terreno exigente. Diseñada para kilómetros largos en barro, roca y terreno variable sin que el pie pague el precio.',
+      highlight:'Ideal si ya corres ultras y necesitas la máxima protección.',
+      metricas:{amortiguacion:5,agarre:5,estabilidad:4},distancia:'Ultra',
+      peso_g:293,stack_heel:38.0,stack_toe:30.8,drop_rr:7.2,score_rr:88,review_source:'RunRepeat',pros:['Amortiguación y comodidad excepcionales','Excelente agarre en todo terreno','Notablemente ligero vs versiones anteriores'],contras:['Collarín de tobillo deja entrar basura','Exposición excesiva de foam','No para pie ancho'],link:'https://www.amazon.com.mx/s?k=Hoka+Mafate+5',linkRunnics:'https://www.runnics.com/buscar?q=hoka+mafate',linkDecathlon:'',linkMarca:'https://hoka.mx/products/mafate-5',labelMarca:'Hoka MX'},
+    {nombre:'Altra Mont Blanc Carbon',marca:'Altra',precio:'$7,381 MXN',precioNum:7381,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['competencia','carbono','zero-drop'],terreno:'Competencia / Sendero mixto',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','51Kplus','21K'],
+      rol:'competencia',shortReason:'Placa de carbono zero-drop para competencia en sendero mixto.',
+      subhead:'El de competencia de Altra para sendero mixto, distancias larga-ultra.',
+      copy:'Placa de carbono con foam EGO MAX y calce zero-drop característico de Altra. Suela Vibram Megagrip de alta tracción, notablemente ligero para su categoría.',
+      highlight:'Ideal si buscas un zapato de competencia zero-drop con placa de carbono para distancias largas.',
+      metricas:{amortiguacion:4,agarre:5,estabilidad:3},distancia:'Larga-Ultra',
+      peso_g:251,stack_heel:27.2,stack_toe:26.9,drop_rr:0.3,score_rr:79,review_source:'RunRepeat',pros:['Mantiene el ADN zero-drop de Altra','Suela Vibram Megagrip con tracción excepcional','Notablemente ligero para su categoría'],contras:['Retorno de energía limitado para su precio','Precio elevado','Durabilidad del acolchado de talón cuestionable'],link:'https://www.amazon.com.mx/dp/B0D47ZGLNB',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Amazon MX'},
+    {nombre:'HOKA Tecton X 2',marca:'Hoka',precio:'$4,800 MXN',precioNum:4800,
+      bucket:['technical_trail'],terrenoKeys:['roca','montaña'],tags:['roca','montaña','competencia','placa carbono'],terreno:'Roca / Ultra técnico',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','51Kplus'],
+      rol:'competencia',shortReason:'Placa de carbono para competencia en ultra técnico.',
+      subhead:'El de competencia de Hoka para terreno técnico, distancias ultra.',
+      copy:'Placa de carbono más amortiguación máxima. Para competir, no para entrenar — el arma de carrera de Hoka en terreno técnico.',
+      highlight:'Ideal si ya tienes ultras y quieres mejorar tu tiempo en carrera.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:4},distancia:'Ultra',
+      peso_g:275,stack_heel:40.0,stack_toe:35.0,drop_rr:5.0,score_rr:86,review_source:'RunRepeat',pros:['Placa de carbono para propulsión','Excelente para carreras técnicas','Stack alto con sensación dinámica'],contras:['Solo para competencia, no para entreno diario','Precio muy alto','Upper ajustado en empeine'],link:'https://www.amazon.com.mx/s?k=Hoka+Tecton+X+2',linkRunnics:'https://www.runnics.com/buscar?q=hoka+tecton+x',linkDecathlon:'',linkMarca:'',labelMarca:'Hoka MX'},
+    {nombre:'Salomon S/LAB Ultra 3',marca:'Salomon',precio:'$5,200 MXN',precioNum:5200,
+      bucket:['technical_trail','mixed_trail'],terrenoKeys:['montaña','mixto','roca'],tags:['ultra','montaña','elite'],terreno:'Ultra / Montaña',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','51Kplus','21K'],
+      rol:'competencia',shortReason:'El más ligero y reactivo para competencia de ultra.',
+      subhead:'El de competencia de Salomon para terreno técnico, distancias ultra.',
+      copy:'El más ligero y reactivo del grupo. Para competidores que priorizan rendimiento sobre comodidad en la distancia más larga.',
+      highlight:'Ideal para corredores avanzados que priorizan ligereza sobre protección.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:3},distancia:'Ultra',
+      peso_g:238,stack_heel:30.0,stack_toe:22.0,drop_rr:8.0,score_rr:90,review_source:'RunRepeat',pros:['Ultraligero para su clase','Excelente propulsión en carrera','Diseño de laboratorio para élite'],contras:['Solo competencia, no entreno diario','Precio extremo','Amortiguación insuficiente para ultra largas'],link:'https://www.amazon.com.mx/s?k=Salomon+S+LAB+Ultra+3',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Salomon MX'},
+
+    {nombre:'Hoka Speedgoat 7',marca:'Hoka',precio:'$4,199 MXN',precioNum:4199,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','montaña','bosque'],tags:['ultra','montaña','todo terreno','vibram'],terreno:'Técnico / Todo Terreno',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','competencia','21K','51Kplus'],
+      rol:'confort',shortReason:'La versión más reciente del bestseller: más agarre y amortiguación.',
+      subhead:'El más cómodo de Hoka para sendero mixto, distancias larga-ultra.',
+      copy:'Vibram Megagrip y espuma CMEVA actualizada. El Speedgoat 7 mejora tracción y amortiguación sobre el 6 sin perder versatilidad. El zapato de ultra más vendido del mundo.',
+      highlight:'Mejor opción si buscas el Speedgoat más reciente disponible en México.',
+      metricas:{amortiguacion:5,agarre:4,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:281,stack_heel:37.7,stack_toe:30.3,drop_rr:7.4,score_rr:85,review_source:'RunRepeat',pros:['Foam supercrítico mejorado con mejor retorno de energía','Amortiguación superior para ultras','Suela Vibram Megagrip confiable'],contras:['Aumento notable de precio','Horma estrecha característica de Hoka','Menos ágil en terreno técnico'],link:'https://www.amazon.com.mx/s?k=Hoka+Speedgoat+7+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://hoka.mx/products/speedgoat-7-verde',labelMarca:'Hoka MX'},
+    {nombre:'Hoka Challenger 8',marca:'Hoka',precio:'$3,999 MXN',precioNum:3999,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['puerta-trail','amortiguado','versátil','road-to-trail'],terreno:'Puerta a Trail / Mixto',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'confort',shortReason:'Amortiguación máxima para quien empieza desde la ciudad.',
+      subhead:'El más cómodo de Hoka para transición ciudad-trail, distancias media-larga.',
+      copy:'Midsole renovado con más rebote. El Challenger 8 es ideal para corredores de asfalto que empiezan a explorar el sendero sin sacrificar comodidad.',
+      highlight:'Perfecto para transición ciudad-trail con amortiguación excepcional.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:4},distancia:'Media-Larga',
+      peso_g:269,stack_heel:40.2,stack_toe:30.1,drop_rr:10.1,score_rr:83,review_source:'RunRepeat',pros:['Amortiguación excelente con SA mejorado','Más espacioso que la versión anterior','Durabilidad impresionante'],contras:['Foam CMEVA ya desactualizado','Ligeramente más pesado que la v7','Lengüeta sin gusset'],link:'https://www.amazon.com.mx/s?k=Hoka+Challenger+8+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://hoka.mx/collections/trail-running',labelMarca:'Hoka MX'},
+    {nombre:'Hoka Mafate X',marca:'Hoka',precio:'$6,799 MXN',precioNum:6799,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','montaña','bosque'],tags:['ultra','max-cushion','técnico','carbon'],terreno:'Ultra / Técnico Extremo',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','51Kplus'],
+      rol:'ultra',shortReason:'El ultra shoe más protegido de Hoka para distancias extremas.',
+      subhead:'El especialista en ultra distancia de Hoka para sendero mixto, distancias ultra.',
+      copy:'Stack altísimo, placa de carbono y suela Vibram. El Mafate X está diseñado para quienes corren 100K o más en terreno técnico y exigen protección máxima.',
+      highlight:'Solo para ultra-runners avanzados que corren en terreno muy exigente.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:4},distancia:'Ultra',
+      peso_g:335,stack_heel:47.3,stack_toe:36.7,drop_rr:10.6,score_rr:78,review_source:'RunRepeat',pros:['Amortiguación masiva, casi 50mm de stack','Fuerte retorno de energía con foam PEBA','Estabilidad sorprendente pese a la altura'],contras:['Muy pesado en el pie','Demasiado alto para terreno técnico','Precio elevado'],link:'https://www.amazon.com.mx/s?k=Hoka+Mafate+X',linkRunnics:'',linkDecathlon:'',linkMarca:'https://hoka.mx/collections/trail-running',labelMarca:'Hoka MX'},
+    {nombre:'Hoka Tecton X 3',marca:'Hoka',precio:'$4,500 MXN',precioNum:4500,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','montaña'],tags:['placa','velocidad','técnico','carrera'],terreno:'Técnico / Velocidad',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','21K','51Kplus'],
+      rol:'velocidad',shortReason:'Placa de carbono Hoka para competencia en terreno técnico.',
+      subhead:'El más veloz de Hoka para sendero mixto, distancias media-larga.',
+      copy:'Placa de carbono dual + foam PEBA de alta reactividad. El Tecton X 3 es una herramienta de carrera para atletas que compiten en terreno técnico y buscan tiempo.',
+      highlight:'Exclusivo para competencia. No recomendado para entrenamiento diario.',
+      metricas:{amortiguacion:4,agarre:5,estabilidad:3},distancia:'Media-Larga',
+      peso_g:275,stack_heel:37.8,stack_toe:30.9,drop_rr:6.9,score_rr:90,review_source:'RunRepeat',pros:['Un verdadero supershoe para trail','Suela Vibram ultra-agarre y duradera','Retorno de energía fantástico con foam PEBA'],contras:['Precio por las nubes','Más pesado que el Tecton X 2','Definitivamente no para pie ancho'],link:'https://www.amazon.com.mx/s?k=Hoka+Tecton+X+3',linkRunnics:'',linkDecathlon:'',linkMarca:'https://hoka.mx/collections/trail-running',labelMarca:'Hoka MX'},
+    {nombre:'Hoka Torrent 3',marca:'Hoka',precio:'$2,200 MXN',precioNum:2200,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['entrada','ligero','versátil'],terreno:'Sendero ligero / Mixto',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','10K','21K'],
+      rol:'transición',shortReason:'El trail shoe de entrada más ligero de Hoka.',
+      subhead:'El puente ideal de Hoka para sendero mixto, distancias corta-media.',
+      copy:'Suela de 4mm de agarre y midsole Hoka asequible. El Torrent 3 es el punto de entrada ideal a la marca sin gastar de más.',
+      highlight:'La opción más económica de Hoka para trail.',
+      metricas:{amortiguacion:3,agarre:3,estabilidad:5},distancia:'Corta-Media',
+      peso_g:258,stack_heel:29.5,stack_toe:22.4,drop_rr:7.1,score_rr:71,review_source:'RunRepeat',pros:['Excepcionalmente estable','Funciona bien en casi todo terreno seco','Stack bajo da sensación más natural'],contras:['Sin placa de roca','No apto para ultras','Muy rígido para trail técnico'],link:'https://www.amazon.com.mx/s?k=Hoka+Torrent+3+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://hoka.mx/collections/trail-running',labelMarca:'Hoka MX'},
+    {nombre:'Salomon Genesis',marca:'Salomon',precio:'$3,299 MXN',precioNum:3299,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['versátil','amortiguado','diario'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'versátil',shortReason:'El trail diario de Salomon: cómodo, confiable y bien amortiguado.',
+      subhead:'El más versátil de Salomon para sendero mixto, distancias media-larga.',
+      copy:'Foam Energy Save+ y suela Contagrip MA. El Genesis es el trail diario de Salomon para senderos mixtos, con amortiguación accesible y tracción suficiente.',
+      highlight:'Excelente relación calidad-precio para entrenamiento regular.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:4},distancia:'Media-Larga',
+      peso_g:282,stack_heel:33.5,stack_toe:24.5,drop_rr:9.0,score_rr:93,review_source:'RunRepeat',pros:['Upper MATRYX premium','Comodidad para largas distancias','Muy estable'],contras:['Sin elementos reflectantes','Suela se gasta rápido','Drop alto para algunos'],link:'https://www.amazon.com.mx/s?k=Salomon+Genesis+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/products/tenis-genesis-3',labelMarca:'Salomon MX'},
+    {nombre:'Salomon Thundercross',marca:'Salomon',precio:'$2,899 MXN',precioNum:2899,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['ligero','velocidad','versátil'],terreno:'Mixto / Velocidad',
+      nivelKeys:['intermedio'],objetivoKeys:['entrenamiento','competencia','10K','21K'],
+      rol:'velocidad',shortReason:'Ligero y reactivo para trail rápido en terreno mixto.',
+      subhead:'El más veloz de Salomon para sendero mixto, distancias corta-media.',
+      copy:'Ligero, reactivo y con buena tracción en Contagrip MA. El Thundercross es para corredores que quieren velocidad en trail sin sacrificar agarre.',
+      highlight:'Buena opción para trail races de 10-21K en terreno mixto.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:4},distancia:'Corta-Media',
+      peso_g:271,stack_heel:27.6,stack_toe:24.6,drop_rr:3.0,score_rr:89,review_source:'RunRepeat',pros:['Estabilidad excepcional','Muy duradero','Versátil en distintos ritmos'],contras:['No para verano (calienta)','Bajo retorno de energía','Drop muy bajo puede no ajustar a todos'],link:'https://www.amazon.com.mx/s?k=Salomon+Thundercross+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/products/thundercross-calzado-de-trail-running-para-hombre',labelMarca:'Salomon MX'},
+    {nombre:'Salomon Ultra Flow 2',marca:'Salomon',precio:'$2,999 MXN',precioNum:2999,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['ciudad','mixto','bosque'],tags:['puerta-trail','road-to-trail','amortiguado'],terreno:'Puerta a Trail / Ciudad',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'transición',shortReason:'De la ciudad al sendero con máxima amortiguación Salomon.',
+      subhead:'El puente ideal de Salomon para transición ciudad-trail, distancias media-larga.',
+      copy:'Foam Ultra-amortiguado y suela Contagrip TA para asfalto y trail suave. Perfecto para corredores urbanos que exploran el campo los fines de semana.',
+      highlight:'Ideal para quien mezcla rodadas de ciudad con salidas al sendero.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:4},distancia:'Media-Larga',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Salomon+Ultra+Flow+2+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/products/ultra-flow-2',labelMarca:'Salomon MX'},
+    {nombre:'Salomon XA Pro 3D v9',marca:'Salomon',precio:'$3,599 MXN',precioNum:3599,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['protección','estabilidad','todo-terreno','clásico'],terreno:'Todo Terreno / Mixto',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'protección',shortReason:'El clásico trail shoe de Salomon: protección y estabilidad probadas.',
+      subhead:'El de mayor protección de Salomon para sendero mixto, distancias media-larga.',
+      copy:'Marco 3D chassis para estabilidad máxima en terreno variable. El XA Pro 3D v9 es el trail shoe más vendido de Salomon por su confiabilidad en cualquier terreno.',
+      highlight:'El trail shoe más probado y confiable para terreno variado.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:5},distancia:'Media-Larga',
+      peso_g:346,stack_heel:31.7,stack_toe:19.2,drop_rr:12.5,score_rr:75,review_source:'RunRepeat',pros:['Protección de pie tipo tanque','Ride increíblemente estable','Buena tracción en mixto'],contras:['Algo pesado','Upper rígido necesita rodaje','Amortiguación en el lado firme'],link:'https://www.amazon.com.mx/s?k=Salomon+XA+Pro+3D+v9+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/collections/calzado-trail-running-hombre',labelMarca:'Salomon MX'},
+    {nombre:'Salomon Supercross 4',marca:'Salomon',precio:'$2,800 MXN',precioNum:2800,
+      bucket:['mud_soft_ground','technical_trail'],terrenoKeys:['barro','tierra suelta','mixto'],tags:['barro','agarre','carrera'],terreno:'Barro / Terreno suelto',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['competencia','21K'],
+      rol:'agarre',shortReason:'Suela de clavos profundos para dominar el barro en carrera.',
+      subhead:'El de mayor agarre de Salomon para barro y terreno suelto, distancias corta-media.',
+      copy:'Contagrip Maxi con 6mm de profundidad y suela de evacuación de barro. Para carreras de montaña con mucho terreno suelto o húmedo.',
+      highlight:'Especialista en barro. No apto para asfalto ni terreno duro.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:4},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Salomon+Supercross+4+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.salomon.com.mx/collections/calzado-trail-running-hombre',labelMarca:'Salomon MX'},
+    {nombre:'Brooks Cascadia 19',marca:'Brooks',precio:'$3,789 MXN',precioNum:3789,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['mixto','estabilidad','all-terrain'],terreno:'Mixto / Bosque / Montaña',
+      nivelKeys:['principiante','intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'estabilidad',shortReason:'El trail shoe más versátil de Brooks en su versión más reciente.',
+      subhead:'El más estable de Brooks para sendero mixto, distancias media-larga.',
+      copy:'DNA Loft v3 foam y suela TrailTack con 4mm de agarre. El Cascadia 19 es la evolución del trail shoe más popular de Brooks: más reactivo, más estable y mejor fit.',
+      highlight:'La opción más actualizada y confiable de Brooks para trail mixto.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:4},distancia:'Media-Larga',
+      peso_g:306,stack_heel:34.8,stack_toe:27.0,drop_rr:7.8,score_rr:86,review_source:'RunRepeat',pros:['DNA Loft v3 más suave y reactivo','Estabilidad sobresaliente','Mayor flexibilidad'],contras:['Aún en el lado pesado','Caja de dedos estrecha','Ligero aumento de precio'],link:'https://www.amazon.com.mx/s?k=Brooks+Cascadia+19+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://brooksrunning.com.mx/collections/trail',labelMarca:'Brooks MX'},
+    {nombre:'Brooks Caldera 8',marca:'Brooks',precio:'$3,999 MXN',precioNum:3999,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','bosque'],tags:['max-cushion','técnico','montaña'],terreno:'Técnico / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','51Kplus'],
+      rol:'confort',shortReason:'Máxima amortiguación Brooks para terreno técnico y largas distancias.',
+      subhead:'El más cómodo de Brooks para sendero mixto, distancias larga-ultra.',
+      copy:'Stack máximo con DNA Loft v3 y suela de 5mm de agarre. El Caldera 8 es para quienes necesitan protección máxima en distancias largas en terreno duro.',
+      highlight:'Ideal para ultra o entrenamientos largos en montaña técnica.',
+      metricas:{amortiguacion:5,agarre:3,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:309,stack_heel:36.7,stack_toe:27.9,drop_rr:8.8,score_rr:88,review_source:'RunRepeat',pros:['Estabilidad sobresaliente','Ride cómodo y suave','Versátil en terreno moderado'],contras:['Aún pesado','Talón voluminoso y ancho','Necesita más amortiguación'],link:'https://www.amazon.com.mx/s?k=Brooks+Caldera+8+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://brooksrunning.com.mx/collections/trail',labelMarca:'Brooks MX'},
+    {nombre:'Brooks Catamount 3',marca:'Brooks',precio:'$4,200 MXN',precioNum:4200,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['velocidad','carrera','ligero','placa'],terreno:'Técnico / Velocidad',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','21K','51Kplus'],
+      rol:'velocidad',shortReason:'La zapatilla de carrera más rápida de Brooks para trail.',
+      subhead:'El más veloz de Brooks para sendero mixto, distancias corta-media.',
+      copy:'DNA FLASH v2 foam + placa de propulsión. El Catamount 3 es para corredores que buscan velocidad máxima en carrera de trail sin perder tracción.',
+      highlight:'Solo para competencia. Requiere adaptación progresiva.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:3},distancia:'Corta-Media',
+      peso_g:255,stack_heel:28.3,stack_toe:21.5,drop_rr:6.8,score_rr:89,review_source:'RunRepeat',pros:['Peso reducido respecto a v2','Mayor flexibilidad','Ride estable y seguro'],contras:['Poca ventilación del upper','Ajuste apretado para algunos','Agarre limitado en mojado'],link:'https://www.amazon.com.mx/s?k=Brooks+Catamount+3+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://brooksrunning.com.mx/collections/trail',labelMarca:'Brooks MX'},
+    {nombre:'Brooks Divide 6',marca:'Brooks',precio:'$2,989 MXN',precioNum:2989,
+      bucket:['door_to_trail','mixed_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['entrada','versátil','accesible'],terreno:'Puerta a Trail / Sendero ligero',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','10K','21K'],
+      rol:'transición',shortReason:'El trail shoe de entrada más accesible de Brooks.',
+      subhead:'El puente ideal de Brooks para transición ciudad-trail, distancias corta-media.',
+      copy:'Construcción sólida y suela de buen agarre a precio accesible. El Divide 6 es el punto de entrada perfecto a Brooks trail para quienes dan el primer paso al sendero.',
+      highlight:'Mejor relación calidad-precio de Brooks para principiantes.',
+      metricas:{amortiguacion:3,agarre:3,estabilidad:3},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Brooks+Divide+6+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://brooksrunning.com.mx/collections/trail',labelMarca:'Brooks MX'},
+    {nombre:'Merrell Agility Peak 6',marca:'Merrell',precio:'$2,900 MXN',precioNum:2900,
+      bucket:['technical_trail','mud_soft_ground'],terrenoKeys:['roca','barro','montaña'],tags:['técnico','agarre','montaña'],terreno:'Técnico / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'agarre',shortReason:'Grip mejorado para terreno técnico: la evolución del Peak 5.',
+      subhead:'El de mayor agarre de Merrell para terreno técnico, distancias media-larga.',
+      copy:'Suela Vibram con 5mm de lugs y upper reforzado. El Agility Peak 6 mejora el agarre y la protección lateral del Peak 5 para terreno más demandante.',
+      highlight:'Si ya tienes el Peak 5 y quieres más grip, este es el siguiente paso.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:4},distancia:'Media-Larga',
+      peso_g:278,stack_heel:36.1,stack_toe:24.6,drop_rr:11.5,score_rr:88,review_source:'RunRepeat',pros:['Excelente suela Vibram con Traction Lug','Confiable en terreno técnico','Mayor flexibilidad'],contras:['Foam FloatPro sin retorno de energía','Caja de dedos estrecha','Baja absorción de impacto'],link:'https://www.amazon.com.mx/Merrell-Agility-Peak-para-Hombre/dp/B0FY41LDGG',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Merrell Nova 4',marca:'Merrell',precio:'$2,300 MXN',precioNum:2300,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['versátil','amortiguado','diario'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'versátil',shortReason:'Trail diario de Merrell con buen balance comodidad-agarre.',
+      subhead:'El más versátil de Merrell para sendero mixto, distancias media.',
+      copy:'Foam FloatPro y suela Vibram para rodadas de entrenamiento en sendero mixto. El Nova 4 ofrece más amortiguación que el Agility Peak con agarre suficiente.',
+      highlight:'Buena opción para entrenamiento regular en terreno no muy técnico.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:3},distancia:'Media',
+      peso_g:272,stack_heel:37.7,stack_toe:25.6,drop_rr:12.1,score_rr:76,review_source:'RunRepeat',pros:['Excelente para principiantes en trail','Notablemente más ligero que la Nova 3','Buena transpirabilidad'],contras:['Retorno de energía muy bajo','Drop alto puede sentirse raro','Acolchado de talón débil'],link:'https://www.amazon.com.mx/Merrell-Nova-Zapatillas-para-Hombre/dp/B0DN88LC65',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Merrell Morphlite',marca:'Merrell',precio:'$2,100 MXN',precioNum:2100,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['ligero','puerta-trail','road-to-trail'],terreno:'Puerta a Trail / Ligero',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','10K'],
+      rol:'transición',shortReason:'Ligero y flexible para quienes empiezan en trail desde la ciudad.',
+      subhead:'El puente ideal de Merrell para sendero mixto, distancias corta.',
+      copy:'Upper ligero y suela Vibram de bajo perfil. El Morphlite es para quienes quieren un zapato cómodo en ciudad que también funcione en sendero suave.',
+      highlight:'Para rodar en trail suave. No recomendado para terreno técnico.',
+      metricas:{amortiguacion:3,agarre:2,estabilidad:3},distancia:'Corta',
+      peso_g:237,stack_heel:32.3,stack_toe:21.3,drop_rr:11.0,score_rr:75,review_source:'RunRepeat',pros:['Excelente relación precio','Construcción pluma','Funciona muy bien para pisada de talón'],contras:['Preocupaciones serias de durabilidad','Cobertura de suela escasa','No para pie ancho'],link:'https://www.amazon.com.mx/Merrell-Morphlite-Senderismo-Hombre-Blanco/dp/B0DMTJ7R3C',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'Merrell Moab Flight',marca:'Merrell',precio:'$2,200 MXN',precioNum:2200,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','ciudad'],tags:['amortiguado','versátil','Moab'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'confort',shortReason:'La amortiguación del Moab en formato trail runner.',
+      subhead:'El más cómodo de Merrell para sendero mixto, distancias media.',
+      copy:'Foam FloatPro de alta amortiguación y suela Vibram con perfil trail. El Moab Flight combina la protección de la línea Moab con la agilidad de un trail shoe.',
+      highlight:'Para quien ama la comodidad del Moab pero quiere correr.',
+      metricas:{amortiguacion:3,agarre:2,estabilidad:3},distancia:'Media',
+      peso_g:271,stack_heel:32.6,stack_toe:19.1,drop_rr:13.5,score_rr:68,review_source:'RunRepeat',pros:['Precio accesible','Upper cómodo y mullido','Amortiguación generosa en el talón'],contras:['Poca ventilación','Suela Vibram no muy agarradora','Drop se siente excesivo'],link:'https://www.amazon.com.mx/Merrell-Moab-Flight-Zapatos-Senderismo/dp/B0BF877VM2',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Merrell MX'},
+    {nombre:'New Balance Fresh Foam X Hierro v9',marca:'New Balance',precio:'$2,800 MXN',precioNum:2800,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['mixto','equilibrado','foam'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'equilibrado',shortReason:'El Hierro más reciente: más foam, más agarre, mismo precio.',
+      subhead:'El más equilibrado de New Balance para sendero mixto, distancias media.',
+      copy:'Fresh Foam X mejorado y suela Vibram Megagrip con 4.5mm de lugs. El Hierro v9 es el trail diario más completo de NB para terreno mixto.',
+      highlight:'Si ya tienes el Hierro v8, el v9 mejora en grip y comodidad.',
+      metricas:{amortiguacion:5,agarre:5,estabilidad:4},distancia:'Media',
+      peso_g:309,stack_heel:37.3,stack_toe:33.1,drop_rr:4.2,score_rr:85,review_source:'RunRepeat',pros:['Muchísimo foam bajo el pie','Suela Vibram Megagrip con tracción excepcional','Sorprendentemente estable pese a ser maximalista'],contras:['Horma no muy amplia','Más pesado que versiones anteriores','Perdió la flexibilidad de versiones pasadas'],link:'https://www.amazon.com.mx/s?k=New+Balance+Hierro+v9+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.newbalancemexico.com/',labelMarca:'New Balance MX'},
+    {nombre:'New Balance DynaSoft Nitrel v6',marca:'New Balance',precio:'$2,099 MXN',precioNum:2099,
+      bucket:['door_to_trail'],terrenoKeys:['mixto','ciudad'],tags:['puerta-trail','ligero','accesible'],terreno:'Puerta a Trail / Ciudad',
+      nivelKeys:['principiante'],objetivoKeys:['entrenamiento','10K'],
+      rol:'transición',shortReason:'El trail de entrada más accesible de New Balance.',
+      subhead:'El puente ideal de New Balance para transición ciudad-trail, distancias corta.',
+      copy:'DynaSoft foam y suela AT Tread para caminos de tierra y sendero suave. El Nitrel v6 es ligero y versátil para quienes corren principalmente en ciudad pero se aventuran al campo.',
+      highlight:'La opción más económica de New Balance para trail.',
+      metricas:{amortiguacion:2,agarre:2,estabilidad:5},distancia:'Corta',
+      peso_g:291,stack_heel:22.7,stack_toe:20.2,drop_rr:2.5,score_rr:68,review_source:'RunRepeat',pros:['Cómodo para uso todo el día','Muy estable','Excelente relación calidad-precio'],contras:['Necesita mejor suela','Poca amortiguación','No para pisada de talón'],link:'https://www.amazon.com.mx/s?k=New+Balance+Nitrel+v6+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.kuest.mx/marcas/5152-new-balance',labelMarca:'Kuest MX'},
+    {nombre:'New Balance FuelCell SuperComp Trail',marca:'New Balance',precio:'$4,500 MXN',precioNum:4500,
+      bucket:['technical_trail'],terrenoKeys:['montaña','mixto','roca'],tags:['velocidad','placa','carrera','elite'],terreno:'Técnico / Velocidad',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','21K','51Kplus'],
+      rol:'velocidad',shortReason:'La placa de carbono de New Balance para competencia en trail.',
+      subhead:'El más veloz de New Balance para terreno técnico, distancias corta-media.',
+      copy:'Placa de carbono + FuelCell foam de alta reactividad. El SuperComp Trail es la apuesta de NB en el segmento de race shoes para trail: ligero, reactivo y agresivo.',
+      highlight:'Para competencia. Requiere adaptación progresiva antes de una carrera.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:3},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=New+Balance+FuelCell+SuperComp+Trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.newbalancemexico.com/',labelMarca:'New Balance MX'},
+    {nombre:'New Balance Minimus Trail',marca:'New Balance',precio:'$1,700 MXN',precioNum:1700,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','ciudad'],tags:['minimalista','ligero','zero-drop','accesible'],terreno:'Mixto / Minimalista',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','10K'],
+      rol:'ligero',shortReason:'El trail minimalista de NB: ligero, flexible y muy accesible.',
+      subhead:'El más ligero de New Balance para sendero mixto, distancias corta.',
+      copy:'Drop 4mm y construcción minimalista para fortalecer el pie. El Minimus Trail es para corredores que buscan naturalidad en el movimiento en sendero no técnico.',
+      highlight:'Transición gradual recomendada si vienes de zapatos con mucha amortiguación.',
+      metricas:{amortiguacion:1,agarre:2,estabilidad:3},distancia:'Corta',
+      peso_g:213,stack_heel:19.5,stack_toe:14.3,drop_rr:5.2,score_rr:77,review_source:'RunRepeat',pros:['Durabilidad sobresaliente','Flexibilidad excepcional','Foam FuelCell con buen rebote'],contras:['Caja de dedos angosta limita el splay','Agarre débil','Heel rocker puede sentirse antinatural'],link:'https://www.amazon.com.mx/s?k=New+Balance+Minimus+Trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.newbalancemexico.com/',labelMarca:'New Balance MX'},
+    {nombre:'The North Face Vectiv Enduris 4',marca:'The North Face',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['placa','larga distancia','versátil'],terreno:'Mixto / Larga distancia',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'estabilidad',shortReason:'El Vectiv Enduris más reciente: más Dream foam y mejor grip.',
+      subhead:'El más estable de The North Face para sendero mixto, distancias larga-ultra.',
+      copy:'DREAM nitrogen-TPU foam + placa Vectiv + Surface Ctrl outsole. El Enduris 4 mejora la propulsión y estabilidad del 3 para distancias largas en terreno mixto.',
+      highlight:'El mejor Vectiv para entrenamiento de fondo y ultra en terreno mixto.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:5},distancia:'Larga-Ultra',
+      peso_g:275,stack_heel:35.8,stack_toe:24.2,drop_rr:11.6,score_rr:90,review_source:'RunRepeat',pros:['DREAM foam nitrogen-TPU excelente','Muy amortiguado para talones','Durabilidad fantástica'],contras:['Caja de dedos estrecha','Drop real muy distinto al declarado','No respira bien'],link:'https://www.amazon.com.mx/s?k=North+Face+Vectiv+Enduris+4+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.thenorthface.com.mx/tenis-vectiv-enduris-4-trail-running-hombre-nf0a8aepezi-glacier-gray-summit-nav/p',labelMarca:'The North Face MX'},
+    {nombre:'The North Face Vectiv Infinite 3',marca:'The North Face',precio:'$3,500 MXN',precioNum:3500,
+      bucket:['technical_trail','mixed_trail'],terrenoKeys:['roca','montaña','mixto'],tags:['técnico','placa','agarre agresivo'],terreno:'Técnico / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','competencia','21K','51Kplus'],
+      rol:'técnico',shortReason:'Placa Vectiv y suela agresiva para terreno técnico y montaña.',
+      subhead:'El más técnico de The North Face para terreno técnico, distancias media-larga.',
+      copy:'Surface Ctrl con 5mm de lugs + placa Vectiv doble. El Infinite 3 ataca terreno técnico con confianza: suela agresiva en roca y fango con protección excelente.',
+      highlight:'Para terreno técnico real: rocas, raíces, pendientes pronunciadas.',
+      metricas:{amortiguacion:4,agarre:5,estabilidad:5},distancia:'Media-Larga',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=North+Face+Vectiv+Infinite+3+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.thenorthface.com.mx/tenis-para-correr-vectiv-infinite-3-hombre-nf0a8aer801-winslor-bluehero-blue/p',labelMarca:'The North Face MX'},
+    {nombre:'The North Face Summit Vectiv Sky 2',marca:'The North Face',precio:'$4,500 MXN',precioNum:4500,
+      bucket:['technical_trail'],terrenoKeys:['roca','montaña'],tags:['carrera','ligero','técnico','elite'],terreno:'Técnico / Competencia',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','21K'],
+      rol:'velocidad',shortReason:'El race shoe más ligero de TNF: 8.3oz y placa Vectiv.',
+      subhead:'El más veloz de The North Face para terreno técnico, distancias corta-media.',
+      copy:'La zapatilla más ligera de la línea Summit con 32mm de stack y placa Vectiv. Para atletas elite que compiten en terreno técnico y necesitan el mínimo peso posible.',
+      highlight:'Exclusivo para competencia técnica. Requiere experiencia en trail.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=North+Face+Summit+Vectiv+Sky+2',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'The North Face MX'},
+    {nombre:'La Sportiva Mutant',marca:'La Sportiva',precio:'$3,700 MXN',precioNum:3700,
+      bucket:['technical_trail'],terrenoKeys:['roca','montaña'],tags:['técnico','agarre extremo','montaña','ultra'],terreno:'Técnico Extremo / Ultra',
+      nivelKeys:['avanzado'],objetivoKeys:['entrenamiento','competencia','51Kplus'],
+      rol:'técnico',shortReason:'El hybrid de La Sportiva para ultra en cualquier terreno.',
+      subhead:'El más técnico de La Sportiva para terreno técnico, distancias larga-ultra.',
+      copy:'Suela FriXion con doble patrón de lugs para roca y barro. El Mutant es el trail shoe más versátil de La Sportiva para distancias largas en terreno cambiante.',
+      highlight:'Para ultra runners que enfrentan terreno mixto en condiciones variables.',
+      metricas:{amortiguacion:3,agarre:5,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:323,stack_heel:33.2,stack_toe:21.9,drop_rr:11.3,score_rr:88,review_source:'RunRepeat',pros:['Fit excepcional para pie estrecho','Estabilidad sobresaliente','Upper extremadamente duradero'],contras:['Indiscutiblemente pesado','Midsole excesivamente firme','Suela puede gastarse rápido'],link:'https://www.amazon.com.mx/s?k=La+Sportiva+Mutant+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://lasportiva.mx/products/pa-mutant-hombre',labelMarca:'La Sportiva MX'},
+    {nombre:'La Sportiva Prodigio 2',marca:'La Sportiva',precio:'$3,300 MXN',precioNum:3300,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['versátil','amortiguado','all-terrain'],terreno:'Mixto / Todo Terreno',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'versátil',shortReason:'La Sportiva para todo terreno: el trail diario de la marca.',
+      subhead:'El más versátil de La Sportiva para sendero mixto, distancias media-larga.',
+      copy:'Cushion equilibrado y suela FriXion con 3.5mm de agarre. El Prodigio 2 es el trail shoe más versátil de La Sportiva para quienes entrenan en terreno variado.',
+      highlight:'Buena opción para quien quiere La Sportiva sin especializarse en un terreno.',
+      metricas:{amortiguacion:4,agarre:3,estabilidad:4},distancia:'Media-Larga',
+      peso_g:271,stack_heel:29.3,stack_toe:20.4,drop_rr:8.9,score_rr:82,review_source:'RunRepeat',pros:['Upper transpirable','Plataforma estable','Midsole supercrítico reactivo'],contras:['Durabilidad cuestionable','Necesita más foam','No para trail técnico real'],link:'https://www.amazon.com.mx/s?k=La+Sportiva+Prodigio+2+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'La Sportiva Prodigio Max',marca:'La Sportiva',precio:'$3,600 MXN',precioNum:3600,
+      bucket:['technical_trail','mixed_trail'],terrenoKeys:['montaña','mixto'],tags:['max-cushion','ultra','protección'],terreno:'Ultra / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','51Kplus'],
+      rol:'ultra',shortReason:'Máxima amortiguación La Sportiva para ultra y distancias extremas.',
+      subhead:'El especialista en ultra distancia de La Sportiva para terreno técnico, distancias larga-ultra.',
+      copy:'Foam de alta amortiguación con suela FriXion. El Prodigio Max es para ultra runners que necesitan protección máxima en distancias de 50K o más.',
+      highlight:'Específico para ultra. Amortiguación extrema para terreno duro en horas.',
+      metricas:{amortiguacion:5,agarre:4,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:306,stack_heel:35.1,stack_toe:28.0,drop_rr:7.1,score_rr:82,review_source:'RunRepeat',pros:['Tracción sólida en terreno variado','Muy duradero','Lockdown impresionante'],contras:['Caja de dedos estrecha','Algo pesado para su stack','No para runners con presupuesto ajustado'],link:'https://www.amazon.com.mx/s?k=La+Sportiva+Prodigio+Max+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'La Sportiva Akasha II',marca:'La Sportiva',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['mixed_trail','technical_trail'],terrenoKeys:['mixto','montaña','bosque'],tags:['versátil','equilibrado','larga distancia'],terreno:'Mixto / Fondo',
+      nivelKeys:['intermedio'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'equilibrado',shortReason:'Trail de fondo de La Sportiva: equilibrio entre grip y comodidad.',
+      subhead:'El más equilibrado de La Sportiva para sendero mixto, distancias media-larga.',
+      copy:'Foam amortiguado y suela FriXion con 4mm de agarre. El Akasha II equilibra protección y agilidad para entrenamiento largo en sendero mixto.',
+      highlight:'Para media a larga distancia en terreno no extremamente técnico.',
+      metricas:{amortiguacion:4,agarre:4,estabilidad:4},distancia:'Media-Larga',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=La+Sportiva+Akasha+II+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://lasportiva.mx/products/pa-akasha-ii',labelMarca:'La Sportiva MX'},
+    {nombre:'Adidas Terrex Agravic 4',marca:'Adidas',precio:'$2,500 MXN',precioNum:2500,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['diario','versátil','Terrex'],terreno:'Mixto / Entrenamiento',
+      nivelKeys:['principiante','intermedio'],objetivoKeys:['entrenamiento','21K'],
+      rol:'versátil',shortReason:'El trail diario de Terrex: sólido, cómodo y confiable.',
+      subhead:'El más versátil de Adidas para sendero mixto, distancias media.',
+      copy:'Lightstrike 3 foam y suela Continental Rubber con 4mm de agarre. El Agravic 4 es el trail de entrenamiento diario de Adidas: durable, cómodo y accesible.',
+      highlight:'Excelente para rodadas de entrenamiento en terreno mixto.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Media',
+      peso_g:283,stack_heel:32.6,stack_toe:23.5,drop_rr:9.1,score_rr:78,review_source:'RunRepeat',pros:['Buena absorción de impacto para su stack','Foam LIGHTSTRIKE más suave para terreno variado','Precio justo con cobertura Continental completa'],contras:['Retorno de energía por debajo del promedio','Durabilidad decepcionante del upper','Nada transpirable'],link:'https://www.amazon.com.mx/s?k=Adidas+Terrex+Agravic+4+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.adidas.mx/tenis-de-trail-running-terrex-agravic-4/KJ8870.html',labelMarca:'Adidas MX'},
+    {nombre:'Adidas Terrex Agravic Speed 2',marca:'Adidas',precio:'$3,200 MXN',precioNum:3200,
+      bucket:['technical_trail'],terrenoKeys:['roca','montaña','mixto'],tags:['velocidad','carrera','ligero','Terrex'],terreno:'Técnico / Velocidad',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','21K'],
+      rol:'velocidad',shortReason:'El trail race shoe más ligero de Adidas Terrex.',
+      subhead:'El más veloz de Adidas para terreno técnico, distancias corta-media.',
+      copy:'Lightstrike Pro ultra-light y Continental Rubber 4mm. El Agravic Speed 2 es el zapato de carrera más ligero de Terrex para distancias cortas y medias en trail técnico.',
+      highlight:'Para corredores rápidos que compiten en trail. Poca amortiguación.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Corta-Media',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/s?k=Adidas+Terrex+Agravic+Speed+2+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'https://www.adidas.mx/tenis-de-trail-running-terrex-agravic-speed-2/JR9103.html',labelMarca:'Adidas MX'},
+    {nombre:'Adidas Terrex Speed Ultra',marca:'Adidas',precio:'$3,500 MXN',precioNum:3500,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['ultra','carrera','elite','velocidad'],terreno:'Ultra / Técnico',
+      nivelKeys:['avanzado'],objetivoKeys:['competencia','51Kplus'],
+      rol:'ultra',shortReason:'El race shoe de ultra más rápido de Adidas Terrex.',
+      subhead:'El especialista en ultra distancia de Adidas para sendero mixto, distancias larga-ultra.',
+      copy:'Lightstrike Pro foam con Continental Rubber agresivo. El Terrex Speed Ultra está diseñado para atletas de élite que compiten en ultra trail con énfasis en velocidad.',
+      highlight:'Para atletas avanzados en competencias de ultra. No apto para principiantes.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Larga-Ultra',
+      peso_g:258,stack_heel:32.8,stack_toe:24.6,drop_rr:8.2,score_rr:81,review_source:'RunRepeat',pros:['Ligero y ágil bajo el pie','Suela Continental con buen agarre en superficies variadas','Seca rápido por su upper minimalista'],contras:['Diseño minimalista, poca amortiguación','Sin loop trasero para ajuste rápido','Tracción limitada en barro'],link:'https://www.amazon.com.mx/s?k=Adidas+Terrex+Speed+Ultra+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Adidas MX'},
+    {nombre:'Altra Lone Peak 9',marca:'Altra',precio:'$2,700 MXN',precioNum:2700,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque','montaña'],tags:['zero-drop','wide-toe','Vibram','ultra'],terreno:'Mixto / Montaña',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'equilibrado',shortReason:'El zero-drop más popular para trail con Vibram Megagrip.',
+      subhead:'El más equilibrado de Altra para sendero mixto, distancias larga-ultra.',
+      copy:'Zero drop, caja de dedos ancha y Vibram Megagrip. El Lone Peak 9 es el favorito de los ultra runners que quieren un movimiento más natural sin sacrificar agarre.',
+      highlight:'Ideal si priorizas pie natural y larga distancia. Adaptación necesaria si vienes de drop alto.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Larga-Ultra',
+      peso_g:309,stack_heel:23.3,stack_toe:23.3,drop_rr:0.0,score_rr:91,review_source:'RunRepeat',pros:['Verdadero zero-drop','Caja de dedos extra-ancha','Opción Vibram Megagrip disponible'],contras:['Se siente pesado para su talla','Más rígido que versiones anteriores','Poca circulación de aire'],link:'https://www.amazon.com.mx/dp/B0D47XWLRJ',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'Altra Olympus 7',marca:'Altra',precio:'$3,400 MXN',precioNum:3400,
+      bucket:['mixed_trail'],terrenoKeys:['mixto','bosque'],tags:['zero-drop','max-cushion','ultra','Vibram'],terreno:'Técnico / Ultra',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','51Kplus'],
+      rol:'ultra',shortReason:'Zero drop con stack máximo: el ultra shoe de Altra para terreno duro.',
+      subhead:'El especialista en ultra distancia de Altra para sendero mixto, distancias larga-ultra.',
+      copy:'Ego Max foam rediseñado + Vibram Megagrip. El Olympus 7 ofrece el stack más alto de Altra con zero drop: protección máxima sin alterar la biomecánica natural.',
+      highlight:'Para ultra runners que quieren amortiguación extrema sin drop.',
+      metricas:{amortiguacion:5,agarre:4,estabilidad:4},distancia:'Larga-Ultra',
+      peso_g:325,stack_heel:33.0,stack_toe:31.0,drop_rr:2.0,score_rr:81,review_source:'RunRepeat',pros:['Grip en mojado y seco','Comodidad excepcional','Ride estable'],contras:['Durabilidad muy cuestionable','Cordones que hacen daño','Precio elevado'],link:'https://www.amazon.com.mx/s?k=Altra+Olympus+7+trail',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'Altra Timp 5',marca:'Altra',precio:'$2,900 MXN',precioNum:2900,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['zero-drop','all-terrain','versátil'],terreno:'Mixto / Todo Terreno',
+      nivelKeys:['intermedio'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'versátil',shortReason:'El trail más versátil de Altra: zero drop para todo tipo de sendero.',
+      subhead:'El más versátil de Altra para sendero mixto, distancias media-larga.',
+      copy:'Foam Altra EGO + Vibram con 4.5mm de lugs. El Timp 5 es el trail shoe más versátil de Altra: suficiente grip para técnico, suficiente comodidad para larga distancia.',
+      highlight:'El mejor Altra para quien quiere uno solo para todo tipo de sendero.',
+      metricas:{amortiguacion:3,agarre:4,estabilidad:3},distancia:'Media-Larga',
+      peso_g:269,stack_heel:28.6,stack_toe:28.7,drop_rr:0.0,score_rr:80,review_source:'RunRepeat',pros:['Suela Vibram Megagrip','Gran mejora de peso vs anterior','Excepcionalmente estable'],contras:['Necesita mejor foam','No para pisada de talón','Poca sensación del terreno'],link:'https://www.amazon.com.mx/dp/B0D47ZSX8J',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Run24'},
+    {nombre:'Asics Trabuco Max 5',marca:'Asics',precio:'$3,699 MXN',precioNum:3699,
+      bucket:['mixed_trail','technical_trail'],terrenoKeys:['montaña','mixto','bosque'],tags:['max-cushion','larga distancia','ultra'],terreno:'Mixto / Larga distancia',
+      nivelKeys:['intermedio','avanzado'],objetivoKeys:['entrenamiento','21K','51Kplus'],
+      rol:'confort',shortReason:'El ultra shoe de Asics: máxima amortiguación Gel para trail largo.',
+      subhead:'El más cómodo de Asics para sendero mixto, distancias larga-ultra.',
+      copy:'FF BLAST+ Eco foam y Gel heel para amortiguación extrema. El Trabuco Max 5 lleva la comodidad de Asics al trail de larga distancia con suela de buen agarre.',
+      highlight:'Para runners de Asics que quieren entrar al trail con máxima comodidad.',
+      metricas:{amortiguacion:5,agarre:4,estabilidad:4},distancia:'Larga-Ultra',
+      review_source:'pendiente',link:'https://www.amazon.com.mx/dp/B0FV7MXK2R',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Asics MX'},
+    {nombre:'Saucony Peregrine 16',marca:'Saucony',precio:'$2,900 MXN',precioNum:2900,
+      bucket:['mixed_trail','door_to_trail'],terrenoKeys:['mixto','bosque'],tags:['versátil','agarre','actualizado'],terreno:'Mixto / Sendero',
+      nivelKeys:['principiante','intermedio','avanzado'],objetivoKeys:['entrenamiento','competencia','distancia','10K','21K'],
+      rol:'versátil',shortReason:'Suela Vibram Megagrip nueva — versátil en gravel y sendero mixto.',
+      subhead:'El más versátil de Saucony para sendero mixto, distancias media.',
+      copy:'PWRRUN foam con la nueva suela Vibram Megagrip. Ride estable y fit seguro para terreno mixto y gravel — no es un zapato de roca extrema, es el versátil de Saucony.',
+      highlight:'Ideal si quieres un zapato confiable para sendero mixto sin ir a los extremos técnicos.',
+      metricas:{amortiguacion:4,agarre:5,estabilidad:4},distancia:'Media',
+      peso_g:278,stack_heel:31.7,stack_toe:26.9,drop_rr:4.8,score_rr:88,review_source:'RunRepeat',pros:['Suela Vibram Megagrip — gran mejora de tracción','Ride estable con fit seguro','Versátil en terrenos variados'],contras:['Ligero aumento de peso vs versión anterior','Caja de dedos ahusada limita el splay','Drop bajo no es para todos'],
+      link:'https://www.amazon.com.mx/dp/B0F9LJKWXS',linkRunnics:'',linkDecathlon:'',linkMarca:'',labelMarca:'Saucony MX'}
+  ];
+
+  // REGLA 6: Pickers explícitos por rol
+  // REGLA 1d: preferencias avanzadas opcionales (pisada, prioridad) suman un
+  // boost al score del pick recomendado — aditivo, si el usuario no elige
+  // nada esto devuelve 0 y el comportamiento queda identico al de antes.
+  function preferenciaScore(z, pisada, prioridad, terreno){
+    let score=0;
+    if(pisada==='pronador') score += (z.metricas.estabilidad||0)*2;
+    if(pisada==='supinador') score += (z.metricas.amortiguacion||0)*2;
+    if(prioridad==='ligereza' && z.peso_g) score += Math.max(0,(350-z.peso_g))/20;
+    if(prioridad==='agarre') score += (z.metricas.agarre||0)*2;
+    if(prioridad==='amortiguacion') score += (z.metricas.amortiguacion||0)*2;
+    if(prioridad==='estabilidad') score += (z.metricas.estabilidad||0)*2;
+    // REGLA 1e: terreno especifico (roca vs montaña, bosque vs mixto) desempata
+    // dentro del bucket colapsado — antes elegir 'roca' o 'montaña' daba
+    // exactamente el mismo resultado porque ambos mapean a technical_trail.
+    if(terreno && (z.terrenoKeys||[]).includes(terreno)) score += 3;
+    return score;
+  }
+
+  function pickRecommended(pool, pisada, prioridad, terreno){
+    const inBudget=pool.filter(z=>z.precioNum<=maxMXN);
+    if(inBudget.length>=1){
+      // Dentro del presupuesto: mejor score, desempate por precio (más caro = más especializado)
+      return [...inBudget].sort((a,b)=>
+        ((b.metricas.agarre+b.metricas.estabilidad)+preferenciaScore(b,pisada,prioridad,terreno))
+        -((a.metricas.agarre+a.metricas.estabilidad)+preferenciaScore(a,pisada,prioridad,terreno))
+        || b.precioNum-a.precioNum
+      )[0];
+    } else {
+      // Sin opciones en presupuesto: el más barato del pool (mostrará badge fuera/subir)
+      return [...pool].sort((a,b)=>a.precioNum-b.precioNum)[0];
+    }
+  }
+
+  function pickComfort(pool, excludeNames){
+    const available=pool.filter(z=>!excludeNames.includes(z.nombre));
+    const inBudget=available.filter(z=>z.precioNum<=maxMXN);
+    const base=inBudget.length?inBudget:available;
+    return [...base].sort((a,b)=>b.metricas.amortiguacion-a.metricas.amortiguacion||b.precioNum-a.precioNum)[0];
+  }
+
+  function pickTraction(pool, excludeNames){
+    const available=pool.filter(z=>!excludeNames.includes(z.nombre));
+    const inBudget=available.filter(z=>z.precioNum<=maxMXN);
+    const base=inBudget.length?inBudget:available;
+    return [...base].sort((a,b)=>b.metricas.agarre-a.metricas.agarre||b.precioNum-a.precioNum)[0];
+  }
+
+  // Pool por bucket (terreno) — incluye mud_soft_ground si el usuario pidio humedad
+  const poolBucket=catalogo.filter(z=>z.bucket.some(b=>bucketsObjetivo.includes(b)));
+
+  // REGLA 1b: nivel y objetivo deben pesar en la seleccion — antes se pedian y se ignoraban
+  // (causaba recomendar zapatos de "entrenamiento urbano" cuando el usuario pedia "mejorar tecnica")
+  // Orden de relajacion: el OBJETIVO es la señal mas fuerte (el "para qué" del zapato) —
+  // se relaja el nivel primero, nunca el objetivo, salvo que ni terreno+objetivo alcancen.
+  let pool=poolBucket.filter(z=>(z.nivelKeys||[]).includes(nivel) && (z.objetivoKeys||[]).includes(objetivo));
+  if(pool.length<3){
+    // Relajar nivel: mantener el objetivo intacto
+    pool=poolBucket.filter(z=>(z.objetivoKeys||[]).includes(objetivo));
+  }
+  if(pool.length<3){
+    // Relajar objetivo: mantener al menos el nivel
+    pool=poolBucket.filter(z=>(z.nivelKeys||[]).includes(nivel));
+  }
+  if(pool.length<3){
+    // Relajar del todo: terreno solo (comportamiento previo al fix)
+    pool=poolBucket;
+  }
+
+  // Si el bucket principal no tiene opciones en presupuesto, agregar en-presupuesto de cualquier bucket
+  const inBudgetFromBucket=pool.filter(z=>z.precioNum<=maxMXN);
+  if(inBudgetFromBucket.length<3){
+    const budgetAlts=catalogo.filter(z=>z.precioNum<=maxMXN&&!pool.some(p=>p.nombre===z.nombre));
+    pool=[...pool,...budgetAlts];
+  }
+
+  // Fallback general: mixed_trail si aun hay menos de 3
+  if(pool.length<3){
+    const extras=catalogo.filter(z=>z.bucket.includes('mixed_trail')&&!pool.some(p=>p.nombre===z.nombre));
+    pool=[...pool,...extras];
+  }
+
+  const rec=pickRecommended(pool, pisada, prioridad, terreno);
+  const comfort=pickComfort(pool,[rec?.nombre].filter(Boolean));
+  const traction=pickTraction(pool,[rec?.nombre,comfort?.nombre].filter(Boolean));
+
+  const roleLabels={
+    recomendado:'Mejor para ti',
+    alternativa_comoda:'Más comodidad',
+    alternativa_traccion:'Más tracción'
+  };
+
+  function withRole(z,role){
+    if(!z) return null;
+    const badge=budgetBadge(z);
+    return{...z,
+      badgeLabel:roleLabels[role]||'Alternativa',
+      budgetBadge:badge,
+      rol:role
+    };
+  }
+
+  const picks=[withRole(rec,'recomendado'),withRole(comfort,'alternativa_comoda'),withRole(traction,'alternativa_traccion')]
+    .filter(Boolean);
+
+  // REGLA 10: Gear por bucket
+  const gearByBucket={
+    mixed_trail:['Medias técnicas de trail (anti-ampolla)','Hidratación: botella suave 500ml mínimo'],
+    technical_trail:['Medias anti-ampolla con mejor ajuste','Hidratación: botella suave 500ml o más','Chaleco si la ruta supera 1.5h'],
+    mud_soft_ground:['Medias técnicas de secado rápido','Gaiters / polainas opcionales','Cambio de calcetas post-carrera'],
+    door_to_trail:['Medias ligeras transpirables','Botella suave 500ml']
+  };
+  let equipo=[...(gearByBucket[bucket]||gearByBucket.mixed_trail)];
+
+  if(['21K','51Kplus'].includes(objetivo)){equipo.push('Chaleco de hidratación (2L+)','Geles energéticos / nutrición de carrera');}
+  if(objetivo==='51Kplus'){equipo.push('Bastones de trail (carbono o aluminio)','Kit de emergencia (manta, silbato, linterna)');}
+
+  const presupuestoLabel={'menos2000':'Menos de $2,000','2000-4000':'$2,000–$4,000','mas4000':'Más de $4,000'};
+  const result={
+    zapatos:picks.map(z=>({
+      nombre:z.nombre,marca:z.marca,precio:z.precio,
+      copy:z.copy,descripcion:z.copy,
+      terreno:z.terreno,tags:z.tags,link:z.link,
+      linkRunnics:z.linkRunnics,linkDecathlon:z.linkDecathlon,linkMarca:z.linkMarca,labelMarca:z.labelMarca,
+      rol:z.rol,subhead:z.subhead,highlight:z.highlight,
+      mejorPara:z.shortReason,distancia:z.distancia,metricas:z.metricas,
+      badgeLabel:z.badgeLabel,budgetBadge:z.budgetBadge,
+      peso_g:z.peso_g,stack_heel:z.stack_heel,stack_toe:z.stack_toe,drop_rr:z.drop_rr,
+      score_rr:z.score_rr,review_source:z.review_source,pros:z.pros,contras:z.contras,
+      terrenoKeys:z.terrenoKeys,nivelKeys:z.nivelKeys,objetivoKeys:z.objetivoKeys,
+      bucket:z.bucket
+    })),
+    equipo,objetivo,terreno,nivel,presupuesto:presupuestoLabel[presupuesto]||presupuesto,
+    bucket
+  };
+    return result;
+}
+/* MOTOR-TENIS:END */
+(function(){
+  const vivo=/(\.github\.io|runcierge\.ai)$/.test(location.hostname);
+  const fr=document.getElementById("wFrame"), panelN=document.getElementById("wPanel"), pie=document.getElementById("wPie"), panelT=document.getElementById("tenisPanel");
+  const elige_=document.getElementById("herrElige"), hBarra=document.getElementById("herrBarra"), hbK=document.getElementById("hbK"), hbT=document.getElementById("hbT"), hbC=document.getElementById("hbCambia");
+  let ro=null, actual=null;
+  function ajusta(){ try{ const d=fr.contentDocument; if(!d||!d.body) return; const h=Math.min(5000,Math.max(d.documentElement.scrollHeight,d.body.scrollHeight)); if(h>300) fr.style.height=h+"px"; }catch(e){} }
+  fr.addEventListener("load",()=>{ ajusta(); try{ if(ro) ro.disconnect(); ro=new ResizeObserver(ajusta); ro.observe(fr.contentDocument.body); }catch(e){} });
+  function elige(k){
+    if(actual===k) return; actual=k;
+    document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-expanded",String(t.dataset.w===k)));
+    elige_.hidden=true; hBarra.hidden=false;
+    hbK.textContent=k==="tenis"?"Tenis ideal":"Nutrición ideal";
+    hbT.textContent=k==="tenis"?"¿Qué tenis de trail te conviene?":"¿Qué llevar en la sesión de mañana?";
+    hbC.textContent=k==="tenis"?"Cambiar a Nutrición ideal":"Cambiar a Tenis ideal";
+    panelT.hidden=k!=="tenis"; panelN.hidden=k!=="nutricion"; pie.hidden=k!=="nutricion";
+    if(k==="nutricion" && !fr.src){ fr.src=vivo?"https://dagurrola.github.io/fueling-coach/":"widgets/nutricion/index.html"; }
+  }
+  const sube=()=>hBarra.scrollIntoView({behavior:"smooth",block:"start"});
+  document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{ elige(t.dataset.w); sube(); }));
+  hbC.addEventListener("click",()=>{ elige(actual==="tenis"?"nutricion":"tenis"); sube(); });
+  document.querySelectorAll("[data-ir-w]").forEach(a=>a.addEventListener("click",()=>elige(a.dataset.irW)));
+
+  /* Tenis ideal */
+  const T={nivel:"",terreno:"",humedad:"",presupuesto:"",objMaj:"",objSub:"",pisada:"",prioridad:""};
+  const SUB={entrenamiento:["¿Qué quieres mejorar?",[["tecnica","Técnica"],["distancia","Distancia"],["velocidad","Velocidad"]]],
+             competencia:["¿De qué distancia?",[["5K","5 K"],["10K","10 K"],["21K","21 K"],["51Kplus","51 K o más"]]]};
+  const PRESU={dentro:"Dentro de tu presupuesto",subir:"Si puedes subir un poco",fuera:"Fuera de tu presupuesto"};
+  const lado=document.getElementById("tnLado"), listo=document.getElementById("tnListo");
+  let elegido=0, res=null;
+  const esc=t=>String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function compra(z){ if(z.linkMarca) return [z.linkMarca,"Comprar en "+(z.labelMarca||"tienda oficial")]; if(z.linkDecathlon) return [z.linkDecathlon,"Comprar en Decathlon"]; if(z.link) return [z.link,"Ver en Amazon MX"]; return null; }
+  function barra(n){ let h=""; for(let i=1;i<=5;i++) h+='<i class="'+(i<=n?"si":"")+'"></i>'; return '<span aria-label="'+n+' de 5">'+h+'</span>'; }
+  function pinta(){
+    const req=["nivel","terreno","presupuesto","objMaj"];
+    req.forEach(k=>{ const q=document.querySelector('.tn-q[data-q="'+k+'"]'); if(q) q.classList.toggle("hecho",!!T[k]); });
+    const faltan=req.filter(k=>!T[k]).length;
+    res = faltan ? null : recomendarTenis(T);
+    listo.classList.toggle("si",!!res);
+    if(!res){
+      let p=""; req.forEach(k=>p+='<i class="'+(T[k]?"si":"")+'"></i>');
+      lado.innerHTML='<div class="tn-vacio"><b>Tu par aparece aquí.</b><div class="pasos" aria-hidden="true">'+p+'</div><span>'+(faltan===4?"Contesta cuatro preguntas. Se arma mientras eliges.":"Faltan "+faltan+(faltan===1?" respuesta.":" respuestas."))+'</span></div>';
+      return;
+    }
+    if(elegido>=res.zapatos.length) elegido=0;
+    const z=res.zapatos[elegido], c=compra(z), m=z.metricas||{};
+    const ficha=[z.peso_g?'<span><b>'+z.peso_g+' g</b> peso</span>':"", (z.drop_rr!=null&&z.drop_rr!=="")?'<span><b>'+z.drop_rr+' mm</b> drop</span>':"", z.stack_heel?'<span><b>'+z.stack_heel+' mm</b> suela al talón</span>':"", z.distancia?'<span><b>'+esc(z.distancia)+'</b> distancia</span>':""].join("");
+    const pros=(z.pros||[]).slice(0,3).map(t=>"<li>"+esc(t)+"</li>").join(""), contras=(z.contras||[]).slice(0,3).map(t=>"<li>"+esc(t)+"</li>").join("");
+    let h='<article class="tn-res"><div class="tn-top"><span class="k">'+esc(z.badgeLabel)+'</span>'+(PRESU[z.budgetBadge]?'<span class="presu '+z.budgetBadge+'">'+PRESU[z.budgetBadge]+'</span>':"")+'</div>'+
+      '<h3>'+esc(z.nombre)+'</h3><p class="tn-precio">'+esc(z.precio)+' · '+esc(z.terreno||"Trail")+'</p>'+
+      '<p class="tn-why">'+esc(z.mejorPara||z.copy)+'</p>'+
+      '<div class="metr"><div>Amortiguación'+barra(m.amortiguacion||0)+'</div><div>Agarre'+barra(m.agarre||0)+'</div><div>Estabilidad'+barra(m.estabilidad||0)+'</div></div>'+
+      (ficha?'<div class="ficha">'+ficha+'</div>':"")+
+      ((pros||contras)?'<div class="pc">'+(pros?'<ul class="mas">'+pros+'</ul>':"")+(contras?'<ul class="menos">'+contras+'</ul>':"")+'</div>':"")+
+      '<div class="tn-comprar">'+(c?'<a class="btn" href="'+esc(c[0])+'" target="_blank" rel="noopener">'+esc(c[1])+' ↗</a>':"")+(z.review_source&&z.review_source!=="pendiente"?'<small>Datos técnicos: '+esc(z.review_source)+'</small>':"")+'</div></article>';
+    const otros=res.zapatos.map((o,i)=>i===elegido?"":'<button type="button" class="alt" data-i="'+i+'"><span class="k">'+esc(o.badgeLabel)+'</span><b>'+esc(o.nombre)+'</b><span>'+esc(o.precio)+'</span><em>'+esc(o.mejorPara||"")+'</em></button>').join("");
+    if(otros) h+='<div class="alts">'+otros+'</div>';
+    h+='<p class="puente">Con tu Garmin conectado llevo los kilómetros de cada par y te aviso cuando toca cambiarlo.</p>';
+    lado.innerHTML=h;
+    lado.querySelectorAll(".alt").forEach(b=>b.addEventListener("click",()=>{ elegido=+b.dataset.i; pinta(); }));
+  }
+  function subObjetivo(){
+    const box=document.getElementById("tnSub"), seg=document.getElementById("tnSubSeg");
+    const d=SUB[T.objMaj]; T.objSub="";
+    if(!d){ box.hidden=true; return; }
+    document.getElementById("tnSubQ").textContent=d[0]+" (opcional)";
+    seg.innerHTML=d[1].map(([v,t])=>'<button type="button" data-v="'+v+'" aria-pressed="false">'+t+'</button>').join("");
+    box.hidden=false;
+  }
+  panelT.addEventListener("click",e=>{
+    const b=e.target.closest(".seg button"); if(!b) return;
+    const g=b.closest("[data-q]"); const k=g.dataset.q;
+    const ya=b.getAttribute("aria-pressed")==="true";
+    const opcional=(k==="humedad"||k==="objSub");
+    b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));
+    if(ya && opcional){ T[k]=""; } else { b.setAttribute("aria-pressed","true"); T[k]=b.dataset.v; }
+    if(k==="terreno") document.getElementById("tnHum").hidden=false;
+    if(k==="objMaj") subObjetivo();
+    elegido=0; pinta();
+  });
+  pinta();
+})();
+</script>
+
+</body></html>
