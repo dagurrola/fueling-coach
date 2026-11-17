@@ -549,7 +549,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     </div>
     <h2 style="margin-top:1.5rem">Ese sábado puede ser el tuyo.</h2>
     <form class="form" id="wl" novalidate><label for="wlMail">Tu correo<input id="wlMail" type="email" inputmode="email" autocomplete="email" placeholder="tú@correo.com" required></label><button class="btn" type="submit">Avísame cuando me toque</button></form>
-    <p class="nota">Solo el correo. Nada de contraseñas de Garmin, nunca: te conectas en la pantalla oficial de Garmin. <span class="pend">[se conecta al alta real]</span></p>
+    <p class="nota">Solo el correo. Nada de contraseñas de Garmin, nunca: te conectas en la pantalla oficial de Garmin. </p>
+    <p class="err" id="eWl" aria-live="polite"></p>
     <footer>
       <span>Runcierge · Morelia, México</span>
       <nav aria-label="Pie"><a href="../privacidad.html" target="_blank" rel="noopener">Aviso de privacidad</a><button class="liga" type="button" data-abre="invi">Tengo invitación</button><button class="liga" type="button" data-abre="estado">Mi estado</button></nav>
@@ -571,9 +572,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <p class="hora">1 · Acceso por invitación</p>
     <h2 id="flT">¿Tienes código de invitación?</h2>
     <p class="lead">Voy abriendo de a cinco o diez corredores. Sin código, apúntate en la lista y te escribo cuando se abra tu lugar.</p>
-    <div class="campo"><label for="fCod">Tu código</label><input id="fCod" type="text" autocomplete="off" placeholder="RUN-XXXX" style="text-transform:uppercase;letter-spacing:.08em"></div>
+    <div class="campo"><label for="fCod">Tu código</label><input id="fCod" type="text" autocomplete="off" placeholder="RUN-XXXX-XXXX" maxlength="20" style="text-transform:uppercase;letter-spacing:.08em"></div>
     <p class="err" id="eCod" aria-live="polite"></p>
-    <p class="nota">En este prototipo sirve <b>RUN-2026</b>.</p>
     <div class="fila-btn"><button class="btn" type="submit">Validar</button><a class="atras" href="#cierre" data-cierra>No tengo código</a></div>
   </form>
 
@@ -581,7 +581,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <p class="hora">1 · Acceso por invitación · código válido</p>
     <h2>Tu correo es tu cuenta.</h2>
     <p class="lead">Sin contraseña. Cuando quieras entrar a tu estado, te mando un enlace por Telegram.</p>
-    <div class="campo"><label for="fMail">Tu correo</label><input id="fMail" type="email" inputmode="email" autocomplete="email" placeholder="tú@correo.com"></div>
+    <div class="campo"><label for="fMail">Tu correo</label><input id="fMail" type="email" maxlength="254" inputmode="email" autocomplete="email" placeholder="tú@correo.com"></div>
     <p class="err" id="eMail" aria-live="polite"></p>
     <div class="fila-btn"><button class="btn" type="submit">Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
   </form>
@@ -594,13 +594,13 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <label class="check"><input type="checkbox" class="cons" id="c3"><span><b>Puedes desconectar y borrar todo cuando quieras.</b> Desde tu estado o desde Garmin Connect.</span></label>
     <p class="nota">Detalle completo en el <a href="../privacidad.html" target="_blank" rel="noopener">aviso de privacidad</a>.</p>
     <div class="pg" id="pgGarmin" hidden>
-      <p class="marca">AQUÍ VA LA PANTALLA OFICIAL DE GARMIN · SIMULADA</p>
-      <p>Garmin te pide entrar con tu cuenta y autorizar a Runcierge. La contraseña la escribes en Garmin, nunca aquí.</p>
-      <ul><li>Actividades</li><li>Salud: sueño, estrés, recuperación</li><li>Entrenamiento: enviar sesiones a tu reloj</li></ul>
-      <div class="fila-btn"><button class="btn" type="button" id="pgOk">Autorizar (simulado)</button></div>
+      <p class="marca">TU CUENTA YA ESTÁ CREADA</p>
+      <p>Falta conectar tu Garmin en su pantalla oficial. Esa conexión todavía no está abierta en esta beta: en cuanto lo esté, la haces desde tu estado. La contraseña la escribes en Garmin, nunca aquí.</p>
+      <div class="fila-btn"><button class="btn" type="button" id="pgOk">Seguir con mi setup</button></div>
     </div>
     <p class="ok-g" id="gOk" hidden>Garmin conectado</p>
-    <div class="fila-btn"><button class="btn" type="button" id="bGarmin" disabled>Conectar mi Garmin</button><button class="btn" type="submit" id="bGarminSig" hidden>Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
+    <p class="err" id="eGar" aria-live="polite"></p>
+    <div class="fila-btn"><button class="btn" type="button" id="bGarmin" disabled>Acepto, crear mi cuenta</button><button class="btn" type="submit" id="bGarminSig" hidden>Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
   </form>
 
   <!-- 2 · Setup -->
@@ -609,12 +609,13 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <h2>Lo que tu reloj no me dice.</h2>
     <p class="aviso">Garmin me manda tus sesiones desde hoy, no las anteriores. Por eso te pregunto lo esencial: lo demás lo aprendo de cada entrenamiento.</p>
     <div class="campo"><label for="fReloj">Tu reloj</label><select id="fReloj"><option value="">Elige uno</option><option>Forerunner</option><option>Fenix</option><option>Enduro</option><option>Epix</option><option>Instinct</option><option>Otro Garmin</option></select></div>
-    <div class="campo"><label for="fRitmo">Tu ritmo cómodo en plano (min/km)</label><input id="fRitmo" type="text" inputmode="decimal" placeholder="6:30"></div>
-    <div class="campo"><label for="fTenis">Los tenis que más usas</label><input id="fTenis" type="text" placeholder="Speedgoat 5"></div>
-    <div class="campo"><label for="fKm">¿Cuántos km crees que llevan?</label><input id="fKm" type="text" inputmode="numeric" placeholder="300"></div>
+    <div class="campo"><label for="fRitmo">Tu ritmo cómodo en plano (min/km)</label><input id="fRitmo" type="text" maxlength="12" inputmode="decimal" placeholder="6:30"></div>
+    <div class="campo"><label for="fTenis">Los tenis que más usas</label><input id="fTenis" type="text" maxlength="80" placeholder="Speedgoat 5"></div>
+    <div class="campo"><label for="fKm">¿Cuántos km crees que llevan?</label><input id="fKm" type="text" maxlength="5" inputmode="numeric" placeholder="300"></div>
     <p class="nota">Si no sabes, déjalo en blanco: lo completas después por Telegram.</p>
     <div class="campo"><span class="q">¿Corres para competir o para entrenar?</span><div class="seg" id="sComp" role="group" aria-label="Competencia o entrenamiento"><button type="button" data-v="Competencia" aria-pressed="false">Tengo una carrera</button><button type="button" data-v="Entrenamiento" aria-pressed="false">Solo entrenar</button></div></div>
     <div class="campo"><span class="q">¿Dónde te escribo?</span><div class="seg" id="sCanal" role="group" aria-label="Canal"><button type="button" data-v="Telegram" aria-pressed="true">Telegram</button><button type="button" data-v="" aria-pressed="false" disabled title="Próximamente">WhatsApp · próximamente</button></div></div>
+    <p class="err" id="eSet" aria-live="polite"></p>
     <div class="fila-btn"><button class="btn" type="submit">Seguir</button><button class="atras" type="button" data-atras>Atrás</button></div>
   </form>
 
@@ -636,7 +637,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <h2>¿Qué estás buscando?</h2>
     <div class="campo"><span class="q">Tu objetivo</span><div class="seg" id="sObj" role="group" aria-label="Objetivo"><button type="button" data-v="Competencia" aria-pressed="false">Una carrera</button><button type="button" data-v="Mejorar base" aria-pressed="false">Mejorar mi base</button><button type="button" data-v="Mantenimiento" aria-pressed="false">Mantenerme</button><button type="button" data-v="No sé todavía" aria-pressed="false">No sé todavía</button></div></div>
     <div class="campo"><span class="q">¿Tienes plan o entrenador?</span><div class="seg" id="sPlan" role="group" aria-label="Plan"><button type="button" data-v="si" aria-pressed="false">Sí</button><button type="button" data-v="no" aria-pressed="false">No</button></div></div>
-    <div class="campo" id="cPlan" hidden><label for="fPlan">Pégalo como te lo mandaron. Lo convierto en sesiones para tu reloj.</label><textarea id="fPlan" placeholder="Lunes: gym B. Martes: cuestas 6×2 min. Sábado: largo 100 min Z2…"></textarea></div>
+    <div class="campo" id="cPlan" hidden><label for="fPlan">Pégalo como te lo mandaron. Lo convierto en sesiones para tu reloj.</label><textarea id="fPlan" maxlength="8000" placeholder="Lunes: gym B. Martes: cuestas 6×2 min. Sábado: largo 100 min Z2…"></textarea></div>
     <p class="nota" id="nPlan" hidden>Sin plan no pasa nada: leo lo que hagas y lo comparo contra ti mismo.</p>
     <p class="err" id="eEnt" aria-live="polite"></p>
     <div class="fila-btn"><button class="btn" type="submit">Terminar</button><button class="atras" type="button" data-atras>Atrás</button></div>
@@ -644,10 +645,10 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
 
   <!-- listo: primer valor -->
   <div class="paso" data-paso="listo" hidden>
-    <p class="hora">Listo · tu primer mensaje</p>
-    <h2>Ya te escribí a Telegram.</h2>
+    <p class="hora">Listo · tu cuenta está creada</p>
+    <h2>Así te voy a escribir.</h2>
     <article class="msg" aria-label="Mensaje de bienvenida"><div class="hd"><i>R</i>Runcierge<span>ahora</span></div><div id="bien"></div></article>
-    <p class="nota">Ejemplo armado con tus respuestas de este prototipo. Lo que va entre corchetes lo llenaría tu Garmin.</p>
+    <p class="nota">Ejemplo armado con tus respuestas. Lo que va entre corchetes lo llena tu Garmin cuando lo conectes.</p>
     <div class="fila-btn"><button class="btn" type="button" data-ir="estado">Ver mi estado</button><button class="atras" type="button" data-atras>Atrás</button></div>
   </div>
 
@@ -656,7 +657,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
     <p class="hora">5 · Mi estado</p>
     <h2 id="eHola">Tu estado</h2>
     <div class="est">
-      <div><span class="k">Conexión</span><span class="v">Garmin conectado</span><span class="s">Leo tus sesiones unos minutos después de que pares el reloj.</span></div>
+      <div><span class="k">Conexión</span><span class="v" id="eCon">[tu Garmin]</span><span class="s" id="eConS">Entra con tu invitación para ver tu estado.</span></div>
       <div><span class="k">Objetivo</span><span class="v" id="eObj">[objetivo]</span><span class="s" id="ePlan">[plan]</span></div>
       <div><span class="k">Esta semana</span><span class="v">Aún sin sesiones</span><span class="s">Tu primera sesión aparece aquí en cuanto la termines.</span></div>
       <div><span class="k">Último mensaje</span><span class="v">Bienvenida</span><span class="s">El próximo llega la noche antes de tu siguiente sesión.</span></div>
@@ -686,22 +687,41 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
       <p class="marca">CONFIRMA</p>
       <p>Se borra todo: tus sesiones, tus mensajes, tus tenis y tu correo. Garmin queda desconectado. No se puede deshacer.</p>
       <div class="fila-btn"><button class="btn peligro" type="button" id="bBorrar">Sí, borrar todo</button><button class="atras" type="button" id="bNoBorrar">Mejor no</button></div>
+      <p class="err" id="eBor" aria-live="polite"></p>
     </div>
-    <p class="ok" id="borrado" hidden>Listo. Tu cuenta y tus datos están borrados (simulado).</p>
+    <p class="ok" id="borrado" hidden>Listo. Tu cuenta y tus datos están borrados.</p>
   </div>
 </div>
 
 <script>
 (function(){
-/* prototipo del alta: 1 Acceso · 2 Setup · 3 Evaluación · 4 Entrenamiento · 5 Mi estado (sketches del 8-ago) */
+/* alta real contra runcierge-api: 1 Acceso · 2 Setup · 3 Evaluación · 4 Entrenamiento · 5 Mi estado (sketches del 8-ago) */
 const fl=document.getElementById("flujo"), pasos=[...fl.querySelectorAll("[data-paso]")], orden=pasos.map(p=>p.dataset.paso), bar=document.getElementById("flBar");
 const S={canal:"Telegram"}; let hist=[];
 const $=id=>document.getElementById(id);
+/* servidor del alta. En localhost apunta a una copia local (o a ?api=...), nunca a producción. */
+const API=/^(localhost|127\.0\.0\.1)$/.test(location.hostname)?(new URLSearchParams(location.search).get("api")||"http://127.0.0.1:8031"):"https://api.runcierge.me";
+const AVISO="2026-11-13", LLAVE="rc_sesion"; /* AVISO = fecha de "Última actualización" de privacidad.html */
+const tok={ get(){ if(S.token) return S.token; try{ return localStorage.getItem(LLAVE); }catch(e){ return null; } },
+  set(v){ S.token=v||""; try{ v?localStorage.setItem(LLAVE,v):localStorage.removeItem(LLAVE); }catch(e){} } };
+async function api(metodo,ruta,cuerpo){ const h={}, t=tok.get(); if(cuerpo) h["Content-Type"]="application/json"; if(t) h.Authorization="Bearer "+t;
+  let r; try{ r=await fetch(API+ruta,{method:metodo,headers:h,body:cuerpo?JSON.stringify(cuerpo):undefined}); }
+  catch(e){ return {ok:false,status:0,mensaje:"No pude conectar. Revisa tu internet y vuelve a intentar."}; }
+  let d={}; try{ d=await r.json(); }catch(e){}
+  return Object.assign({},d,{ok:r.ok,status:r.status,mensaje:r.ok?"":(d.mensaje||"Algo falló de mi lado. Vuelve a intentar en un momento.")}); }
+async function ocupado(boton,fn){ if(boton.dataset.ocupado) return; boton.dataset.ocupado="1"; boton.setAttribute("aria-busy","true"); try{ await fn(); } finally{ delete boton.dataset.ocupado; boton.removeAttribute("aria-busy"); } }
+/* si este dispositivo ya tiene cuenta, trae su estado real */
+async function cargar(){ if(!tok.get()) return false; const r=await api("GET","/api/yo"); if(r.status===401){ tok.set(null); return false; } if(!r.ok) return false;
+  const u=r.setup||{}; S.mail=r.email; S.garmin=!!r.garmin; S.reloj=u.reloj||""; S.ritmo=u.ritmo||""; S.tenis=u.tenis||""; S.km=u.km!=null?String(u.km):""; S.obj=u.objetivo||""; S.plan=u.plan_tiene||""; S.planTxt=u.plan_texto||"";
+  $("fReloj").value=S.reloj; $("fRitmo").value=S.ritmo; $("fTenis").value=S.tenis; $("fKm").value=S.km; $("fPlan").value=S.planTxt; return true; }
 function ver(nombre,push=true){ const cur=pasos.find(p=>!p.hidden); if(push&&cur&&cur.dataset.paso!==nombre) hist.push(cur.dataset.paso);
   pasos.forEach(p=>p.hidden=p.dataset.paso!==nombre); bar.style.width=Math.round((orden.indexOf(nombre)+1)/orden.length*100)+"%"; fl.scrollTop=0;
   const f=pasos.find(p=>p.dataset.paso===nombre).querySelector("input,button.btn"); if(f) setTimeout(()=>f.focus({preventScroll:true}),30);
   if(nombre==="estado") pintaEstado(); if(nombre==="listo") pintaBien(); }
-function abrir(nombre){ fl.hidden=false; document.body.style.overflow="hidden"; hist=[]; ver(nombre||"codigo",false); try{ history.replaceState(null,"","#"+(nombre==="estado"?"mi-estado":"entrar")); }catch(e){} }
+function abrir(nombre){ fl.hidden=false; document.body.style.overflow="hidden"; hist=[]; ver(nombre||"codigo",false); try{ history.replaceState(null,"","#"+(nombre==="estado"?"mi-estado":"entrar")); }catch(e){}
+  /* con cuenta en este dispositivo: "Mi estado" muestra lo real y "Tengo invitación" retoma donde se quedó (el código ya se usó) */
+  cargar().then(hay=>{ if(!hay||fl.hidden) return; const cur=pasos.find(p=>!p.hidden).dataset.paso;
+    if(cur==="estado") pintaEstado(); else if(cur==="codigo") ver(S.obj&&S.plan?"estado":"setup",false); }); }
 function cerrar(){ fl.hidden=true; document.body.style.overflow=""; try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
 document.querySelectorAll("[data-abre]").forEach(b=>b.addEventListener("click",()=>abrir(b.dataset.abre==="estado"?"estado":"codigo")));
 $("flX").addEventListener("click",cerrar);
@@ -711,31 +731,44 @@ fl.querySelectorAll("[data-ir]").forEach(b=>b.addEventListener("click",()=>ver(b
 addEventListener("keydown",e=>{ if(e.key==="Escape"&&!fl.hidden) cerrar(); });
 function sel(id,fn){ const g=$(id), bs=[...g.querySelectorAll("button:not([disabled])")]; bs.forEach(x=>x.addEventListener("click",()=>{ bs.forEach(y=>y.setAttribute("aria-pressed","false")); x.setAttribute("aria-pressed","true"); fn&&fn(x.dataset.v); })); }
 const form=n=>pasos.find(p=>p.dataset.paso===n);
-form("codigo").addEventListener("submit",e=>{ e.preventDefault(); const c=$("fCod"), v=c.value.trim().toUpperCase();
-  if(!/^RUN-[A-Z0-9]{4}$/.test(v)){ c.setAttribute("aria-invalid","true"); $("eCod").textContent="El código tiene la forma RUN-XXXX. Revisa que esté completo."; return; }
-  if(v!=="RUN-2026"){ c.setAttribute("aria-invalid","true"); $("eCod").textContent="Ese código no existe o ya se usó. Si te lo mandaron hoy, revisa mayúsculas y guiones."; return; }
-  c.removeAttribute("aria-invalid"); $("eCod").textContent=""; ver("correo"); });
+form("codigo").addEventListener("submit",e=>{ e.preventDefault(); const c=$("fCod"), v=c.value.replace(/\s+/g,"").toUpperCase();
+  if(!/^RUN-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(v)){ c.setAttribute("aria-invalid","true"); $("eCod").textContent="El código tiene la forma RUN-XXXX-XXXX. Revisa que esté completo."; return; }
+  ocupado(e.target.querySelector("button.btn"),async()=>{ const r=await api("POST","/api/invite/check",{code:v});
+    if(!r.ok){ c.setAttribute("aria-invalid","true"); $("eCod").textContent=r.mensaje; return; }
+    c.removeAttribute("aria-invalid"); $("eCod").textContent=""; S.code=v; ver("correo"); }); });
 form("correo").addEventListener("submit",e=>{ e.preventDefault(); const m=$("fMail"), v=m.value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ m.setAttribute("aria-invalid","true"); $("eMail").textContent="Escribe un correo completo, como nombre@correo.com."; return; }
   m.removeAttribute("aria-invalid"); $("eMail").textContent=""; S.mail=v; ver("garmin"); });
 const cons=[...fl.querySelectorAll(".cons")];
 cons.forEach(c=>c.addEventListener("change",()=>{ $("bGarmin").disabled=!cons.every(x=>x.checked); }));
-$("bGarmin").addEventListener("click",()=>{ $("pgGarmin").hidden=false; $("bGarmin").hidden=true; $("pgOk").focus(); });
-$("pgOk").addEventListener("click",()=>{ $("pgGarmin").hidden=true; $("gOk").hidden=false; $("bGarminSig").hidden=false; $("bGarminSig").focus(); S.garmin=true; });
-form("garmin").addEventListener("submit",e=>{ e.preventDefault(); if(S.garmin) ver("setup"); });
+/* el alta ocurre aquí: código + correo + los 3 permisos. La conexión oficial con Garmin es el paso que sigue. */
+$("bGarmin").addEventListener("click",()=>ocupado($("bGarmin"),async()=>{ $("eGar").textContent="";
+  const r=await api("POST","/api/alta",{code:S.code,email:S.mail,version_aviso:AVISO,consentimientos:{lectura_datos:$("c1").checked,ia:$("c2").checked,borrado:$("c3").checked}});
+  if(!r.ok){ $("eGar").textContent=r.mensaje; return; }
+  tok.set(r.token); cons.forEach(c=>c.disabled=true); $("pgGarmin").hidden=false; $("bGarmin").hidden=true; $("pgOk").focus(); }));
+$("pgOk").addEventListener("click",()=>ver("setup"));
+form("garmin").addEventListener("submit",e=>{ e.preventDefault(); if(tok.get()) ver("setup"); });
 sel("sComp",v=>S.comp=v); sel("sCanal",v=>S.canal=v||"Telegram");
-form("setup").addEventListener("submit",e=>{ e.preventDefault(); S.reloj=$("fReloj").value; S.ritmo=$("fRitmo").value.trim(); S.tenis=$("fTenis").value.trim(); S.km=$("fKm").value.trim(); ver("eval"); });
+form("setup").addEventListener("submit",e=>{ e.preventDefault(); S.reloj=$("fReloj").value; S.ritmo=$("fRitmo").value.trim(); S.tenis=$("fTenis").value.trim(); S.km=$("fKm").value.trim();
+  if(S.km&&!/^\d{1,5}$/.test(S.km)){ $("eSet").textContent="Los km van solo con números, como 300. Si no sabes, déjalo en blanco."; return; }
+  ocupado(e.target.querySelector("button.btn"),async()=>{ const r=await api("POST","/api/setup",{reloj:S.reloj,ritmo:S.ritmo,tenis:S.tenis,km:S.km?+S.km:null});
+    if(!r.ok){ $("eSet").textContent=r.mensaje; return; } $("eSet").textContent=""; ver("eval"); }); });
 form("eval").addEventListener("submit",e=>{ e.preventDefault(); ver("entreno"); });
 sel("sObj",v=>S.obj=v);
 sel("sPlan",v=>{ S.plan=v; $("cPlan").hidden=v!=="si"; $("nPlan").hidden=v!=="no"; });
-form("entreno").addEventListener("submit",e=>{ e.preventDefault(); if(!S.obj||!S.plan){ $("eEnt").textContent="Elige un objetivo y dime si tienes plan. \"No sé todavía\" también vale."; return; } $("eEnt").textContent=""; S.planTxt=$("fPlan").value.trim(); ver("listo"); });
+form("entreno").addEventListener("submit",e=>{ e.preventDefault(); if(!S.obj||!S.plan){ $("eEnt").textContent="Elige un objetivo y dime si tienes plan. \"No sé todavía\" también vale."; return; } $("eEnt").textContent=""; S.planTxt=S.plan==="si"?$("fPlan").value.trim():"";
+  ocupado(e.target.querySelector("button.btn"),async()=>{ const r=await api("POST","/api/setup",{objetivo:S.obj,plan_tiene:S.plan,plan_texto:S.planTxt});
+    if(!r.ok){ $("eEnt").textContent=r.mensaje; return; } ver("listo"); }); });
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ph=s=>`<span class="pend">[${s}]</span>`;
 function pintaBien(){ const ten=S.tenis?esc(S.tenis):ph("tus tenis"), km=S.km?esc(S.km)+" km":ph("km");
   const obj=S.obj==="No sé todavía"?"Sin objetivo por ahora: está bien. En dos o tres semanas te propongo uno con lo que vea.":"Tu objetivo: "+esc(S.obj.toLowerCase())+".";
   const plan=S.plan==="si"?(S.planTxt?"Recibí tu plan. Las sesiones de esta semana ya van a tu reloj.":"Cuando tengas el plan a la mano, mándamelo por aquí y lo subo a tu reloj."):"Sin plan, leo cada sesión contra ti mismo.";
   $("bien").innerHTML=`<p>Hola. Ya leo tu Garmin. Cada sesión que termines me llega sola.</p><p>${obj} ${plan}</p><p>Tus zonas por ahora son estimadas. En unos días te propongo una prueba para medirlas.</p><p>Tus ${ten} van en ${km}. Te aviso antes de que se acaben, no cuando ya te duela la rodilla.</p><p><b>Te escribo la noche antes de tu próxima sesión.</b></p>`; }
-function pintaEstado(){ $("eObj").textContent=S.obj||"[objetivo]"; $("ePlan").textContent=S.plan==="si"?"Con plan: lo subo a tu reloj.":S.plan==="no"?"Sin plan: comparo contra ti mismo.":"[plan]";
+function pintaEstado(){ const hay=!!tok.get();
+  $("eCon").textContent=!hay?"[tu Garmin]":S.garmin?"Garmin conectado":"Garmin sin conectar";
+  $("eConS").textContent=!hay?"Entra con tu invitación para ver tu estado.":S.garmin?"Leo tus sesiones unos minutos después de que pares el reloj.":"La conexión oficial todavía no está abierta en esta beta. En cuanto lo esté, la haces aquí.";
+  $("eObj").textContent=S.obj||"[objetivo]"; $("ePlan").textContent=S.plan==="si"?"Con plan: lo subo a tu reloj.":S.plan==="no"?"Sin plan: comparo contra ti mismo.":"[plan]";
   $("eTen").textContent=S.tenis||"[tenis]"; $("eTenS").textContent=S.km?S.km+" km estimados. Los voy sumando con cada sesión.":"[km] · los voy sumando con cada sesión."; $("eHola").textContent=S.mail?"Tu estado, "+S.mail.split("@")[0]:"Tu estado"; }
 const ay=[...$("ayuda").querySelectorAll("button")];
 ay.forEach(b=>b.addEventListener("click",()=>{ const li=b.parentElement, old=li.querySelector(".resp"), on=b.getAttribute("aria-expanded")==="true";
@@ -744,7 +777,11 @@ ay.forEach(b=>b.addEventListener("click",()=>{ const li=b.parentElement, old=li.
   if(b.hasAttribute("data-borrar")){ $("borrar").hidden=false; $("bBorrar").focus(); return; }
   const p=document.createElement("p"); p.className="resp"; p.textContent=b.dataset.r; li.appendChild(p); }));
 $("bNoBorrar").addEventListener("click",()=>{ $("borrar").hidden=true; ay.forEach(x=>x.setAttribute("aria-expanded","false")); });
-$("bBorrar").addEventListener("click",()=>{ $("borrar").hidden=true; $("ayuda").hidden=true; $("borrado").hidden=false; });
+$("bBorrar").addEventListener("click",()=>ocupado($("bBorrar"),async()=>{ $("eBor").textContent="";
+  if(!tok.get()){ $("borrar").hidden=true; $("borrado").textContent="No hay una cuenta abierta en este dispositivo."; $("borrado").hidden=false; return; }
+  const r=await api("DELETE","/api/yo"); if(!r.ok&&r.status!==401){ $("eBor").textContent=r.mensaje; return; }
+  tok.set(null); Object.keys(S).forEach(k=>delete S[k]); S.canal="Telegram"; fl.querySelectorAll("form").forEach(f=>f.reset()); cons.forEach(c=>c.disabled=false); $("bGarmin").disabled=true; $("bGarmin").hidden=false; $("pgGarmin").hidden=true;
+  $("borrar").hidden=true; $("ayuda").hidden=true; $("borrado").textContent="Listo. Tu cuenta y tus datos están borrados."; $("borrado").hidden=false; pintaEstado(); }));
 function porHash(){ const h=location.hash.slice(1); if(h==="entrar") abrir("codigo"); else if(h==="mi-estado") abrir("estado"); }
 addEventListener("hashchange",porHash); porHash();
 /* frases que enseñan su dato */
@@ -782,9 +819,12 @@ const pOut=document.getElementById("pOut"), pCta=document.getElementById("pCta")
 function pinta(){ const m=+pDur.value; document.getElementById("pDurV").textContent=hm(m); P.dur=m<60?"d1":m<90?"d2":m<120?"d3":"d4"; if(!P.que||!P.sens) return; pOut.innerHTML=probeMsg(P); pCta.hidden=false; }
 document.querySelectorAll("[data-p]").forEach(g=>{ grupo(g,()=>{ P[g.dataset.p]=g.querySelector('[aria-pressed="true"]').dataset.v; pinta(); }); });
 pDur.addEventListener("input",pinta); pinta();
-/* lista e invitación, sin backend */
+/* lista de espera: se guarda en el servidor */
 document.getElementById("wl").addEventListener("submit",e=>{ e.preventDefault(); const em=document.getElementById("wlMail"), v=(em.value||"").trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ em.focus(); em.setAttribute("aria-invalid","true"); return; }
-  const o=document.createElement("p"); o.className="ok"; o.textContent="Listo. Te escribo a "+v+" cuando se abra tu lugar. (Prototipo: este correo no se guarda.)"; e.target.replaceWith(o); });
+  em.removeAttribute("aria-invalid"); const f=e.target;
+  ocupado(f.querySelector("button"),async()=>{ const r=await api("POST","/api/waitlist",{email:v,origen:"home"});
+    if(!r.ok){ $("eWl").textContent=r.mensaje; return; } $("eWl").textContent="";
+    const o=document.createElement("p"); o.className="ok"; o.textContent="Listo. Te escribo a "+v+" cuando se abra tu lugar."; f.replaceWith(o); }); });
 })();
 
 /* herramientas. Tenis ideal: nativo, con el motor del widget extraído tal cual (ver MOTOR-TENIS).
