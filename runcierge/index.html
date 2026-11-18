@@ -660,7 +660,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:.4rem 1.5rem}
       <div><span class="k">Conexión</span><span class="v" id="eCon">[tu Garmin]</span><span class="s" id="eConS">Entra con tu invitación para ver tu estado.</span><button class="atras" type="button" id="bCon" style="justify-self:start" hidden></button></div>
       <div><span class="k">Objetivo</span><span class="v" id="eObj">[objetivo]</span><span class="s" id="ePlan">[plan]</span></div>
       <div><span class="k">Esta semana</span><span class="v">Aún sin sesiones</span><span class="s">Tu primera sesión aparece aquí en cuanto la termines.</span></div>
-      <div><span class="k">Último mensaje</span><span class="v">Bienvenida</span><span class="s">El próximo llega la noche antes de tu siguiente sesión.</span></div>
+      <div><span class="k" id="eMsgK">Último mensaje</span><span class="v" id="eMsg">Bienvenida</span><span class="s" id="eMsgS">El próximo llega la noche antes de tu siguiente sesión.</span><button class="atras" type="button" id="bTel" style="justify-self:start" hidden>Conectar Telegram</button><a class="btn" id="aTel" style="justify-self:start" target="_blank" rel="noopener" hidden>Abrir Telegram</a></div>
     </div>
     <div class="probe">
       <p class="q">Así se verá tu resumen. Ejemplo con los largos de octubre del corredor de arriba, en minutos:</p>
@@ -712,7 +712,7 @@ async function api(metodo,ruta,cuerpo){ const h={}, t=tok.get(); if(cuerpo) h["C
 async function ocupado(boton,fn){ if(boton.dataset.ocupado) return; boton.dataset.ocupado="1"; boton.setAttribute("aria-busy","true"); try{ await fn(); } finally{ delete boton.dataset.ocupado; boton.removeAttribute("aria-busy"); } }
 /* si este dispositivo ya tiene cuenta, trae su estado real */
 async function cargar(){ if(!tok.get()) return false; const r=await api("GET","/api/yo"); if(r.status===401){ tok.set(null); return false; } if(!r.ok) return false;
-  const u=r.setup||{}; S.mail=r.email; S.garmin=!!r.garmin; S.garminAbierto=!!r.garmin_abierto; S.reloj=u.reloj||""; S.ritmo=u.ritmo||""; S.tenis=u.tenis||""; S.km=u.km!=null?String(u.km):""; S.obj=u.objetivo||""; S.plan=u.plan_tiene||""; S.planTxt=u.plan_texto||"";
+  const u=r.setup||{}; S.mail=r.email; S.garmin=!!r.garmin; S.garminAbierto=!!r.garmin_abierto; S.telegram=!!r.telegram; S.telegramAbierto=!!r.telegram_abierto; S.reloj=u.reloj||""; S.ritmo=u.ritmo||""; S.tenis=u.tenis||""; S.km=u.km!=null?String(u.km):""; S.obj=u.objetivo||""; S.plan=u.plan_tiene||""; S.planTxt=u.plan_texto||"";
   $("fReloj").value=S.reloj; $("fRitmo").value=S.ritmo; $("fTenis").value=S.tenis; $("fKm").value=S.km; $("fPlan").value=S.planTxt; return true; }
 function ver(nombre,push=true){ const cur=pasos.find(p=>!p.hidden); if(push&&cur&&cur.dataset.paso!==nombre) hist.push(cur.dataset.paso);
   pasos.forEach(p=>p.hidden=p.dataset.paso!==nombre); bar.style.width=Math.round((orden.indexOf(nombre)+1)/orden.length*100)+"%"; fl.scrollTop=0;
@@ -784,10 +784,21 @@ function pintaEstado(){ const hay=!!tok.get();
   $("eCon").textContent=!hay?"[tu Garmin]":S.garmin?"Garmin conectado":"Garmin sin conectar";
   $("eConS").textContent=!hay?"Entra con tu invitación para ver tu estado.":S.garmin?"Leo tus sesiones unos minutos después de que pares el reloj.":S.garminAbierto?"Te llevo a la pantalla oficial de Garmin. La contraseña la escribes allá, nunca aquí.":"La conexión oficial todavía no está abierta en esta beta. En cuanto lo esté, la haces aquí.";
   $("bCon").hidden=!hay||(!S.garmin&&!S.garminAbierto); $("bCon").textContent=S.garmin?"Desconectar Garmin":"Conectar mi Garmin";
+  /* Telegram: sin chat ligado no hay por dónde escribirle; la tarjeta lo dice y lo conecta */
+  const faltaTel=hay&&S.telegramAbierto&&!S.telegram, hayLink=!$("aTel").hidden&&faltaTel;
+  $("eMsgK").textContent=faltaTel?"Mensajes":"Último mensaje"; $("eMsg").textContent=faltaTel?"Telegram sin conectar":"Bienvenida";
+  if(!hayLink) $("eMsgS").textContent=faltaTel?"Conéctalo para que pueda escribirte.":"El próximo llega la noche antes de tu siguiente sesión.";
+  $("bTel").hidden=!faltaTel||hayLink; if(!faltaTel) $("aTel").hidden=true;
   $("eObj").textContent=S.obj||"[objetivo]"; $("ePlan").textContent=S.plan==="si"?"Con plan: lo subo a tu reloj.":S.plan==="no"?"Sin plan: comparo contra ti mismo.":"[plan]";
   $("eTen").textContent=S.tenis||"[tenis]"; $("eTenS").textContent=S.km?S.km+" km estimados. Los voy sumando con cada sesión.":"[km] · los voy sumando con cada sesión."; $("eHola").textContent=S.mail?"Tu estado, "+S.mail.split("@")[0]:"Tu estado"; }
 $("bCon").addEventListener("click",()=>ocupado($("bCon"),async()=>{ if(!S.garmin){ await irGarmin($("eConS")); return; }
   const r=await api("DELETE","/api/garmin"); if(!r.ok){ $("eConS").textContent=r.mensaje; return; } S.garmin=false; pintaEstado(); }));
+/* pide un enlace de un solo uso y lo deja listo para tocar: al abrirlo, el bot liga este chat con la cuenta */
+$("bTel").addEventListener("click",()=>ocupado($("bTel"),async()=>{ const r=await api("POST","/api/telegram/enlace");
+  if(!r.ok){ $("eMsgS").textContent=r.mensaje; return; }
+  $("aTel").href=r.url; $("aTel").hidden=false; $("bTel").hidden=true; $("eMsgS").textContent="Se abre el chat con Runcierge: toca Iniciar. El enlace dura "+r.minutos+" minutos."; $("aTel").focus(); }));
+/* al volver de Telegram, Mi estado se actualiza solo */
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState!=="visible"||fl.hidden||!tok.get()) return; const cur=pasos.find(p=>!p.hidden); if(cur&&cur.dataset.paso==="estado") cargar().then(()=>pintaEstado()); });
 const ay=[...$("ayuda").querySelectorAll("button")];
 ay.forEach(b=>b.addEventListener("click",()=>{ const li=b.parentElement, old=li.querySelector(".resp"), on=b.getAttribute("aria-expanded")==="true";
   ay.forEach(x=>{ x.setAttribute("aria-expanded","false"); const r=x.parentElement.querySelector(".resp"); if(r) r.remove(); }); $("borrar").hidden=true;
